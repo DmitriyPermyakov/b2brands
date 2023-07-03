@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { IntroPageComponent } from './intro-page/intro-page.component';
 import { WorkingEasyComponent } from './working-easy/working-easy.component';
 import { WorkInRussiaComponent } from './work-in-russia/work-in-russia.component';
+import { PartnersComponent } from './partners/partners.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     IntroPageComponent,
     WorkingEasyComponent,
-    WorkInRussiaComponent
+    WorkInRussiaComponent,
+    PartnersComponent
   ],
   imports: [
     BrowserModule,
