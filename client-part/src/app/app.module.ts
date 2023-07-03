@@ -4,11 +4,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IntroPageComponent } from './intro-page/intro-page.component';
+import { WorkingEasyComponent } from './working-easy/working-easy.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    IntroPageComponent
+    IntroPageComponent,
+    WorkingEasyComponent
   ],
   imports: [
     BrowserModule,
