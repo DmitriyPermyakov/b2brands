@@ -7,6 +7,7 @@ import { IntroPageComponent } from './intro-page/intro-page.component';
 import { WorkingEasyComponent } from './working-easy/working-easy.component';
 import { WorkInRussiaComponent } from './work-in-russia/work-in-russia.component';
 import { PartnersComponent } from './partners/partners.component';
+import { ClientProductCardComponent } from './client-product-card/client-product-card.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { PartnersComponent } from './partners/partners.component';
     IntroPageComponent,
     WorkingEasyComponent,
     WorkInRussiaComponent,
-    PartnersComponent
+    PartnersComponent,
+    ClientProductCardComponent
   ],
   imports: [
     BrowserModule,

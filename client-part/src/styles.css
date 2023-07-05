@@ -12,24 +12,64 @@ h3,
     --intro-section-bg-light-color: #646464;
     --intro-section-bg-dark-color: #292929;
     --main-text-color: #d4d4d4;
+    --secondary-text-color: #ababab;
     --text-shadow-color: #7d7d7d;
     --text-button-color: #4c4c4c;
+
+    /* for print text */
+    --first-gray: #8b8b8b; 
+    --second-gray: #898989;
+
     --dark-bg: #292929;
     --gray-bg: #343434;
     --yellow: #ecff10;
     --map-color-gray: #b7b7b7;
+    --dark-shadow: #1c1c1c;
+    --new-price-color: #f75858;
 }
 
 /* rgba(13, 13, 13, 0.94); */
 
 html {    
-    font-size: 16px;    
+    font-size: calc(.01em + .86vw);
     font-family: 'Play', sans-serif;
     color: var(--main-text-color);
 }
 
+body {
+    
+}
+
+button {
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+button:active {
+    outline: none;
+}
 
 .dark-mode {
 
 }
 
+html::-webkit-scrollbar {
+    display: none; 
+}
+
+html::-webkit-scrollbar-track {
+    background-color: var(--dark-bg);
+}
+
+html::-webkit-scrollbar-thumb {
+    background-color: var(--gray-bg)
+}
+
+/* 
+@media (min-width: 1800px) {
+    html {        
+        font-size: calc(.01em + .86vw);
+        
+    }
+} */

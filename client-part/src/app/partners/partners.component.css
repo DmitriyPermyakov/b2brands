@@ -7,7 +7,7 @@
     height: 100vh;
     width: 100%;
     background-color: var(--dark-bg) ;
-    position: relative;
+    position: relative;    
 }
 
 .container {
