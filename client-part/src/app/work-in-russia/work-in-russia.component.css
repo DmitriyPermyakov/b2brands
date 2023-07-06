@@ -4,7 +4,7 @@
     display: block;    
     height: 100vh;
     width: 100%;
-    background-color: var(--gray-bg);
+    background-color: var(--card);
     position: relative;
 }
 
@@ -30,7 +30,7 @@ h2 {
     justify-self: start;
     align-self: self-start;
     font-size: 4em;
-    color: var(--main-text-color);
+    color: var(--main-text);
 }
 
 .map {
@@ -52,7 +52,7 @@ h2 {
     display: block;
     width: 100%;
     height: 100%;
-    
+    filter: drop-shadow(0px 0px 10px var(--dark-shadow));
 }
 
 .map path {
@@ -62,7 +62,7 @@ h2 {
 .map path:hover {
     stroke: #ffc82f;
     stroke-width: 1px;
-    fill: var(--yellow);
+    fill: var(--outline);
 }
 
 .description {
@@ -94,12 +94,12 @@ h2 {
     padding: 2em 3.6em 3em;
     
     border-radius: 5px;
-    box-shadow: 0px 0px 10px 2px var(--dark-bg);
+    box-shadow: 0px 0px 10px 2px var(--background);
     transition: all .15s linear;
 }
 
 .card:hover {
-    outline: 1px solid var(--yellow);
+    outline: 1px solid var(--outline);
 }
 
 .card + .card {

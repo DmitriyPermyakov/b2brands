@@ -6,7 +6,7 @@
     padding: 1em 9em 0 5em;      
     height: 100vh;
     width: 100%;
-    background: linear-gradient(135deg, var(--intro-section-bg-light-color) 0%, var(--intro-section-bg-dark-color) 65%, var(--intro-section-bg-dark-color) 100% );     
+    background: linear-gradient(135deg, var(--intro-section-bg-light) 0%, var(--intro-section-bg-dark) 65%, var(--intro-section-bg-dark) 100% );     
       
     position: relative;
     overflow: hidden;
@@ -38,10 +38,16 @@
 
 .nav-bar__items_icon {    
     width: 50px;
-    height: 50px;    
-    background-image: url("/assets/icons/Logo.svg");
-    background-size: contain;
-    
+    height: 50px;
+}
+
+.nav-bar__items_icon svg {
+    width: 100%;    
+    height: 100%;
+}
+
+.nav-bar__items_icon svg * {
+    stroke: var(--secondary-text);
 }
 
 .intro__description {
@@ -63,7 +69,7 @@
 .description__main {
     grid-row:  1 / 2;
     grid-column: 2 / 3;
-    text-shadow: 0px 0px 10px var(--text-shadow-color);
+    text-shadow: 0px 0px 10px var(--text-shadow);
 
     font-size: 10rem;
 }
@@ -79,7 +85,7 @@
 
     word-wrap:break-word;
     text-align: end;
-    text-shadow: 0px 0px 5px var(--text-shadow-color);
+    text-shadow: 0px 0px 5px var(--text-shadow);
 }
 
 .description__btn {
@@ -92,18 +98,19 @@
 
     font-size: 1.2em;    
     font-family: inherit;
-    color: var(--text-button-color);
+    color: var(--text-intro-button);
 
-    background-color: var(--main-text-color);
+    background-color: var(--main-text);
     border: none;
     border-radius: 5px;
 
-    box-shadow: 0px 0px 4px 0px var(--text-shadow-color);
-    transition: .1s ease-in-out 0s;
+    box-shadow: 0px 0px 4px 0px var(--text-shadow);
+    transition: .05s ease-in-out 0s;
 }
 .description__btn:hover {
-    
-    box-shadow: 0px 0px 16px 0px var(--text-shadow-color);
+    transform: scale(1.08);
+    box-shadow: 0px 0px 16px 0px var(--text-shadow);
+    outline: 1px solid var(--text-intro-button);
 }
 
 .intro__yellow-shape {    
@@ -126,8 +133,8 @@
 .intro__arrow-down {    
     position:absolute;
     background: transparent;     
-    outline: none;
-    border: none;     
+    /* outline: none;
+    border: none;      */
     width: 280px;
     height: 76px;
     top: 85%;
@@ -138,11 +145,16 @@
 .intro__arrow-down_icon {
     display: block;
     width: 100%;
-    height: 100%;
-
-    background: transparent;
+    height: 100%;    
+}
+.intro__arrow-down_icon * {
+    stroke: var(--secondary-text);
 }
 
+.intro__arrow-down:hover svg * {
+    stroke-width: 3px;
+    stroke: var(--main-text);
+}
 .socials {
     display: flex;
     flex-direction: column;  
@@ -159,7 +171,7 @@
     display: block;
     height: 120px;
     width: 2px;
-    background-color: var(--main-text-color);
+    background-color: var(--secondary-text);
 }
 
 .socials__line.top {
@@ -178,10 +190,12 @@
     margin-top: 8px;
 }
 
-.socials__icon svg {
+.socials__icon svg {   
     transition: all .05s linear;
 }
+.socials__icon svg * {
+    stroke: var(--secondary-text);
+}
 .socials__icon:hover svg {
-    transform: scale(1.1, 1.1);
-    filter: drop-shadow(0px 0px 2px #303030);
+    transform: scale(1.1, 1.1);    
 }

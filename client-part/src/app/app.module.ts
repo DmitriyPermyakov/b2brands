@@ -8,6 +8,8 @@ import { WorkingEasyComponent } from './working-easy/working-easy.component';
 import { WorkInRussiaComponent } from './work-in-russia/work-in-russia.component';
 import { PartnersComponent } from './partners/partners.component';
 import { ClientProductCardComponent } from './client-product-card/client-product-card.component';
+import { ClientOrdersComponent } from './client-orders/client-orders.component';
+import { QuantitiComponent } from './quantiti/quantiti.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { ClientProductCardComponent } from './client-product-card/client-product
     WorkingEasyComponent,
     WorkInRussiaComponent,
     PartnersComponent,
-    ClientProductCardComponent
+    ClientProductCardComponent,
+    ClientOrdersComponent,
+    QuantitiComponent
   ],
   imports: [
     BrowserModule,
