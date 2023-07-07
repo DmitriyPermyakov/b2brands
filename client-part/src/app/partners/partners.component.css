@@ -70,7 +70,7 @@
     grid-column: 4 / 5;    
 
     background-image: url("../../assets/logo/svoboda.svg");
-    filter: invert();
+    /* filter: invert(); */
 }
 /* svoboda */
 

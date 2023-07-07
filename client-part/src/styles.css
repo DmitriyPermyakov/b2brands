@@ -8,7 +8,8 @@
     
 
     --background: #292929;
-    --card: #343434;
+    /* --card: #343434; */
+    --card: #343434ce;
     --outline: #ecff10;
     --map: #b7b7b7;
     --dark-shadow: #1c1c1c;
@@ -29,6 +30,7 @@
 
     --background: #ffffff;
     --card: #fefefe ;
+    --card: #fefefe83 ;
     --outline: #656565 ;
     --map: #ababab;
     --dark-shadow: #aeaeae;
@@ -36,7 +38,9 @@
     color-scheme: light;
 } */
 
-
+:root .icon:nth-child(4){
+    filter: invert();
+}
 
 
 *,
@@ -75,16 +79,19 @@ button:active {
 
 
 
-html::-webkit-scrollbar {
-    display: none; 
-}
-
-html::-webkit-scrollbar-track {
+html::-webkit-scrollbar {    
+    width: .5vw;
     background-color: var(--background);
 }
 
+html::-webkit-scrollbar-track {    
+    background-color: var(--background);
+}
+
+
 html::-webkit-scrollbar-thumb {
-    background-color: var(--card)
+    border-radius: 5px;    
+    background-color: var(--main-text);
 }
 
 /* 

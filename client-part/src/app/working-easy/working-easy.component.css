@@ -9,6 +9,9 @@
     background-color: var(--background);
     font-size: inherit;
     position: relative;
+    z-index: 0;
+    overflow: hidden;
+    border-bottom: 1px solid var(--secondary-text);
 }
 
 h2 {
@@ -42,11 +45,16 @@ h2 {
     
     height: 25em;
     width: 18.75em;
+
     text-align: center;
-    transition: all 0.2s linear;
+    
     outline: 2px solid var(--outline);
     border-radius: 5px;
+    background-color: var(--card);
+    box-shadow: 0px 0px 20px 2px var(--dark-shadow);
+
     transition: all .1s linear;
+
 }
 
 .card:hover {
@@ -90,6 +98,10 @@ h2 {
     height: 65%;
 }
 
+.card-icon svg * {
+    stroke: var(--main-text);
+}
+
 .card-icon.cap svg {   
     width: 100%;
     height: 100%;
@@ -124,3 +136,28 @@ h2 {
     stroke: var(--main-text);
 }
 
+.bg-line {
+    width: 100em;
+    height: 100em;
+    top: 0%;
+    left: 60%;
+    position: absolute;
+    z-index: -1;
+
+    filter: blur(15px);
+    animation: 90s infinite backwards bg-line-rotation linear;
+}
+
+.bg-line svg  {
+    width: 100%;
+    height: 100%;
+}
+
+@keyframes bg-line-rotation {
+    0% {
+        transform: rotate(0deg);
+    }    
+    100% {
+        transform: rotate(360deg);
+    }
+}

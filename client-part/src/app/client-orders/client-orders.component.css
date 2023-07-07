@@ -181,6 +181,5 @@
 }
 
 .remove-icon:hover * {
-    stroke: var(--outline);
-    filter: drop-shadow(0 0 1px var(--outline));
+    stroke: var(--outline);   
 }
