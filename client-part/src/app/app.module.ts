@@ -10,6 +10,7 @@ import { PartnersComponent } from './partners/partners.component';
 import { ClientProductCardComponent } from './client-product-card/client-product-card.component';
 import { ClientOrdersComponent } from './client-orders/client-orders.component';
 import { QuantitiComponent } from './quantiti/quantiti.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { QuantitiComponent } from './quantiti/quantiti.component';
     PartnersComponent,
     ClientProductCardComponent,
     ClientOrdersComponent,
-    QuantitiComponent
+    QuantitiComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,

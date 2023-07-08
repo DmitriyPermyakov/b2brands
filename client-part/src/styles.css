@@ -19,7 +19,7 @@
 }
 
 
-/* :root {
+:root {
     --intro-section-bg-light: #fcfcfc;
     --intro-section-bg-dark: #ffffff;
     --main-text: #3b3b3b;
@@ -36,7 +36,7 @@
     --dark-shadow: #aeaeae;
     --new-price: #f75858;
     color-scheme: light;
-} */
+}
 
 :root .icon:nth-child(4){
     filter: invert();
@@ -65,6 +65,7 @@ html {
 
 body {
     
+    position: relative;
 }
 
 button {
@@ -94,10 +95,3 @@ html::-webkit-scrollbar-thumb {
     background-color: var(--main-text);
 }
 
-/* 
-@media (min-width: 1800px) {
-    html {        
-        font-size: calc(.01em + .86vw);
-        
-    }
-} */

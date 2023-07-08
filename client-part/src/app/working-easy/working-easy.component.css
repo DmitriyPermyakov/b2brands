@@ -1,5 +1,4 @@
 @import url("../../styles.css");
-
 .working-easy {
     display: block;
     margin: 0;
@@ -160,4 +159,287 @@ h2 {
     100% {
         transform: rotate(360deg);
     }
+}
+
+
+
+/* ////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////// */
+
+
+
+@media (max-width: 600px) {   
+
+    .working-easy {        
+        padding: 22em 9em 14em;        
+    }
+    
+    h2 {
+        margin-top: 1em;
+        margin-bottom: .5em;
+        font-size: 6em;
+    }    
+    
+    .card-container {        
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 3fr auto 3fr auto 3fr auto 3fr; 
+
+        position: relative;
+    }   
+    
+    
+    .card {        
+        padding: 0;
+        height: 80%;
+        width: 90%;
+
+        outline: none;
+        border: none;
+        background-color: transparent;
+        box-shadow: none;       
+    }
+    
+    
+    .card.first {
+        grid-column: 2 / 3 ;
+        grid-row: 1 / 2;   
+        margin-bottom: 0;     
+    }
+    
+    .card.second {
+        grid-column: 1 / 2;
+        grid-row: 3 / 4;
+        margin-top: 0;
+    }
+    
+    .card.third {
+        grid-column: 2 / 3;
+        grid-row: 5 / 6;
+        margin-bottom: 0em;
+    }
+    
+    .card.fourth {
+        grid-column: 1 / 2;
+        grid-row: 7 / 8;
+        margin-top: 0;
+    }
+    
+    .card-number {
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+       
+        font-size: 20em;       
+    }
+    
+    .card-icon {
+        grid-column: 2 / 3;
+        grid-row: 1 / 2;    
+        align-self: self-end;            
+    }   
+
+    .card-icon.cap svg {
+        width: 90%;
+        height: 90%;
+    }
+
+    .card-icon.location svg {
+        width: 40%;
+        height: 40%;
+    }
+    
+    .card-description {
+        grid-column: span 2;
+        grid-row: 2 / 3;
+    
+        margin-top: 1.5em;
+    
+        font-size: 4em;        
+    }
+    
+    .arrow {
+        position: absolute;
+    }    
+    
+    .arrow.first {
+        grid-column: span 2;
+        grid-row: 2 / 3;
+
+        transform: rotate(130deg);
+    }
+    
+    .arrow.second {
+        grid-column: span 2;
+        grid-row: 4 / 5;
+
+        transform: rotate(25deg);
+    }
+    
+    .arrow.third {
+        grid-column: span 2;
+        grid-row: 6 / 7;
+
+        transform: rotate(135deg);
+    }    
+    
+    
+    .bg-line {
+        width: 200em;
+        height: 200em;
+        top: 10%;
+        left: 50%;        
+    }
+    
+    .bg-line svg  {
+        width: 90%;
+        height: 90%;
+    }
+   
+}
+
+
+/* ////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////// */
+
+
+@media (min-width: 600px) and (max-width: 900px) {
+    .working-easy {        
+        padding: 0em 9em 14em;                
+    }
+    
+    h2 {
+        margin-top: 1em;
+        font-size: 6em;
+    }    
+    
+    .card-container {
+        
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 3fr auto 3fr auto 3fr auto 3fr; 
+
+        position: relative;
+    }   
+    
+    
+    .card {           
+        margin: 0;
+        padding: 0;     
+    
+        height: 80%;
+        width: 70%;
+        
+        outline: none;
+        /* border: 1px solid white; */
+        border: none;
+        background-color: transparent;
+        box-shadow: none;
+        
+    }
+    
+    
+    .card.first {
+        grid-column: 2 / 3 ;
+        grid-row: 1 / 2;   
+        margin-bottom: 0;     
+    }
+    
+    .card.second {
+        grid-column: 1 / 2;
+        grid-row: 3 / 4;
+        margin-top: 0;
+    }
+    
+    .card.third {
+        grid-column: 2 / 3;
+        grid-row: 5 / 6;
+        margin-bottom: 0em;
+    }
+    
+    .card.fourth {
+        grid-column: 1 / 2;
+        grid-row: 7 / 8;
+        margin-top: 0;
+    }
+    
+    .card-number {
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+       
+        font-size: 15em;       
+    }
+    
+    .card-icon {
+        grid-column: 2 / 3;
+        grid-row: 1 / 2;    
+        align-self: self-end;     
+       
+    }    
+
+    .card-icon svg {
+        height: 50%;
+        width: 50%;
+    }
+
+    .card-icon.cap svg {
+        height: 70%;
+        width: 70%;
+    }
+
+    .card-icon.location svg {
+        height: 40%;
+        width: 40%;
+    }
+    
+    .card-description {
+        grid-column: span 2;
+        grid-row: 2 / 3;
+    
+        margin-top: 1.5em;
+    
+        font-size: 3em;        
+    }
+    
+    .arrow {
+        position: absolute;
+    }    
+    
+    .arrow.first {
+        grid-column: span 2;
+        grid-row: 2 / 3;
+
+        transform: rotate(130deg);
+    }
+    
+    .arrow.second {
+        grid-column: span 2;
+        grid-row: 4 / 5;
+
+        transform: rotate(25deg);
+    }
+    
+    .arrow.third {
+        grid-column: span 2;
+        grid-row: 6 / 7;
+
+        transform: rotate(135deg);
+    }   
+    
+    .bg-line {
+        width: 150em;
+        height: 150em;
+        top: 0%;
+        left: 50%;
+        position: absolute;
+        z-index: -1;
+    
+        filter: blur(15px);
+        animation: 90s infinite backwards bg-line-rotation linear;
+    }
+    
+    .bg-line svg  {
+        width: 100%;
+        height: 100%;
+    }
+    
 }
