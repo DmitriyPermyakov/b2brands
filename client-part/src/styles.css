@@ -19,7 +19,7 @@
 }
 
 
-:root {
+/* :root {
     --intro-section-bg-light: #fcfcfc;
     --intro-section-bg-dark: #ffffff;
     --main-text: #3b3b3b;
@@ -36,11 +36,20 @@
     --dark-shadow: #aeaeae;
     --new-price: #f75858;
     color-scheme: light;
+} */
+
+:root .icon:nth-child(1) {
+    filter: invert();
 }
 
 :root .icon:nth-child(4){
     filter: invert();
 }
+
+:root .icon:nth-child(9){
+    filter: invert();
+}
+
 
 
 *,
