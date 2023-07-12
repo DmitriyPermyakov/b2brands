@@ -8,6 +8,8 @@
     width: 100%;
     background-color: var(--background) ;
     position: relative;    
+    overflow: hidden;   
+    z-index: -1;
 }
 
 .container {
@@ -22,7 +24,6 @@
 
     align-items: center;
     justify-items: center;    
-   
 }
 
 .icon {

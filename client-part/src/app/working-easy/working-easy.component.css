@@ -135,32 +135,6 @@ h2 {
     stroke: var(--main-text);
 }
 
-.bg-line {
-    width: 100em;
-    height: 100em;
-    top: 0%;
-    left: 60%;
-    position: absolute;
-    z-index: -1;
-
-    filter: blur(15px);
-    animation: 90s infinite backwards bg-line-rotation linear;
-}
-
-.bg-line svg  {
-    width: 100%;
-    height: 100%;
-}
-
-@keyframes bg-line-rotation {
-    0% {
-        transform: rotate(0deg);
-    }    
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
 
 
 /* ////////////////////////////////////////////////////////
@@ -280,21 +254,7 @@ h2 {
         grid-row: 6 / 7;
 
         transform: rotate(135deg);
-    }    
-    
-    
-    .bg-line {
-        width: 200em;
-        height: 200em;
-        top: 10%;
-        left: 50%;        
-    }
-    
-    .bg-line svg  {
-        width: 90%;
-        height: 90%;
-    }
-   
+    }   
 }
 
 
@@ -424,22 +384,4 @@ h2 {
 
         transform: rotate(135deg);
     }   
-    
-    .bg-line {
-        width: 150em;
-        height: 150em;
-        top: 0%;
-        left: 50%;
-        position: absolute;
-        z-index: -1;
-    
-        filter: blur(15px);
-        animation: 90s infinite backwards bg-line-rotation linear;
-    }
-    
-    .bg-line svg  {
-        width: 100%;
-        height: 100%;
-    }
-    
 }

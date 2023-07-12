@@ -55,3 +55,12 @@
     stroke: var(--outline);
     filter: drop-shadow(0 0 1px var(--outline));  
 }
+
+@media (max-width: 600px) {
+    .quantity {
+        justify-content: flex-end;
+        margin-top: 1em;
+        margin-right: 2em;
+        font-size: 5em;
+    }
+}

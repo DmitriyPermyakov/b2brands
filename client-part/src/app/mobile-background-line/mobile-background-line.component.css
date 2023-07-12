@@ -1,0 +1,61 @@
+.bg-line {
+    width: 100em;
+    height: 100em;
+    top: 0%;
+    left: 60%;
+    position: absolute;
+    z-index: -2;
+
+    filter: blur(15px);
+    animation: 90s infinite backwards bg-line-rotation linear;
+    pointer-events: none;
+}
+
+.bg-line svg  {
+    width: 100%;
+    height: 100%;
+}
+
+@keyframes bg-line-rotation {
+    0% {
+        transform: rotate(0deg);
+    }    
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+@media (max-width: 600px) {
+     
+    .bg-line {
+        width: 200em;
+        height: 200em;
+        top: 10%;
+        left: 50%;        
+    }
+    
+    .bg-line svg  {
+        width: 90%;
+        height: 90%;
+    }
+}
+
+@media (min-width: 600px) and (max-width: 900px) {
+    .bg-line {
+        width: 150em;
+        height: 150em;
+        top: 0%;
+        left: 50%;
+        position: absolute;
+        z-index: -1;
+    
+        filter: blur(15px);
+        animation: 90s infinite backwards bg-line-rotation linear;
+    }
+    
+    .bg-line svg  {
+        width: 100%;
+        height: 100%;
+    }
+}

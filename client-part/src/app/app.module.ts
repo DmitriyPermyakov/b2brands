@@ -11,6 +11,7 @@ import { ClientProductCardComponent } from './client-product-card/client-product
 import { ClientOrdersComponent } from './client-orders/client-orders.component';
 import { QuantitiComponent } from './quantiti/quantiti.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { MobileBackgroundLineComponent } from './mobile-background-line/mobile-background-line.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
     ClientProductCardComponent,
     ClientOrdersComponent,
     QuantitiComponent,
-    NavBarComponent
+    NavBarComponent,
+    MobileBackgroundLineComponent
   ],
   imports: [
     BrowserModule,
