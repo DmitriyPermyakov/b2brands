@@ -38,17 +38,7 @@
     color-scheme: light;
 } */
 
-:root .icon:nth-child(1) {
-    filter: invert();
-}
 
-:root .icon:nth-child(4){
-    filter: invert();
-}
-
-:root .icon:nth-child(9){
-    filter: invert();
-}
 
 
 

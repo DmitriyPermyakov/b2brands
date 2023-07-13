@@ -12,6 +12,7 @@ import { ClientOrdersComponent } from './client-orders/client-orders.component';
 import { QuantitiComponent } from './quantiti/quantiti.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { MobileBackgroundLineComponent } from './mobile-background-line/mobile-background-line.component';
+import { ClientOrderComponent } from './client-order/client-order.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { MobileBackgroundLineComponent } from './mobile-background-line/mobile-b
     ClientOrdersComponent,
     QuantitiComponent,
     NavBarComponent,
-    MobileBackgroundLineComponent
+    MobileBackgroundLineComponent,
+    ClientOrderComponent
   ],
   imports: [
     BrowserModule,

@@ -448,6 +448,19 @@
     fill: #ff9500;    
 }
 
+.arrow-back-icon {            
+    width: 1.5625em;
+    height: 1.5625em;
+
+    position: absolute;
+    top: 3%;
+    left: 2%;
+}
+.arrow-back-icon svg {
+    display: block;
+    width: 100%;        
+}
+
 
 
 /* /////////////////////////////////////////////////////////////
@@ -474,7 +487,7 @@
     
     .product-nav-bar {
         display: flex;        
-        padding: 1em 4em;
+        padding: 1em 4em 1em 1em;
         width: 100%;
         height: 21em;
 
@@ -487,13 +500,17 @@
         z-index: 1;  
     }
 
-    .arrow-back-icon {        
-        width: 40px;
-        height: 40px;
+    .arrow-back-icon {                 
+        width: 35px;
+        height: 35px;     
+        
+        position: relative;        
     }
     .arrow-back-icon svg {
-        display: block;
-        width: 100%;        
+        display: inline-block;
+        width: 100%;
+        height: 100%;        
+       
     }
     
     .cart-button {        

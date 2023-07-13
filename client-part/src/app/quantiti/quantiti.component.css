@@ -59,8 +59,9 @@
 @media (max-width: 600px) {
     .quantity {
         justify-content: flex-end;
-        margin-top: 1em;
-        margin-right: 2em;
+        /* margin-top: 1em;
+        margin-right: 2em; */
+        
         font-size: 5em;
     }
 }
