@@ -13,12 +13,12 @@
         </svg>
 
     </li>
-    <button class="mobile-menu-btn">
+    <button class="mobile-menu-btn" (click)="showNavBar()">
         <span class="mobile-menu-btn-item"></span>
     </button>
-    <ul class="nav-bar__items">
-        <li class="nav-bar__items_item">Продукция</li>
-        <li class="nav-bar__items_item">Этапы работ</li>
+    <ul class="nav-bar__items" *ngIf="isNavBarVisible">
+        <li class="nav-bar__items_item" routerLink="/products" routerLinkActive="active">Продукция</li>
+        <li class="nav-bar__items_item" (click)="toWorkStage()">Этапы работ</li>
         <li class="nav-bar__items_icon">
             <svg width="74" height="74" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -33,7 +33,7 @@
             </svg>
 
         </li>
-        <li class="nav-bar__items_item">Доставка</li>
-        <li class="nav-bar__items_item">С нами работают</li>
+        <li class="nav-bar__items_item" (click)="toDelivery()">Доставка</li>
+        <li class="nav-bar__items_item" (click)="toPartners()">С нами работают</li>
     </ul>
 </nav>

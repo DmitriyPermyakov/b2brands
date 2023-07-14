@@ -7,4 +7,21 @@ import { Component } from '@angular/core';
 })
 export class NavBarComponent {
 
+  public isNavBarVisible:boolean = false;
+
+  toWorkStage() {
+    document.getElementById("workStage")?.scrollIntoView({ behavior: "smooth" });
+  }
+
+  toDelivery() {
+    document.getElementById("delivery")?.scrollIntoView({ behavior: "smooth"});
+  }
+
+  toPartners() {
+    document.getElementById("partners")?.scrollIntoView({ behavior: "smooth"});
+  }
+
+  showNavBar() {
+    this.isNavBarVisible = !this.isNavBarVisible;
+  }
 }

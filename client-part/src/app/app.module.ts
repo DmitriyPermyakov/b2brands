@@ -15,6 +15,7 @@ import { MobileBackgroundLineComponent } from './mobile-background-line/mobile-b
 import { ClientOrderComponent } from './client-order/client-order.component';
 import { ClientProductListComponent } from './client-product-list/client-product-list.component';
 import { ProductComponent } from './product/product.component';
+import { MainPageComponent } from './main-page/main-page.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ProductComponent } from './product/product.component';
     MobileBackgroundLineComponent,
     ClientOrderComponent,
     ClientProductListComponent,
-    ProductComponent
+    ProductComponent,
+    MainPageComponent
   ],
   imports: [
     BrowserModule,
