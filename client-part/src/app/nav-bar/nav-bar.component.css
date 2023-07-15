@@ -16,6 +16,7 @@
 
 .nav-bar__items_item {
     padding: 1em;
+    cursor: pointer;
 }
 
 .nav-bar__items_item:hover {

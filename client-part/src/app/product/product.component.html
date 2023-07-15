@@ -1,34 +1,28 @@
-<div class="product">
-    <span class="number">1</span>
-    <img class="product-image" src="../../assets/caps/right.png" alt="">
+<div class="product" (click)="toProductCard()">
+    <span class="number">{{ index + 1 }}</span>
+    <!-- <img class="product-image" src="../../assets/caps/right.png" alt=""> -->
+    <img class="product-image" src={{product.productColors[0].rightSmallUrl}} alt="">
     <div class="product-description">
         <label class="product-name-label" for="product-name" >Название:</label>
-        <span class="product-name" id="product-name">Бейсболка промо</span>
+        <span class="product-name" id="product-name">{{ product.name }}</span>
         <label class="product-vendor-code-label" for="vendor-code" >Артикул:</label>
-        <span class="vendor-code" id="vendor-code">Б100-320К</span>
+        <span class="vendor-code" id="vendor-code">{{ product.code }}</span>
     </div>
     <div class="properties">
-        <p class="property">Тип полотна..............................Поплин</p>
-        <p class="property">Плотность..................................130 гр/м²</p>
-        <p class="property">Состав.........................................100% хлопок</p>
-        <p class="property">Упаковка.....................................Индивидуальная</p>
-        <p class="property">Размер........................................57</p>
+        <p class="property" *ngFor="let p of product.productProps">
+            <span>{{p.name}}</span>
+            <span class="dots">..............................</span>
+            <span>{{p.value}}</span>
+        </p>
+        
         <p class="shadow"></p>
     </div>
     <div class="types-of-print">
-        <p class="print">Шелкография</p>
-        <p class="print">Шелкотрансферная печать</p>
-        <p class="print">Печать флексом, флоком</p>
-        <p class="print">DTF печать</p>
-        <p class="print">Вышивка</p>
-        <p class="print">Шеврон</p>
+        <p class="print" *ngFor="let p of product.print;">{{p}}</p>        
         <p class="shadow"></p>
     </div>
     <div class="colors">
-        <span class="color red"></span>
-        <span class="color yellow"></span>
-        <span class="color green"></span>
-        <span class="color blue"></span>
+        <span class="color" *ngFor="let c of product.productColors"  [ngStyle]="{'background-color': c.value}"></span>        
     </div>    
-    <span class="product-price">260р./шт.</span>
+    <span class="product-price">{{product.price}}р./шт.</span>
 </div>

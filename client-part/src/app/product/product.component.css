@@ -83,8 +83,8 @@
     grid-column: 4 / 5;    
     display: flex;
     flex-direction: column;
-    align-items: start;
-    justify-content: start;
+    align-items: flex-start;
+    justify-content: flex-start;
 
     max-height: 6em;
 
@@ -102,7 +102,15 @@
 }
 
 .property {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
 
+    margin-right: 1em;
+}
+
+.property .dots {
+    flex: 1 1 auto;
 }
 
 .property + .property {
@@ -113,8 +121,8 @@
     grid-column: 5 / 6;
     display: flex;
     flex-direction: column;
-    align-items: start;
-    justify-content: start;
+    align-items: flex-start;
+    justify-content: flex-start;
 
     max-height: 6em;
     overflow: hidden;
@@ -148,21 +156,6 @@
     margin-left: 1em;
 }
 
-.color.red {
-    background-color: red;
-}
-
-.color.yellow {
-    background-color: yellow;
-}
-
-.color.green {
-    background-color: green;
-}
-
-.color.blue {
-    background-color: blue;
-}
 
 .product-price {
     grid-column: 7 / 8;
