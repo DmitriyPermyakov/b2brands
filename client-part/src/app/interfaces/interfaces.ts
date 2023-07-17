@@ -2,10 +2,12 @@ export interface Product {
     id: string,
     name: string,
     code: string,
+    description: string,
     print: string[],
     productProps: ProductProperty[],
-    productColors: ProductColor[]
-    price: string
+    productColors: ProductColor[],
+    newPrice: string,
+    oldPrice: string
 }
 
 export interface ProductProperty {

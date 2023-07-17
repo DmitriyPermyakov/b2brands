@@ -9,6 +9,7 @@ import { Product } from '../interfaces/interfaces';
 })
 export class ClientProductListComponent implements OnInit {
   products: Product[] = [];
+  
   constructor(private productService:ProductsService) {
 
   }

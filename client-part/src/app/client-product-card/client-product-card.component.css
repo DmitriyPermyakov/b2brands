@@ -121,6 +121,28 @@
     color: var(--secondary-text);
 }
 
+
+.property {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+
+    margin-right: 1em;
+}
+
+.property>span {
+    flex: 0 0 auto
+}
+
+.property .dots {
+    flex: 1 1 auto;
+    overflow: hidden;
+}
+
+.property + .property {
+    margin-top: .5em;
+}
+
 .number-of-products {
     grid-column: 2 / 3;
     grid-row: 1 / 2;
@@ -280,28 +302,10 @@
     margin: 8px 0;
     width: 2.1875em;
     height: 2.1875em;
+
+    pointer-events: none;
 }
 
-.color.red {
-    background-color: red;
-}
-
-.color.blue {
-    background-color: blue;
-}
-
-
-.color.green {
-    background-color: green;
-}
-
-.color.yellow {
-    background-color: yellow;
-}
-
-.color.white {
-    background-color: white;
-}
 
 .color.selected {
     width: 2.1875em;

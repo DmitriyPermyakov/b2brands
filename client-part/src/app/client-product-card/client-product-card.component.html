@@ -22,27 +22,27 @@
             </div>
 
             <div class="name-of-product">
-                <p class="name">Бейсболка промо</p>
-                <p class="articul">Артикул: Б300-23</p>
+                <p class="name">{{product.name}}</p>
+                <p class="articul">Артикул: {{product.code}}</p>
             </div> 
             <div class="description-wrapper">
-                <p class="description">Отличный вариант для масштабных промоакций. Легкий материал, востребованные промо
-                    цвета. Удобная застежка-липучка</p>
+                <p class="description">{{product.description}}</p>
 
                 <div class="properties">
-                    <p>Тип полотна..............................Поплин</p>
-                    <p>Плотность..................................130 гр/м²</p>
-                    <p>Состав.........................................100% хлопок</p>
-                    <p> Упаковка.....................................Индивидуальная</p>
-                    <p>Размер........................................57</p>
+                    <p class="property" *ngFor="let p of product.productProps">
+                        <span>{{p.name}}</span>
+                        <span class="dots">...........................................................................................................</span>
+                        <span>{{p.value}}</span>
+                    </p>
+                    
                 </div>
             </div>
 
 
             <div class="price-quantity">
                 <p class="price">
-                    <span class="new-price">205р/шт</span>
-                    <span class="old-price">260р/шт</span>
+                    <span class="new-price">{{product.newPrice}}р/шт</span>
+                    <span class="old-price">{{product.oldPrice}}р/шт</span>
                 </p>
 
                 <app-quantiti></app-quantiti>
@@ -57,12 +57,8 @@
                         </svg>
                     </button>
 
-                    <div class="color-items">
-                        <div class="color red second"></div>
-                        <div class="color blue first"></div>
-                        <div class="color green selected"></div>
-                        <div class="color yellow first "></div>
-                        <div class="color white second"></div>
+                    <div class="color-items"  #colors>
+                        <div class="color" *ngFor="let c of product.productColors" [ngStyle]="{'background-color': c.value }"></div>                        
                     </div>
                     <button class="next-color color-btn">
                         <svg width="31" height="16" viewBox="0 0 31 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -77,12 +73,7 @@
                 <div class="print-container">
                     <p class="print-title">Виды нанесения:</p>
                     <div class="prints">
-                        <p class="type-of-print second">Шелкография</p>
-                        <p class="type-of-print first">Шелкотрансферная печать</p>
-                        <p class="type-of-print selected">Печать флексом, флоком</p>
-                        <p class="type-of-print first">DTF печать</p>
-                        <p class="type-of-print second">Вышивка</p>
-                        <p class="type-of-print hidden">Шеврон</p>
+                        <p class="type-of-print" *ngFor="let p of product.print">{{p}}</p>
                     </div>
                 </div>
             </div>

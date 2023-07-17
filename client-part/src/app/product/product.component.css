@@ -50,6 +50,8 @@
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
 
+    max-width: 16em;
+
     align-items: center;
 }
 
@@ -67,6 +69,7 @@
     grid-row: 1 / 2;    
     font-size: 1.2em;
     color: var(--main-text);
+    white-space: nowrap;
 }
 
 .vendor-code-label {
@@ -102,15 +105,24 @@
 }
 
 .property {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-between;
+   display: grid;
+   grid-template-columns: auto auto;
 
+   align-items: center;
+   justify-items: start;
+    
     margin-right: 1em;
 }
 
-.property .dots {
-    flex: 1 1 auto;
+.property .name {
+    grid-column: 1 / 2; 
+    max-width: 18em;       
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.property .value {
+    grid-column: 2 / 3;
 }
 
 .property + .property {

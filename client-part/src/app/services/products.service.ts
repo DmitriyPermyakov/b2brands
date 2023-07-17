@@ -13,8 +13,10 @@ constructor() {
   this.product = [{ 
     id: "asdfasf",
     name: "Бейсболка Промо",
+    description: "Отличный вариант для масштабных промоакций. Легкий материал, востребованные промо цвета. Удобная застежка-липучка",
     code: "Б100-320К",
-    price: "400",
+    newPrice: "260",
+    oldPrice: "400",
     print: [ "Шелкография", "Шелкотрансферная печать", "Печать флексом, флоком", "DTF печать", "Вышивка"],
     productColors: [ { 
       id: 1,
@@ -42,7 +44,7 @@ constructor() {
     },
     { 
       id: 1,
-      value: "#002cff",
+      value: "#ff00f3",
       frontSmallUrl: "../../assets/caps/front.png",
       leftSmallUrl: "../../assets/caps/left.png",
       bottomSmallUrl: "../../assets/caps/back.png",
@@ -51,6 +53,14 @@ constructor() {
     { 
       id: 1,
       value: "#002cff",
+      frontSmallUrl: "../../assets/caps/front.png",
+      leftSmallUrl: "../../assets/caps/left.png",
+      bottomSmallUrl: "../../assets/caps/back.png",
+      rightSmallUrl: "../../assets/caps/right.png"
+    },
+    { 
+      id: 1,
+      value: "#e27a10",
       frontSmallUrl: "../../assets/caps/front.png",
       leftSmallUrl: "../../assets/caps/left.png",
       bottomSmallUrl: "../../assets/caps/back.png",
@@ -64,23 +74,23 @@ constructor() {
     },
     { 
       id: 1,
-      name: "Тип полотна",
-      value: "Поплин"
+      name: "Плотность",
+      value: "130 гр/м²"
     },
     { 
       id: 1,
-      name: "Тип полотна",
-      value: "Поплин"
+      name: "Состав",
+      value: "100% хлопок"
     },
     { 
       id: 1,
-      name: "Тип полотна",
-      value: "Поплин"
+      name: "Упаковка",
+      value: "Индивидуальная"
     },
     { 
       id: 1,
-      name: "Тип полотна",
-      value: "Поплин"
+      name: "Размер",
+      value: "57"
     },
     { 
       id: 1,
@@ -100,7 +110,13 @@ constructor() {
   getAll(): Observable<Product[]> {
     return new Observable(s => {
       s.next(this.product);
-    })
+    });
+  }
+
+  getById(id: string | null) : Observable<Product> {
+    return new Observable(s => {
+      s.next(this.product.find(p => p.id == id));
+    });
   }
 }
 
