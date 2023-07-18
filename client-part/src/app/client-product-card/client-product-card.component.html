@@ -57,8 +57,8 @@
                         </svg>
                     </button>
 
-                    <div class="color-items"  #colors>
-                        <div class="color" *ngFor="let c of product.productColors" [ngStyle]="{'background-color': c.value }"></div>                        
+                    <div class="color-items" (wheel)="onScrollColors($event)" #colors>
+                        <div class="color"  *ngFor="let c of product.productColors" [ngStyle]="{'background-color': c.value }"></div>                        
                     </div>
                     <button class="next-color color-btn">
                         <svg width="31" height="16" viewBox="0 0 31 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -72,8 +72,8 @@
 
                 <div class="print-container">
                     <p class="print-title">Виды нанесения:</p>
-                    <div class="prints">
-                        <p class="type-of-print" *ngFor="let p of product.print">{{p}}</p>
+                    <div class="prints" #prints (wheel)="onScrollPrints($event)">
+                        <p class="type-of-print" *ngFor="let p of product.print; index as i">{{p + i}}</p>
                     </div>
                 </div>
             </div>

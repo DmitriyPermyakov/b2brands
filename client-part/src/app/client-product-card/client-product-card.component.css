@@ -381,7 +381,7 @@
 }
 
 .hidden {
-    visibility: hidden;
+    display: none;
 }
 
 .to-cart-wrapper {

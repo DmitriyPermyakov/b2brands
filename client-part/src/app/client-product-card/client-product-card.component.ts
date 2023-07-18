@@ -9,23 +9,20 @@ import { Product, ProductColor } from '../interfaces/interfaces';
   styleUrls: ['./client-product-card.component.css']
 })
 export class ClientProductCardComponent implements OnInit, AfterViewInit {
-  @HostListener('mousewheel', ['$event']) onMouseWheel(event: WheelEvent) {
-    if(event.deltaY < 0) {
-      this.onScrollUp();
-    }
-    
-    if(event.deltaY > 0) {
-      this.onScrollDown();
-    }
-    
-  }
+  
   @ViewChild('colors') colorsRef!: ElementRef;
+  @ViewChild('prints') printsRef!: ElementRef;
 
   public product!: Product;
   public colors!: ProductColor[];
   public prints!: string[];
 
-  public selectedColorIndex: number = 0;
+  private selectedColorIndex: number = 0; 
+  private selectedPrintIndex: number = 0;
+
+  private colorsCount: number = 0;
+  private printCount: number = 0;
+  private productImageColorIndex = 0;
 
   constructor(private activatedRoute: ActivatedRoute, private productService: ProductsService) {}
 
@@ -36,51 +33,116 @@ export class ClientProductCardComponent implements OnInit, AfterViewInit {
         this.product = p;
         this.colors = p.productColors;
         this.prints = p.print;
-      });     
+      });   
+    
   }
 
   ngAfterViewInit() {
-    this.initColorIndex();
-    this.colorsRef.nativeElement.childNodes[this.selectedColorIndex].classList.add('selected');    
+    this.colorsCount = this.colorsRef.nativeElement.childElementCount;
+    this.printCount = this.printsRef.nativeElement.childElementCount;
     
+    this.selectedColorIndex = this.initSelectedIndex(this.colorsCount);
+    this.selectedPrintIndex = this.initSelectedIndex(this.printCount);
+
+    this.productImageColorIndex = this.selectedColorIndex;
+    console.log(this.selectedPrintIndex);
+
+    this.colorsRef.nativeElement.children[this.selectedColorIndex].classList.add('selected');    
+    this.printsRef.nativeElement.children[this.selectedPrintIndex].classList.add('selected');
   }
 
-  initColorIndex() {
-    if(this.colors.length <= 0)
-      return;
+  private initSelectedIndex(count: number): number {
+    if(count <= 0)
+      return 0;
 
-    if(this.colors.length <= 2) {
-      this.selectedColorIndex = 0;
-      return;
+    if(count <= 2) {     
+      return 0;
     }
     
-    if(this.colors.length >= 6) {
-      this.selectedColorIndex = 2;
+    if(count >= 6) {      
+      return 2;
     }
 
-    this.selectedColorIndex = this.colors.length / 2 ;    
+    return Math.trunc(count / 2) ;    
   }
 
-  onScrollUp() {
-    let firstElement = this.colorsRef.nativeElement.children[0];    
-    let lastElement = this.colorsRef.nativeElement.children[this.colorsRef.nativeElement.childElementCount - 1];
-    
-    let temp = firstElement.cloneNode(true);
-    
-    this.colorsRef.nativeElement.replaceChild(lastElement, firstElement);
-    this.colorsRef.nativeElement.insertBefore(temp, this.colorsRef.nativeElement.children[1]);    
-  }
-  
 
-  onScrollDown() {
-    let firstElement = this.colorsRef.nativeElement.children[0];    
-    let lastElement = this.colorsRef.nativeElement.children[this.colorsRef.nativeElement.childElementCount - 1];
-    
-    let temp = lastElement.cloneNode(true);
-    
-    this.colorsRef.nativeElement.replaceChild(firstElement, lastElement);
-     this.colorsRef.nativeElement.insertBefore(temp, this.colorsRef.nativeElement.children[this.colorsRef.nativeElement.childElementCount - 1] );    
+
+  onScrollColors(event: WheelEvent) {
+    this.onScroll(event, this.colorsRef, this.selectedColorIndex);  
+    this.changeImageColor(event);        
   }
 
+  private changeImageColor(event: WheelEvent) {
+   
+  }
+
+  onScrollPrints(event: WheelEvent) {
+    this.onScroll(event, this.printsRef, this.selectedPrintIndex);    
+  }
+
+  private onScroll(event: WheelEvent, element: ElementRef, selectedIndex: number) {
+    if (event.deltaY < 0) {
+      this.onScrollUp(element);      
+      this.scrollUpChangeSelectedClass(element, selectedIndex);
+    }
+    
+    if (event.deltaY > 0) {
+      this.onScrollDown(element);      
+      this.scrollDownChangeSelectedClass(element, selectedIndex);
+    }    
+  }
+
+  private onScrollUp(scrollElement: ElementRef) {    
+    let lastElement = scrollElement.nativeElement.children[scrollElement.nativeElement.childElementCount - 1];    
+    scrollElement.nativeElement.insertBefore(lastElement, scrollElement.nativeElement.children[0]);    
+  }  
+
+
+   private onScrollDown(scrollElement: ElementRef) {
+    let firstElement = scrollElement.nativeElement.children[0];         
+    
+    scrollElement.nativeElement.insertBefore(firstElement, scrollElement.nativeElement.children[scrollElement.nativeElement.childElementCount] );    
+  }
+
+
+  private scrollUpChangeSelectedClass(element: ElementRef, index: number) {
+    element.nativeElement.children[index - 2]?.classList.remove('hidden');
+    element.nativeElement.children[index - 2]?.classList.add('second');
+    element.nativeElement.children[index - 1]?.classList.remove('second');
+    element.nativeElement.children[index - 1]?.classList.add('first');
+    element.nativeElement.children[index]?.classList.remove('first');
+    element.nativeElement.children[index]?.classList.add('selected');
+    
+    element.nativeElement.children[index + 1]?.classList.remove('selected');
+    element.nativeElement.children[index + 1]?.classList.add('first');
+    element.nativeElement.children[index + 2]?.classList.remove('first');
+    element.nativeElement.children[index + 2]?.classList.add('second');
+    element.nativeElement.children[index + 3].classList.remove('second');
+    element.nativeElement.children[index + 3]?.classList.add('hidden');    
+  }
+
+  private scrollDownChangeSelectedClass(element: ElementRef, index: number) {
+    element.nativeElement.children[index + 2]?.classList.remove('hidden');
+    element.nativeElement.children[index + 2]?.classList.add('second');
+
+    element.nativeElement.children[index + 1]?.classList.remove('second');
+    element.nativeElement.children[index + 1]?.classList.add('first');
+    
+
+    element.nativeElement.children[index]?.classList.remove('first');
+    element.nativeElement.children[index]?.classList.add('selected');
+    element.nativeElement.children[index - 1]?.classList.remove('selected');
+    element.nativeElement.children[index - 1]?.classList.add('first');
+    
+    element.nativeElement.children[index - 2]?.classList.remove('first');
+    element.nativeElement.children[index - 2]?.classList.add('second');    
+
+    for(let i = 0; i < element.nativeElement.childElementCount; i++) {
+      if(i > 4) {
+        element.nativeElement.children[i].classList.add('hidden');
+      }
+    }    
+  }
 
 }
