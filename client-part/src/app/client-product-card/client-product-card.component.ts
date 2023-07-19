@@ -1,28 +1,42 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, QueryList, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../services/products.service';
 import { Product, ProductColor } from '../interfaces/interfaces';
+import { debounce, fromEvent, debounceTime, interval, map, scan, Subscription } from 'rxjs';
+import { filter } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-client-product-card',
   templateUrl: './client-product-card.component.html',
   styleUrls: ['./client-product-card.component.css']
 })
-export class ClientProductCardComponent implements OnInit, AfterViewInit {
+export class ClientProductCardComponent implements OnInit, AfterViewInit, OnDestroy {
   
   @ViewChild('colors') colorsRef!: ElementRef;
   @ViewChild('prints') printsRef!: ElementRef;
 
   public product!: Product;
-  public colors!: ProductColor[];
+  public productColor: ProductColor = { 
+    id: 1,
+    value: "#33ff00",
+    frontSmallUrl: "../../assets/caps/front.png",
+    leftSmallUrl: "../../assets/caps/left.png",
+    bottomSmallUrl: "../../assets/caps/back.png",
+    rightSmallUrl: "../../assets/caps/right.png"
+  };
   public prints!: string[];
+
+  
 
   private selectedColorIndex: number = 0; 
   private selectedPrintIndex: number = 0;
 
   private colorsCount: number = 0;
   private printCount: number = 0;
-  private productImageColorIndex = 0;
+
+  private changeImageSub!: Subscription;
 
   constructor(private activatedRoute: ActivatedRoute, private productService: ProductsService) {}
 
@@ -31,9 +45,9 @@ export class ClientProductCardComponent implements OnInit, AfterViewInit {
     this.productService.getById(id)
       .subscribe(p => {
         this.product = p;
-        this.colors = p.productColors;
-        this.prints = p.print;
-      });   
+        // this.colors = p.productColors;
+        // this.prints = p.print;
+      });
     
   }
 
@@ -42,13 +56,81 @@ export class ClientProductCardComponent implements OnInit, AfterViewInit {
     this.printCount = this.printsRef.nativeElement.childElementCount;
     
     this.selectedColorIndex = this.initSelectedIndex(this.colorsCount);
-    this.selectedPrintIndex = this.initSelectedIndex(this.printCount);
+    this.selectedPrintIndex = this.initSelectedIndex(this.printCount);  
 
-    this.productImageColorIndex = this.selectedColorIndex;
-    console.log(this.selectedPrintIndex);
+    this.initColorsStartClasses(this.colorsRef, this.selectedColorIndex);
+    this.initPrintStartClasses(this.printsRef, this.selectedPrintIndex);
+    
+    this.setColorValueAttribute(this.colorsRef);
 
-    this.colorsRef.nativeElement.children[this.selectedColorIndex].classList.add('selected');    
-    this.printsRef.nativeElement.children[this.selectedPrintIndex].classList.add('selected');
+    
+
+    this.changeImage();
+  }
+
+  ngOnDestroy(): void {
+    if(this.changeImageSub)
+      this.changeImageSub.unsubscribe();
+  }
+
+  
+  public onScrollColors(event: WheelEvent) {    
+    this.onScroll(event, this.colorsRef, this.selectedColorIndex);       
+    
+  }  
+
+  public onScrollPrints(event: WheelEvent) {
+    this.onScroll(event, this.printsRef, this.selectedPrintIndex);    
+    
+  }
+
+  private changeImage() {
+    let changeImage = fromEvent(this.colorsRef.nativeElement, 'wheel')
+      .pipe(        
+        debounceTime(1000),
+        switchMap(() => this.setImage(this.colorsRef)),
+      );
+
+    this.changeImageSub = changeImage.subscribe((color) => this.productColor = color );    
+  }
+
+  private setImage(element: ElementRef) {    
+      let children: HTMLCollection = element.nativeElement.children;
+      let colorValue: string | undefined | null = Array.from(children)
+        .find(el => el.classList.contains('selected'))
+        ?.getAttribute("color-value");
+      
+      let images: any;
+      return images = this.product.productColors.filter(p => p.value === colorValue)
+  }
+
+  private setColorValueAttribute(element: ElementRef) {
+    for(let i = 0; i < element.nativeElement.childElementCount; i++) {
+      element.nativeElement.children[i].setAttribute('color-value', this.product.productColors[i].value);
+    }    
+  }
+
+
+
+  private initColorsStartClasses(element: ElementRef, index: number) {
+    this.initStartClasses(element, index);
+  }
+
+  private initPrintStartClasses(element: ElementRef, index: number) {
+    this.initStartClasses(element, index);
+  }
+
+  private initStartClasses(element: ElementRef, index: number) {
+    element.nativeElement.children[index - 2]?.classList.add('second');
+    element.nativeElement.children[index - 1]?.classList.add('first');
+    element.nativeElement.children[index]?.classList.add('selected');
+    element.nativeElement.children[index + 1]?.classList.add('first');
+    element.nativeElement.children[index + 2]?.classList.add('second');
+
+    for(let i = 0; i < element.nativeElement.childElementCount; i++) {
+      if(i > 4)
+        element.nativeElement.children[i]?.classList.add('hidden');
+    }
   }
 
   private initSelectedIndex(count: number): number {
@@ -68,18 +150,6 @@ export class ClientProductCardComponent implements OnInit, AfterViewInit {
 
 
 
-  onScrollColors(event: WheelEvent) {
-    this.onScroll(event, this.colorsRef, this.selectedColorIndex);  
-    this.changeImageColor(event);        
-  }
-
-  private changeImageColor(event: WheelEvent) {
-   
-  }
-
-  onScrollPrints(event: WheelEvent) {
-    this.onScroll(event, this.printsRef, this.selectedPrintIndex);    
-  }
 
   private onScroll(event: WheelEvent, element: ElementRef, selectedIndex: number) {
     if (event.deltaY < 0) {

@@ -15,10 +15,10 @@
             <p class="number-of-products">1/13</p>
 
             <div class="images">
-                <img class="image front" src="../../assets/caps/front.png" alt="front-image">
-                <img class="image left" src="../../assets/caps/left.png" alt="left-image">
-                <img class="image bottom" src="../../assets/caps/back.png" alt="bottom-image">
-                <img class="image right" src="../../assets/caps/right.png" alt="right-image">
+                <img class="image front" [src]="productColor.frontSmallUrl" alt="front-image">
+                <img class="image left" [src]="productColor.leftSmallUrl" alt="left-image">
+                <img class="image bottom" [src]="productColor.bottomSmallUrl" alt="bottom-image">
+                <img class="image right" [src]="productColor.rightSmallUrl" alt="right-image">
             </div>
 
             <div class="name-of-product">
@@ -57,8 +57,8 @@
                         </svg>
                     </button>
 
-                    <div class="color-items" (wheel)="onScrollColors($event)" #colors>
-                        <div class="color"  *ngFor="let c of product.productColors" [ngStyle]="{'background-color': c.value }"></div>                        
+                    <div class="color-items" (wheel)="onScrollColors($event)" #colors> 
+                        <div  class="color"  *ngFor="let c of product.productColors" [ngStyle]="{'background-color': c.value }"></div>                        
                     </div>
                     <button class="next-color color-btn">
                         <svg width="31" height="16" viewBox="0 0 31 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -73,7 +73,7 @@
                 <div class="print-container">
                     <p class="print-title">Виды нанесения:</p>
                     <div class="prints" #prints (wheel)="onScrollPrints($event)">
-                        <p class="type-of-print" *ngFor="let p of product.print; index as i">{{p + i}}</p>
+                        <p class="type-of-print" *ngFor="let p of product.print; index as i">{{p}}</p>
                     </div>
                 </div>
             </div>

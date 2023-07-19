@@ -29,10 +29,10 @@ constructor() {
     { 
       id: 1,
       value: "#ff0000",
-      frontSmallUrl: "../../assets/caps/front.png",
-      leftSmallUrl: "../../assets/caps/left.png",
-      bottomSmallUrl: "../../assets/caps/back.png",
-      rightSmallUrl: "../../assets/caps/right.png"
+      frontSmallUrl: "../../assets/caps/red-front.png",
+      leftSmallUrl: "../../assets/caps/red-left.png",
+      bottomSmallUrl: "../../assets/caps/red-back.png",
+      rightSmallUrl: "../../assets/caps/red-right.png"
     },
     { 
       id: 1,

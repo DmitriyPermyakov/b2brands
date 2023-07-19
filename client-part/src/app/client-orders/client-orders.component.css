@@ -75,7 +75,7 @@
         height: 21em;
 
         align-items: center;
-        justify-content: start;
+        justify-content: flex-start;
         background-color: var(--background);
         /* background-color: var(--card); */
         box-shadow: 0 0 5px 1px var(--dark-shadow);     
