@@ -1,31 +1,33 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, QueryList, ViewChild } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../services/products.service';
-import { Product, ProductColor } from '../interfaces/interfaces';
+import { IProduct, IProductColor, OrderItem } from '../interfaces/interfaces';
 import { fromEvent, debounceTime, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs';
+import { ClientOrdersService } from '../services/client-orders.service';
 
 @Component({
   selector: 'app-client-product-card',
   templateUrl: './client-product-card.component.html',
   styleUrls: ['./client-product-card.component.css']
 })
-export class ClientProductCardComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ClientProductCardComponent implements OnInit, AfterContentInit, AfterViewInit, OnDestroy {
   
   @ViewChild('colors') colorsRef!: ElementRef;
   @ViewChild('prints') printsRef!: ElementRef;
-  @ViewChild('prevBtn') prevColorBtn!: ElementRef;
-  @ViewChild('nextBtn') nextColorBtn!: ElementRef;
+  @ViewChild('prevBtn') prevColorBtnRef!: ElementRef;
+  @ViewChild('nextBtn') nextColorBtnRef!: ElementRef;
 
-  public product!: Product;
-  public productColor: ProductColor = { 
-    id: 1,
-    value: "#33ff00",
-    frontSmallUrl: "../../assets/caps/front.png",
-    leftSmallUrl: "../../assets/caps/left.png",
-    bottomSmallUrl: "../../assets/caps/back.png",
-    rightSmallUrl: "../../assets/caps/right.png"
-  };
+  public product!: IProduct;
+  public productColor!: IProductColor;
+  // public productColor: ProductColor = { 
+  //   id: 1,
+  //   value: "#33ff00",
+  //   frontSmallUrl: "../../assets/caps/front.png",
+  //   leftSmallUrl: "../../assets/caps/left.png",
+  //   bottomSmallUrl: "../../assets/caps/back.png",
+  //   rightSmallUrl: "../../assets/caps/right.png"
+  // };
   public prints!: string[];
 
   
@@ -35,38 +37,42 @@ export class ClientProductCardComponent implements OnInit, AfterViewInit, OnDest
 
   private colorsCount: number = 0;
   private printCount: number = 0;
+  private productAmount: number = 0;
 
   private changeImageOnScrollSub!: Subscription;
   private changeImageOnClickSub!: Subscription;
 
-  constructor(private activatedRoute: ActivatedRoute, private productService: ProductsService) {}
+  constructor(private activatedRoute: ActivatedRoute, 
+    private productService: ProductsService, 
+    private clientOrdersService: ClientOrdersService) {}
 
   ngOnInit(): void {
     let id = this.activatedRoute.snapshot.paramMap.get("id");
     this.productService.getById(id)
       .subscribe(p => {
-        this.product = p;        
-      });
-    
+        this.product = p;                
+      });    
   }
 
-  ngAfterViewInit() {
-    this.colorsCount = this.colorsRef.nativeElement.childElementCount;
-    this.printCount = this.printsRef.nativeElement.childElementCount;
-    
+  ngAfterContentInit(): void {
+    this.colorsCount = this.product.productColors.length;
+    this.printCount = this.product.print.length;
+
     this.selectedColorIndex = this.initSelectedIndex(this.colorsCount);
     this.selectedPrintIndex = this.initSelectedIndex(this.printCount);  
 
+    this.productColor = this.product.productColors[this.selectedColorIndex];
+  }
+
+  ngAfterViewInit() {  
     this.initColorsStartClasses(this.colorsRef, this.selectedColorIndex);
     this.initPrintStartClasses(this.printsRef, this.selectedPrintIndex);
     
     this.setColorValueAttribute(this.colorsRef);
 
-    
-
     this.changeImageOnScroll();
-    this.changeImageOnClick(this.prevColorBtn);
-    this.changeImageOnClick(this.nextColorBtn);
+    this.changeImageOnClick(this.prevColorBtnRef);
+    this.changeImageOnClick(this.nextColorBtnRef);
   }
 
   ngOnDestroy(): void {
@@ -77,6 +83,22 @@ export class ClientProductCardComponent implements OnInit, AfterViewInit, OnDest
       this.changeImageOnClickSub.unsubscribe();
   }
 
+  public addToCart() {
+    let print = this.getSelectedTypeOfPrint();
+    let orderItem: OrderItem = {
+      id: "id",
+      name: this.product.name,
+      vendorCode: this.product.code,
+      color: this.productColor,
+      printType: print,
+      price: this.product.newPrice,
+      amount: this.productAmount,
+      status: "В заказе",
+      comment: ""
+    }
+
+    this.clientOrdersService.addPositionToOrder(orderItem);
+  }
   
   public onScrollColors(event: WheelEvent) {    
     this.onScroll(event, this.colorsRef, this.selectedColorIndex);       
@@ -96,6 +118,22 @@ export class ClientProductCardComponent implements OnInit, AfterViewInit, OnDest
   public nextColor() {
     this.onScrollDown(this.colorsRef);
     this.scrollDownChangeSelectedClass(this.colorsRef, this.selectedColorIndex);
+  }
+
+  public quantityChanged(count: number) {
+    this.productAmount = count;    
+  }
+
+  private getSelectedTypeOfPrint(): string {
+    let children: HTMLCollection = this.printsRef.nativeElement.children;
+    let print: string | undefined | null = Array.from(children)
+      .find(el => el.classList.contains('selected'))
+      ?.innerHTML;
+
+    if(!print) {
+      print = ""
+    }
+    return print;
   }
 
   private changeImageOnScroll() {
@@ -133,8 +171,6 @@ export class ClientProductCardComponent implements OnInit, AfterViewInit, OnDest
       element.nativeElement.children[i].setAttribute('color-value', this.product.productColors[i].value);
     }    
   }
-
-
 
   private initColorsStartClasses(element: ElementRef, index: number) {
     this.initStartClasses(element, index);
@@ -209,7 +245,7 @@ export class ClientProductCardComponent implements OnInit, AfterViewInit, OnDest
     element.nativeElement.children[index + 1]?.classList.add('first');
     element.nativeElement.children[index + 2]?.classList.remove('first');
     element.nativeElement.children[index + 2]?.classList.add('second');
-    element.nativeElement.children[index + 3].classList.remove('second');
+    element.nativeElement.children[index + 3]?.classList.remove('second');
     element.nativeElement.children[index + 3]?.classList.add('hidden');    
   }
 
@@ -235,5 +271,7 @@ export class ClientProductCardComponent implements OnInit, AfterViewInit, OnDest
       }
     }    
   }
+
+  
 
 }

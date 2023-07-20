@@ -1,28 +1,28 @@
 
 <div class="order desktop">
     <p class="order-number">1/2</p>
-    <img class="order-image" src="../../assets/caps/left.png" alt="" >
+    <img class="order-image" [src]="productItem.color.rightSmallUrl" alt="" >
     <div class="count-of-items">
-        <app-quantiti></app-quantiti>
+        <app-quantiti [inputQuantity]="productItem.amount"></app-quantiti>
     </div>
     <div class="order-description">        
             <label class="name-label" for="name">Название:</label>
-            <span class="product-name" id="name" >Бейсболка промо</span>
+            <span class="product-name" id="name" >{{ productItem.name }}</span>
                 
             <label class="vendor-code-label" for="vendor-code-label">Артикул:</label>
-            <span class="product-vendor-code" id="vendor-code">Б100-320К</span>       
+            <span class="product-vendor-code" id="vendor-code">{{ productItem.vendorCode }}</span>       
         
             <label class="print-label" for="print-label">Нанесение:</label>
-            <span class="product-print" id="print">Вышивка</span>        
+            <span class="product-print" id="print">{{ productItem.printType }}</span>        
     </div>
     
     <div class="order-status">
         <label for="status">Статус:</label>
-        <span class="status" id="status">В заказе</span>
+        <span class="status" id="status">{{ productItem.status }}</span>
     </div>
     <div class="order-price">
         <label for="price">Цена:</label>
-        <span class="price" id="price">2048р.</span>
+        <span class="price" id="price">{{ productItem.price }}р.</span>
     </div>
     <div class="remove-icon">
         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">

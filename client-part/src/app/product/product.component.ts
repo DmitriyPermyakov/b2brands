@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
-import { Product } from '../interfaces/interfaces';
+import { IProduct } from '../interfaces/interfaces';
 import { Router } from '@angular/router';
 
 @Component({

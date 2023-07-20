@@ -45,7 +45,7 @@
                     <span class="old-price">{{product.oldPrice}}р/шт</span>
                 </p>
 
-                <app-quantiti></app-quantiti>
+                <app-quantiti (onQuantityChanged)="quantityChanged($event)"></app-quantiti>
             </div>
 
             <div class="colors-prints">
@@ -78,9 +78,9 @@
                 </div>
             </div>
             <div class="to-cart-wrapper">
-                <button class="to-cart">В корзину</button>
+                <button class="to-cart" (click)="addToCart()">В корзину</button>
             </div>
-            <button class="cart-button">
+            <button class="cart-button" [routerLink]="['/orders']">
                 <svg class="cart" width="34" height="34" viewBox="0 0 34 34" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <circle cx="17" cy="30" r="2" stroke="#A2A2A2" stroke-width="2" />

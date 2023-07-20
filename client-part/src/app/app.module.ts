@@ -16,6 +16,7 @@ import { ClientOrderComponent } from './client-order/client-order.component';
 import { ClientProductListComponent } from './client-product-list/client-product-list.component';
 import { ProductComponent } from './product/product.component';
 import { MainPageComponent } from './main-page/main-page.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { MainPageComponent } from './main-page/main-page.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
