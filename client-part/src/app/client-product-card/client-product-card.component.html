@@ -50,7 +50,7 @@
 
             <div class="colors-prints">
                 <div class="colors-with-btns">
-                    <button class="previous-color color-btn">
+                    <button class="previous-color color-btn" #prevBtn (click)="previousColor()">
                         <svg width="30" height="16" viewBox="0 0 30 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M1.64648 15L15.6337 1" stroke="white" stroke-width="2" stroke-linecap="round" />
                             <path d="M15.6338 1L28.6465 15" stroke="white" stroke-width="2" stroke-linecap="round" />
@@ -60,7 +60,7 @@
                     <div class="color-items" (wheel)="onScrollColors($event)" #colors> 
                         <div  class="color"  *ngFor="let c of product.productColors" [ngStyle]="{'background-color': c.value }"></div>                        
                     </div>
-                    <button class="next-color color-btn">
+                    <button class="next-color color-btn" #nextBtn (click)="nextColor()">
                         <svg width="31" height="16" viewBox="0 0 31 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M2 1L15.9872 15" stroke="white" stroke-width="2" stroke-linecap="round" />
                             <path d="M15.9873 15L29.0001 1" stroke="white" stroke-width="2" stroke-linecap="round" />
@@ -95,7 +95,7 @@
 
             </button>
         </div>
-        <button class="change-product">
+        <button class="change-product" >
             <svg class="change-product-arrow" width="79" height="282" viewBox="0 0 79 282" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1 1L77 145.242L0.999988 281" stroke="white" stroke-width="2"/>
                 </svg>

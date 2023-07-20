@@ -2,9 +2,7 @@ import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, 
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../services/products.service';
 import { Product, ProductColor } from '../interfaces/interfaces';
-import { debounce, fromEvent, debounceTime, interval, map, scan, Subscription } from 'rxjs';
-import { filter } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs';
+import { fromEvent, debounceTime, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs';
 
 @Component({
@@ -16,6 +14,8 @@ export class ClientProductCardComponent implements OnInit, AfterViewInit, OnDest
   
   @ViewChild('colors') colorsRef!: ElementRef;
   @ViewChild('prints') printsRef!: ElementRef;
+  @ViewChild('prevBtn') prevColorBtn!: ElementRef;
+  @ViewChild('nextBtn') nextColorBtn!: ElementRef;
 
   public product!: Product;
   public productColor: ProductColor = { 
@@ -36,7 +36,8 @@ export class ClientProductCardComponent implements OnInit, AfterViewInit, OnDest
   private colorsCount: number = 0;
   private printCount: number = 0;
 
-  private changeImageSub!: Subscription;
+  private changeImageOnScrollSub!: Subscription;
+  private changeImageOnClickSub!: Subscription;
 
   constructor(private activatedRoute: ActivatedRoute, private productService: ProductsService) {}
 
@@ -44,9 +45,7 @@ export class ClientProductCardComponent implements OnInit, AfterViewInit, OnDest
     let id = this.activatedRoute.snapshot.paramMap.get("id");
     this.productService.getById(id)
       .subscribe(p => {
-        this.product = p;
-        // this.colors = p.productColors;
-        // this.prints = p.print;
+        this.product = p;        
       });
     
   }
@@ -65,12 +64,17 @@ export class ClientProductCardComponent implements OnInit, AfterViewInit, OnDest
 
     
 
-    this.changeImage();
+    this.changeImageOnScroll();
+    this.changeImageOnClick(this.prevColorBtn);
+    this.changeImageOnClick(this.nextColorBtn);
   }
 
   ngOnDestroy(): void {
-    if(this.changeImageSub)
-      this.changeImageSub.unsubscribe();
+    if(this.changeImageOnScrollSub)
+      this.changeImageOnScrollSub.unsubscribe();
+
+    if(this.changeImageOnClickSub)
+      this.changeImageOnClickSub.unsubscribe();
   }
 
   
@@ -84,14 +88,34 @@ export class ClientProductCardComponent implements OnInit, AfterViewInit, OnDest
     
   }
 
-  private changeImage() {
+  public previousColor() {
+    this.onScrollUp(this.colorsRef);
+    this.scrollUpChangeSelectedClass(this.colorsRef, this.selectedColorIndex);
+  }
+
+  public nextColor() {
+    this.onScrollDown(this.colorsRef);
+    this.scrollDownChangeSelectedClass(this.colorsRef, this.selectedColorIndex);
+  }
+
+  private changeImageOnScroll() {
     let changeImage = fromEvent(this.colorsRef.nativeElement, 'wheel')
       .pipe(        
         debounceTime(1000),
         switchMap(() => this.setImage(this.colorsRef)),
       );
 
-    this.changeImageSub = changeImage.subscribe((color) => this.productColor = color );    
+    this.changeImageOnScrollSub = changeImage.subscribe((color) => this.productColor = color );    
+  }
+
+  private changeImageOnClick(buttonRef: ElementRef) {
+    let changeImage = fromEvent(buttonRef.nativeElement, 'click')
+      .pipe(        
+        debounceTime(1000),
+        switchMap(() => this.setImage(this.colorsRef)),
+      );
+
+    this.changeImageOnClickSub = changeImage.subscribe(color => this.productColor = color);
   }
 
   private setImage(element: ElementRef) {    
@@ -147,9 +171,6 @@ export class ClientProductCardComponent implements OnInit, AfterViewInit, OnDest
 
     return Math.trunc(count / 2) ;    
   }
-
-
-
 
   private onScroll(event: WheelEvent, element: ElementRef, selectedIndex: number) {
     if (event.deltaY < 0) {

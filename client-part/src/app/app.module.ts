@@ -16,7 +16,6 @@ import { ClientOrderComponent } from './client-order/client-order.component';
 import { ClientProductListComponent } from './client-product-list/client-product-list.component';
 import { ProductComponent } from './product/product.component';
 import { MainPageComponent } from './main-page/main-page.component';
-import { ProductImageDirective } from './directives/product-image.directive';
 
 @NgModule({
   declarations: [
@@ -33,8 +32,7 @@ import { ProductImageDirective } from './directives/product-image.directive';
     ClientOrderComponent,
     ClientProductListComponent,
     ProductComponent,
-    MainPageComponent,
-    ProductImageDirective
+    MainPageComponent   
   ],
   imports: [
     BrowserModule,

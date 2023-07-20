@@ -26,11 +26,11 @@
 }
 
 .intro__cap.white {
-    display: none;
+    display: block;
 }
 
 .intro__cap.black {
-    display: block;
+    display: none;
 }
 
 .intro__description {
