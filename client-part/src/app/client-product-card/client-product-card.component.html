@@ -1,208 +1,234 @@
 <section class="products desktop">
-    <div class="container">
-        <button class="change-product">
-            <svg class="change-product-arrow" width="79" height="282" viewBox="0 0 79 282" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M78 1L1.99999 145.242L78 281" stroke="#D5D5D5" stroke-width="2"/>
-                </svg>                
-        </button>
-        <div class="product-card">
-            <button class="arrow-back-icon" [routerLink]="['/products']">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20 3L5.2901 18.6293C4.5653 19.3994 4.5653 20.6006 5.2901 21.3707L20 37" stroke="#A2A2A2" stroke-width="3" stroke-linecap="round"/>
-                    <path d="M6 20H36" stroke="#A2A2A2" stroke-width="3" stroke-linecap="round"/>
-                    </svg>                
-            </button>
-            <p class="number-of-products">1/13</p>
+	<div class="container">
+		<button class="change-product">
+			<svg
+				class="change-product-arrow"
+				width="79"
+				height="282"
+				viewBox="0 0 79 282"
+				fill="none"
+				xmlns="http://www.w3.org/2000/svg"
+			>
+				<path d="M78 1L1.99999 145.242L78 281" stroke="#D5D5D5" stroke-width="2" />
+			</svg>
+		</button>
+		<div class="product-card">
+			<button class="arrow-back-icon" [routerLink]="['/products']">
+				<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="M20 3L5.2901 18.6293C4.5653 19.3994 4.5653 20.6006 5.2901 21.3707L20 37"
+						stroke="#A2A2A2"
+						stroke-width="3"
+						stroke-linecap="round"
+					/>
+					<path d="M6 20H36" stroke="#A2A2A2" stroke-width="3" stroke-linecap="round" />
+				</svg>
+			</button>
+			<p class="number-of-products">1/13</p>
 
-            <div class="images">
-                <img class="image front" [src]="productColor.frontSmallUrl" alt="front-image">
-                <img class="image left" [src]="productColor.leftSmallUrl" alt="left-image">
-                <img class="image bottom" [src]="productColor.bottomSmallUrl" alt="bottom-image">
-                <img class="image right" [src]="productColor.rightSmallUrl" alt="right-image">
-            </div>
+			<div class="images">
+				<img class="image front" [src]="productColor.frontSmallUrl" alt="front-image" />
+				<img class="image left" [src]="productColor.leftSmallUrl" alt="left-image" />
+				<img class="image bottom" [src]="productColor.bottomSmallUrl" alt="bottom-image" />
+				<img class="image right" [src]="productColor.rightSmallUrl" alt="right-image" />
+			</div>
 
-            <div class="name-of-product">
-                <p class="name">{{product.name}}</p>
-                <p class="articul">Артикул: {{product.code}}</p>
-            </div> 
-            <div class="description-wrapper">
-                <p class="description">{{product.description}}</p>
+			<div class="name-of-product">
+				<p class="name">{{ product.name }}</p>
+				<p class="articul">Артикул: {{ product.code }}</p>
+			</div>
+			<div class="description-wrapper">
+				<p class="description">{{ product.description }}</p>
 
-                <div class="properties">
-                    <p class="property" *ngFor="let p of product.productProps">
-                        <span>{{p.name}}</span>
-                        <span class="dots">...........................................................................................................</span>
-                        <span>{{p.value}}</span>
-                    </p>
-                    
-                </div>
-            </div>
+				<div class="properties">
+					<p class="property" *ngFor="let p of product.productProps">
+						<span>{{ p.name }}</span>
+						<span class="dots"
+							>...........................................................................................................</span
+						>
+						<span>{{ p.value }}</span>
+					</p>
+				</div>
+			</div>
 
+			<div class="price-quantity">
+				<p class="price">
+					<span class="new-price">{{ product.newPrice }}р/шт</span>
+					<span class="old-price">{{ product.oldPrice }}р/шт</span>
+				</p>
 
-            <div class="price-quantity">
-                <p class="price">
-                    <span class="new-price">{{product.newPrice}}р/шт</span>
-                    <span class="old-price">{{product.oldPrice}}р/шт</span>
-                </p>
+				<app-quantity (onQuantityChanged)="quantityChanged($event)"></app-quantity>
+			</div>
 
-                <app-quantiti (onQuantityChanged)="quantityChanged($event)"></app-quantiti>
-            </div>
+			<div class="colors-prints">
+				<div class="colors-with-btns">
+					<button class="previous-color color-btn" #prevBtn (click)="previousColor()">
+						<svg width="30" height="16" viewBox="0 0 30 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M1.64648 15L15.6337 1" stroke="white" stroke-width="2" stroke-linecap="round" />
+							<path d="M15.6338 1L28.6465 15" stroke="white" stroke-width="2" stroke-linecap="round" />
+						</svg>
+					</button>
 
-            <div class="colors-prints">
-                <div class="colors-with-btns">
-                    <button class="previous-color color-btn" #prevBtn (click)="previousColor()">
-                        <svg width="30" height="16" viewBox="0 0 30 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M1.64648 15L15.6337 1" stroke="white" stroke-width="2" stroke-linecap="round" />
-                            <path d="M15.6338 1L28.6465 15" stroke="white" stroke-width="2" stroke-linecap="round" />
-                        </svg>
-                    </button>
+					<div class="color-items" (wheel)="onScrollColors($event)" #colors>
+						<div
+							class="color"
+							*ngFor="let c of product.productColors"
+							[ngStyle]="{ 'background-color': c.value }"
+						></div>
+					</div>
+					<button class="next-color color-btn" #nextBtn (click)="nextColor()">
+						<svg width="31" height="16" viewBox="0 0 31 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M2 1L15.9872 15" stroke="white" stroke-width="2" stroke-linecap="round" />
+							<path d="M15.9873 15L29.0001 1" stroke="white" stroke-width="2" stroke-linecap="round" />
+						</svg>
+					</button>
+				</div>
 
-                    <div class="color-items" (wheel)="onScrollColors($event)" #colors> 
-                        <div  class="color"  *ngFor="let c of product.productColors" [ngStyle]="{'background-color': c.value }"></div>                        
-                    </div>
-                    <button class="next-color color-btn" #nextBtn (click)="nextColor()">
-                        <svg width="31" height="16" viewBox="0 0 31 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M2 1L15.9872 15" stroke="white" stroke-width="2" stroke-linecap="round" />
-                            <path d="M15.9873 15L29.0001 1" stroke="white" stroke-width="2" stroke-linecap="round" />
-                        </svg>
-
-                    </button>
-
-                </div>
-
-                <div class="print-container">
-                    <p class="print-title">Виды нанесения:</p>
-                    <div class="prints" #prints (wheel)="onScrollPrints($event)">
-                        <p class="type-of-print" *ngFor="let p of product.print; index as i">{{p}}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="to-cart-wrapper">
-                <button class="to-cart" (click)="addToCart()">В корзину</button>
-            </div>
-            <button class="cart-button" [routerLink]="['/orders']">
-                <svg class="cart" width="34" height="34" viewBox="0 0 34 34" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="17" cy="30" r="2" stroke="#A2A2A2" stroke-width="2" />
-                    <circle cx="25" cy="30" r="2" stroke="#A2A2A2" stroke-width="2" />
-                    <path
-                        d="M1 6L6.8612 7.61903C7.55401 7.8104 8.09085 8.35881 8.26741 9.05553L11.6722 22.4913C11.8971 23.3786 12.6956 24 13.6109 24H27.5109C28.3595 24 29.1158 23.4645 29.3975 22.664L32.0624 15.0926C32.5203 13.7916 31.555 12.4286 30.1758 12.4286H13"
-                        stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
-                </svg>
-                <svg class="dot" width="3" height="3" viewBox="0 0 3 3" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="1.5" cy="1.5" r="1.5" transform="matrix(1 0 0 -1 0 3)" fill="#FEFEFE" />
-                </svg>
-
-            </button>
-        </div>
-        <button class="change-product" >
-            <svg class="change-product-arrow" width="79" height="282" viewBox="0 0 79 282" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1 1L77 145.242L0.999988 281" stroke="white" stroke-width="2"/>
-                </svg>
-                
-        </button>
-    </div>
+				<div class="print-container">
+					<p class="print-title">Виды нанесения:</p>
+					<div class="prints" #prints (wheel)="onScrollPrints($event)">
+						<p class="type-of-print" *ngFor="let p of product.print; index as i">{{ p }}</p>
+					</div>
+				</div>
+			</div>
+			<div class="to-cart-wrapper">
+				<button class="to-cart" (click)="addToCart()">В корзину</button>
+			</div>
+			<button class="cart-button" [routerLink]="['/orders']">
+				<svg class="cart" width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<circle cx="17" cy="30" r="2" stroke="#A2A2A2" stroke-width="2" />
+					<circle cx="25" cy="30" r="2" stroke="#A2A2A2" stroke-width="2" />
+					<path
+						d="M1 6L6.8612 7.61903C7.55401 7.8104 8.09085 8.35881 8.26741 9.05553L11.6722 22.4913C11.8971 23.3786 12.6956 24 13.6109 24H27.5109C28.3595 24 29.1158 23.4645 29.3975 22.664L32.0624 15.0926C32.5203 13.7916 31.555 12.4286 30.1758 12.4286H13"
+						stroke="#A2A2A2"
+						stroke-width="2"
+						stroke-linecap="round"
+					/>
+				</svg>
+				<svg class="dot" width="3" height="3" viewBox="0 0 3 3" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<circle cx="1.5" cy="1.5" r="1.5" transform="matrix(1 0 0 -1 0 3)" fill="#FEFEFE" />
+				</svg>
+			</button>
+		</div>
+		<button class="change-product">
+			<svg
+				class="change-product-arrow"
+				width="79"
+				height="282"
+				viewBox="0 0 79 282"
+				fill="none"
+				xmlns="http://www.w3.org/2000/svg"
+			>
+				<path d="M1 1L77 145.242L0.999988 281" stroke="white" stroke-width="2" />
+			</svg>
+		</button>
+	</div>
 </section>
 
-
 <section class="products mobile">
-    
-    <nav class="product-nav-bar">
-        <button class="arrow-back-icon">
-            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 3L5.2901 18.6293C4.5653 19.3994 4.5653 20.6006 5.2901 21.3707L20 37" stroke="#A2A2A2" stroke-width="3" stroke-linecap="round"/>
-                <path d="M6 20H36" stroke="#A2A2A2" stroke-width="3" stroke-linecap="round"/>
-                </svg>                
-        </button>
-        <button class="cart-button">            
-                <svg class="cart" width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="17" cy="30" r="2" stroke="#A2A2A2" stroke-width="2" />
-                    <circle cx="25" cy="30" r="2" stroke="#A2A2A2" stroke-width="2" />
-                    <path
-                        d="M1 6L6.8612 7.61903C7.55401 7.8104 8.09085 8.35881 8.26741 9.05553L11.6722 22.4913C11.8971 23.3786 12.6956 24 13.6109 24H27.5109C28.3595 24 29.1158 23.4645 29.3975 22.664L32.0624 15.0926C32.5203 13.7916 31.555 12.4286 30.1758 12.4286H13"
-                        stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
-                </svg>
-                <svg class="dot" width="3" height="3" viewBox="0 0 3 3" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="1.5" cy="1.5" r="1.5" transform="matrix(1 0 0 -1 0 3)" fill="#FEFEFE" />
-                </svg>            
-        </button>
-    </nav>
-    <div class="product-card">
-        <div class="image-container">
-            <div class="images">
-                <div class="image-with-shadow">
-                    <img class="image front" src="../../assets/caps/front.png" alt="front-image">
-                </div>
-                <div class="image-with-shadow">
-                    <img class="image left" src="../../assets/caps/left.png" alt="left-image">
-                </div>
-                <div class="image-with-shadow">
-                    <img class="image bottom" src="../../assets/caps/back.png" alt="bottom-image">
-                </div>
-                <div class="image-with-shadow">
-                    <img class="image right" src="../../assets/caps/right.png" alt="right-image">
-                </div>
-            </div>            
-        </div>
-        <div class="description-wrapper">
-            <div class="description-btns-container">
-                <button class="description-btn active">Описание</button>
-                <button class="description-btn">Характеристики</button>
-                <button class="description-btn">Цвет и нанесения</button>
-            </div>
-            <div class="description-container">
-                <div class="name-of-product">
-                    <p class="name">Бейсболка промо</p>
-                    <p class="articul">Артикул: Б300-23</p>
-                </div> 
-                <p class="description">Отличный вариант для масштабных промоакций. Легкий материал, востребованные промо
-                    цвета. Удобная застежка-липучка</p>                
-                <p class="price">
-                    <span class="new-price">205р/шт</span>
-                    <span class="old-price">260р/шт</span>
-                </p>
-                <app-quantiti></app-quantiti>
-            </div>
+	<nav class="product-nav-bar">
+		<button class="arrow-back-icon">
+			<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path
+					d="M20 3L5.2901 18.6293C4.5653 19.3994 4.5653 20.6006 5.2901 21.3707L20 37"
+					stroke="#A2A2A2"
+					stroke-width="3"
+					stroke-linecap="round"
+				/>
+				<path d="M6 20H36" stroke="#A2A2A2" stroke-width="3" stroke-linecap="round" />
+			</svg>
+		</button>
+		<button class="cart-button">
+			<svg class="cart" width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<circle cx="17" cy="30" r="2" stroke="#A2A2A2" stroke-width="2" />
+				<circle cx="25" cy="30" r="2" stroke="#A2A2A2" stroke-width="2" />
+				<path
+					d="M1 6L6.8612 7.61903C7.55401 7.8104 8.09085 8.35881 8.26741 9.05553L11.6722 22.4913C11.8971 23.3786 12.6956 24 13.6109 24H27.5109C28.3595 24 29.1158 23.4645 29.3975 22.664L32.0624 15.0926C32.5203 13.7916 31.555 12.4286 30.1758 12.4286H13"
+					stroke="#A2A2A2"
+					stroke-width="2"
+					stroke-linecap="round"
+				/>
+			</svg>
+			<svg class="dot" width="3" height="3" viewBox="0 0 3 3" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<circle cx="1.5" cy="1.5" r="1.5" transform="matrix(1 0 0 -1 0 3)" fill="#FEFEFE" />
+			</svg>
+		</button>
+	</nav>
+	<div class="product-card">
+		<div class="image-container">
+			<div class="images">
+				<div class="image-with-shadow">
+					<img class="image front" src="../../assets/caps/front.png" alt="front-image" />
+				</div>
+				<div class="image-with-shadow">
+					<img class="image left" src="../../assets/caps/left.png" alt="left-image" />
+				</div>
+				<div class="image-with-shadow">
+					<img class="image bottom" src="../../assets/caps/back.png" alt="bottom-image" />
+				</div>
+				<div class="image-with-shadow">
+					<img class="image right" src="../../assets/caps/right.png" alt="right-image" />
+				</div>
+			</div>
+		</div>
+		<div class="description-wrapper">
+			<div class="description-btns-container">
+				<button class="description-btn active">Описание</button>
+				<button class="description-btn">Характеристики</button>
+				<button class="description-btn">Цвет и нанесения</button>
+			</div>
+			<div class="description-container">
+				<div class="name-of-product">
+					<p class="name">Бейсболка промо</p>
+					<p class="articul">Артикул: Б300-23</p>
+				</div>
+				<p class="description">
+					Отличный вариант для масштабных промоакций. Легкий материал, востребованные промо цвета. Удобная
+					застежка-липучка
+				</p>
+				<p class="price">
+					<span class="new-price">205р/шт</span>
+					<span class="old-price">260р/шт</span>
+				</p>
+				<app-quantity></app-quantity>
+			</div>
 
-            <div class="properties-container">
-                <div class="properties">
-                    <p>Тип полотна..............................Поплин</p>
-                    <p>Плотность..................................130 гр/м²</p>
-                    <p>Состав.........................................100% хлопок</p>
-                    <p> Упаковка.....................................Индивидуальная</p>
-                    <p>Размер........................................57</p>
-                </div>
-            </div>
+			<div class="properties-container">
+				<div class="properties">
+					<p>Тип полотна..............................Поплин</p>
+					<p>Плотность..................................130 гр/м²</p>
+					<p>Состав.........................................100% хлопок</p>
+					<p>Упаковка.....................................Индивидуальная</p>
+					<p>Размер........................................57</p>
+				</div>
+			</div>
 
-            <div class="color-print-container">
-                <div class="colors-prints">
-                    <div class="color-items">
-                        <div class="color red"></div>
-                        <div class="color blue"></div>
-                        <div class="color green selected"></div>
-                        <div class="color yellow"></div>
-                        <div class="color white"></div>
-                    </div>
-    
+			<div class="color-print-container">
+				<div class="colors-prints">
+					<div class="color-items">
+						<div class="color red"></div>
+						<div class="color blue"></div>
+						<div class="color green selected"></div>
+						<div class="color yellow"></div>
+						<div class="color white"></div>
+					</div>
 
-                    <label for="prints" class="print-title">Выберите вид нанесения:</label>
-                    <select class="type-of-print" name="prints" id="prints">
-                        <option class="print" value="">Шелкография</option>
-                        <option class="print" value="">Шелкотрансферная печать</option>
-                        <option class="print" value="">Печать флексом, флоком</option>
-                        <option class="print" value="">DTF печать</option>
-                        <option class="print" value="">Вышивка</option>
-                        <option class="print" value="">Шеврон</option>
-                    </select>
-                    
-                </div>
-            </div>
-        </div>
-    
-    </div>
-    <div class="to-cart-wrapper">
-        <button class="to-cart">В корзину</button>
-    </div>    
+					<label for="prints" class="print-title">Выберите вид нанесения:</label>
+					<select class="type-of-print" name="prints" id="prints">
+						<option class="print" value="">Шелкография</option>
+						<option class="print" value="">Шелкотрансферная печать</option>
+						<option class="print" value="">Печать флексом, флоком</option>
+						<option class="print" value="">DTF печать</option>
+						<option class="print" value="">Вышивка</option>
+						<option class="print" value="">Шеврон</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="to-cart-wrapper">
+		<button class="to-cart">В корзину</button>
+	</div>
 
-    <app-mobile-background-line></app-mobile-background-line>
+	<app-mobile-background-line></app-mobile-background-line>
 </section>

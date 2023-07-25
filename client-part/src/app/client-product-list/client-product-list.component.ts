@@ -1,23 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { ProductsService } from '../services/products.service';
-import { IProduct } from '../interfaces/interfaces';
+import { Component, OnDestroy, OnInit } from '@angular/core'
+import { IProduct } from '../interfaces/product.interface'
+import { Store, select } from '@ngrx/store'
+import { Subscription } from 'rxjs'
+import { productSelector } from '../store/products/products.selector'
+import { gettingProductAction } from '../store/products/products.action'
 
 @Component({
-  selector: 'app-client-product-list',
-  templateUrl: './client-product-list.component.html',
-  styleUrls: ['./client-product-list.component.css']
+	selector: 'app-client-product-list',
+	templateUrl: './client-product-list.component.html',
+	styleUrls: ['./client-product-list.component.css'],
 })
-export class ClientProductListComponent implements OnInit {
-  products: IProduct[] = [];
-  
-  constructor(private productService:ProductsService) {
+export class ClientProductListComponent implements OnInit, OnDestroy {
+	products: IProduct[] = []
+	productsSubscription!: Subscription
 
-  }
+	constructor(private store: Store) {
+		this.store.dispatch(gettingProductAction())
+	}
 
-  ngOnInit() {
-    this.productService.getAll().subscribe(p => {
-      this.products = p;
-      console.log(p);
-    });
-  }
+	ngOnInit(): void {
+		this.productsSubscription = this.store.pipe(select(productSelector)).subscribe((p) => {
+			this.products = Array.from(Object.values(p))
+		})
+	}
+
+	ngOnDestroy(): void {
+		if (this.productsSubscription) this.productsSubscription.unsubscribe()
+	}
 }

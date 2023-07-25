@@ -1,15 +1,19 @@
 <section class="client-product-list">
-    <div class="product-list" *ngIf="products">
-        <nav class="product-nav-bar">
-            <button class="arrow-back-icon" [routerLink]="['']">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20 3L5.2901 18.6293C4.5653 19.3994 4.5653 20.6006 5.2901 21.3707L20 37" stroke="#A2A2A2" stroke-width="3" stroke-linecap="round"/>
-                    <path d="M6 20H36" stroke="#A2A2A2" stroke-width="3" stroke-linecap="round"/>
-                    </svg>                
-            </button>            
-        </nav>
-        <p class="product-list-title">Список товаров:</p>
-        <app-product *ngFor="let p of products; index as i" [product]="p" [index]="i"></app-product>
-        
-    </div>
+	<div class="product-list" *ngIf="products">
+		<nav class="product-nav-bar">
+			<button class="arrow-back-icon" [routerLink]="['']">
+				<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="M20 3L5.2901 18.6293C4.5653 19.3994 4.5653 20.6006 5.2901 21.3707L20 37"
+						stroke="#A2A2A2"
+						stroke-width="3"
+						stroke-linecap="round"
+					/>
+					<path d="M6 20H36" stroke="#A2A2A2" stroke-width="3" stroke-linecap="round" />
+				</svg>
+			</button>
+		</nav>
+		<p class="product-list-title">Список товаров:</p>
+		<app-product *ngFor="let p of products; index as i" [product]="p" [index]="i"></app-product>
+	</div>
 </section>
