@@ -7,7 +7,7 @@ export const gettingProductAction = createAction(ProductsActionTypes.GETTING_PRO
 
 export const gettingProductActionSuccess = createAction(
 	ProductsActionTypes.GETTING_PRODUCTS_SUCCESS,
-	props<{ products: IProduct[] }>()
+	props<{ products: ReadonlyArray<IProduct> }>()
 )
 export const gettingProductActionFailure = createAction(
 	ProductsActionTypes.GETTING_PRODUCTS_FAILURE,

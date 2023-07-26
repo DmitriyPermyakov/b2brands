@@ -22,6 +22,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { EffectsModule } from '@ngrx/effects'
 import { gettingProductReducer } from './store/products/products.reducer'
 import { GettingProductEffect } from './store/products/products.effect'
+import { orderItemReducer } from './store/orders/order-item.reducer'
 
 @NgModule({
 	declarations: [
@@ -44,7 +45,7 @@ import { GettingProductEffect } from './store/products/products.effect'
 		BrowserModule,
 		AppRoutingModule,
 		FormsModule,
-		StoreModule.forRoot({ products: gettingProductReducer }),
+		StoreModule.forRoot({ products: gettingProductReducer, orderItems: orderItemReducer }),
 		StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
 		EffectsModule.forRoot([GettingProductEffect]),
 	],

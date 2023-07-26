@@ -2,15 +2,12 @@ import { createReducer, on } from '@ngrx/store'
 import { IProduct } from 'src/app/interfaces/product.interface'
 import { gettingProductAction, gettingProductActionSuccess } from './products.action'
 
-const initialState: IProduct[] = []
+const initialState: ReadonlyArray<IProduct> = []
 
 export const gettingProductReducer = createReducer(
 	initialState,
-	on(gettingProductAction, (state): IProduct[] => {
+	on(gettingProductAction, (state): ReadonlyArray<IProduct> => {
 		return state
 	}),
-	on(gettingProductActionSuccess, (state, { products }): IProduct[] => ({
-		...state,
-		...products,
-	}))
+	on(gettingProductActionSuccess, (state, { products }): ReadonlyArray<IProduct> => products)
 )

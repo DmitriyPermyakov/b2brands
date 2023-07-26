@@ -1,5 +1,5 @@
 <section class="client-product-list">
-	<div class="product-list" *ngIf="products">
+	<div class="product-list" *ngIf="products$ | async">
 		<nav class="product-nav-bar">
 			<button class="arrow-back-icon" [routerLink]="['']">
 				<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -14,6 +14,6 @@
 			</button>
 		</nav>
 		<p class="product-list-title">Список товаров:</p>
-		<app-product *ngFor="let p of products; index as i" [product]="p" [index]="i"></app-product>
+		<app-product *ngFor="let p of products$ | async; index as i" [product]="p" [index]="i"></app-product>
 	</div>
 </section>

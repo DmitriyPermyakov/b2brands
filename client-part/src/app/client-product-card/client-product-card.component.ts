@@ -4,11 +4,13 @@ import { ProductsService } from '../services/products.service'
 import { OrderItem } from '../interfaces/orderItem.interface'
 import { IProduct } from '../interfaces/product.interface'
 import { IProductColor } from '../interfaces/productColor.interface'
-import { fromEvent, debounceTime, Subscription } from 'rxjs'
+import { fromEvent, debounceTime, Subscription, Observable } from 'rxjs'
 import { switchMap } from 'rxjs'
 import { ClientOrdersService } from '../services/client-orders.service'
 import { Store, select } from '@ngrx/store'
 import { productSelector } from '../store/products/products.selector'
+import { addOrderItemAction } from '../store/orders/order-item.action'
+import { orderItemSelector } from '../store/orders/order-item.selector'
 
 @Component({
 	selector: 'app-client-product-card',
@@ -21,16 +23,11 @@ export class ClientProductCardComponent implements OnInit, AfterContentInit, Aft
 	@ViewChild('prevBtn') prevColorBtnRef!: ElementRef
 	@ViewChild('nextBtn') nextColorBtnRef!: ElementRef
 
+	public cartIconDotActive: boolean = false
+
 	public product!: IProduct
 	public productColor!: IProductColor
-	// public productColor: ProductColor = {
-	//   id: 1,
-	//   value: "#33ff00",
-	//   frontSmallUrl: "../../assets/caps/front.png",
-	//   leftSmallUrl: "../../assets/caps/left.png",
-	//   bottomSmallUrl: "../../assets/caps/back.png",
-	//   rightSmallUrl: "../../assets/caps/right.png"
-	// };
+
 	public prints!: string[]
 
 	private selectedColorIndex: number = 0
@@ -38,24 +35,27 @@ export class ClientProductCardComponent implements OnInit, AfterContentInit, Aft
 
 	private colorsCount: number = 0
 	private printCount: number = 0
-	private productAmount: number = 0
+	private productAmount: number = 1
+
+	private ordersItem$: Observable<ReadonlyArray<OrderItem>>
 
 	private changeImageOnScrollSub!: Subscription
 	private changeImageOnClickSub!: Subscription
 
-	constructor(
-		private activatedRoute: ActivatedRoute,
-		private store: Store,
-		private clientOrdersService: ClientOrdersService
-	) {}
+	constructor(private activatedRoute: ActivatedRoute, private store: Store) {}
 
 	ngOnInit(): void {
 		let id = this.activatedRoute.snapshot.paramMap.get('id')
 		this.store.pipe(select(productSelector)).subscribe((p) => {
-			let product = Array.from(Object.values(p)).find((el) => el.id == id)
+			let product = p.find((el) => el.id == id)
+
 			if (product !== undefined) this.product = product
-			else product = null
+			else this.product = null
 		})
+
+		this.checkLocalStorageOnCurrentProduct()
+		this.ordersItem$ = this.store.pipe(select(orderItemSelector))
+		this.checkAmoutOfOrderItems()
 	}
 
 	ngAfterContentInit(): void {
@@ -88,7 +88,7 @@ export class ClientProductCardComponent implements OnInit, AfterContentInit, Aft
 	public addToCart() {
 		let print = this.getSelectedTypeOfPrint()
 		let orderItem: OrderItem = {
-			id: 'id',
+			id: Math.random().toString(16),
 			name: this.product.name,
 			vendorCode: this.product.code,
 			color: this.productColor,
@@ -99,7 +99,9 @@ export class ClientProductCardComponent implements OnInit, AfterContentInit, Aft
 			comment: '',
 		}
 
-		this.clientOrdersService.addPositionToOrder(orderItem)
+		console.log('order', orderItem)
+		this.store.dispatch(addOrderItemAction({ orderItem }))
+		this.checkAmoutOfOrderItems()
 	}
 
 	public onScrollColors(event: WheelEvent) {
@@ -124,6 +126,15 @@ export class ClientProductCardComponent implements OnInit, AfterContentInit, Aft
 		this.productAmount = count
 	}
 
+	private checkLocalStorageOnCurrentProduct() {
+		if (this.product === null) {
+			this.product = JSON.parse(localStorage.getItem('currentProduct'))
+			console.log(this.product)
+		} else {
+			localStorage.setItem('currentProduct', JSON.stringify(this.product))
+		}
+	}
+
 	private getSelectedTypeOfPrint(): string {
 		let children: HTMLCollection = this.printsRef.nativeElement.children
 		let print: string | undefined | null = Array.from(children).find((el) =>
@@ -136,6 +147,9 @@ export class ClientProductCardComponent implements OnInit, AfterContentInit, Aft
 		return print
 	}
 
+	private checkAmoutOfOrderItems() {
+		this.ordersItem$.subscribe((o) => (this.cartIconDotActive = o.length > 0))
+	}
 	private changeImageOnScroll() {
 		let changeImage = fromEvent(this.colorsRef.nativeElement, 'wheel').pipe(
 			debounceTime(1000),
