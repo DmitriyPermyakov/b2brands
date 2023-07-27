@@ -1,17 +1,5 @@
 <section class="products desktop">
 	<div class="container">
-		<button class="change-product">
-			<svg
-				class="change-product-arrow"
-				width="79"
-				height="282"
-				viewBox="0 0 79 282"
-				fill="none"
-				xmlns="http://www.w3.org/2000/svg"
-			>
-				<path d="M78 1L1.99999 145.242L78 281" stroke="#D5D5D5" stroke-width="2" />
-			</svg>
-		</button>
 		<div class="product-card">
 			<button class="arrow-back-icon" [routerLink]="['/products']">
 				<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -24,7 +12,6 @@
 					<path d="M6 20H36" stroke="#A2A2A2" stroke-width="3" stroke-linecap="round" />
 				</svg>
 			</button>
-			<p class="number-of-products">1/13</p>
 
 			<div class="images">
 				<img class="image front" [src]="productColor.frontSmallUrl" alt="front-image" />
@@ -118,18 +105,6 @@
 				</svg>
 			</button>
 		</div>
-		<button class="change-product">
-			<svg
-				class="change-product-arrow"
-				width="79"
-				height="282"
-				viewBox="0 0 79 282"
-				fill="none"
-				xmlns="http://www.w3.org/2000/svg"
-			>
-				<path d="M1 1L77 145.242L0.999988 281" stroke="white" stroke-width="2" />
-			</svg>
-		</button>
 	</div>
 </section>
 
@@ -146,7 +121,7 @@
 				<path d="M6 20H36" stroke="#A2A2A2" stroke-width="3" stroke-linecap="round" />
 			</svg>
 		</button>
-		<button class="cart-button">
+		<button class="cart-button" [routerLink]="['/orders']">
 			<svg class="cart" width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<circle cx="17" cy="30" r="2" stroke="#A2A2A2" stroke-width="2" />
 				<circle cx="25" cy="30" r="2" stroke="#A2A2A2" stroke-width="2" />

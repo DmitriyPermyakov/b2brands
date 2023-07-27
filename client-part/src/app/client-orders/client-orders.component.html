@@ -15,6 +15,39 @@
 		</nav>
 		<p class="orders-title">Ваш заказ:</p>
 		<app-client-order *ngFor="let item of orderItems$ | async" [productItem]="item"></app-client-order>
+		<button class="approve-order btn" [disabled]="!(isOrderNotEmpty$ | async)" (click)="approveOrder()">
+			Заказать
+		</button>
+	</div>
+	<div class="order-form-container" [ngStyle]="{ display: isFormVisible ? 'flex' : 'none' }">
+		<form class="order-form" [formGroup]="form" (submit)="submit()">
+			<div class="form-controls-container">
+				<h2 class="form-title">Введите данные для связи:</h2>
+				<div class="form-control">
+					<label class="form-label" for="name">Имя:</label>
+					<input class="form-input" id="name" type="text" formControlName="name" />
+					<div class="validation"></div>
+				</div>
+				<div class="form-control">
+					<label class="form-label" for="phone">Телефон:</label>
+					<input class="form-input" id="phone" type="tel" formControlName="phone" />
+					<div class="validation"></div>
+				</div>
+				<div class="form-control">
+					<label class="form-label" for="email">Email:</label>
+					<input class="form-input" id="email" type="email" formControlName="email" />
+					<div class="validation"></div>
+				</div>
+			</div>
+
+			<button class="submit-btn btn" [disabled]="form.invalid">Отправить</button>
+			<div class="close-form-button" (click)="closeForm()">
+				<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M1 13H25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
+					<path d="M13 1L13 25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
+				</svg>
+			</div>
+		</form>
 	</div>
 	<app-mobile-background-line></app-mobile-background-line>
 </section>

@@ -99,7 +99,6 @@ export class ClientProductCardComponent implements OnInit, AfterContentInit, Aft
 			comment: '',
 		}
 
-		console.log('order', orderItem)
 		this.store.dispatch(addOrderItemAction({ orderItem }))
 		this.checkAmoutOfOrderItems()
 	}
@@ -174,8 +173,7 @@ export class ClientProductCardComponent implements OnInit, AfterContentInit, Aft
 			.find((el) => el.classList.contains('selected'))
 			?.getAttribute('color-value')
 
-		let images: any
-		return (images = this.product.productColors.filter((p) => p.value === colorValue))
+		return this.product.productColors.filter((p) => p.value === colorValue)
 	}
 
 	private setColorValueAttribute(element: ElementRef) {

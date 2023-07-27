@@ -15,5 +15,8 @@
 		</nav>
 		<p class="product-list-title">Список товаров:</p>
 		<app-product *ngFor="let p of products$ | async; index as i" [product]="p" [index]="i"></app-product>
+		<!-- <div class="loading-icon">
+			<div class="spinner"></div>
+		</div> -->
 	</div>
 </section>

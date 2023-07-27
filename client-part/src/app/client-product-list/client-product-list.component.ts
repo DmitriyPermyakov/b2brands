@@ -10,22 +10,14 @@ import { gettingProductAction } from '../store/products/products.action'
 	templateUrl: './client-product-list.component.html',
 	styleUrls: ['./client-product-list.component.css'],
 })
-export class ClientProductListComponent implements OnInit, OnDestroy {
+export class ClientProductListComponent implements OnInit {
 	products$: Observable<ReadonlyArray<IProduct>>
-	productsSubscription!: Subscription
 
 	constructor(private store: Store) {
 		this.store.dispatch(gettingProductAction())
 	}
 
 	ngOnInit(): void {
-		// this.productsSubscription = this.store.pipe(select(productSelector)).subscribe((p) => {
-		// 	this.products = Array.from(Object.values(p))
-		// })
 		this.products$ = this.store.pipe(select(productSelector))
-	}
-
-	ngOnDestroy(): void {
-		if (this.productsSubscription) this.productsSubscription.unsubscribe()
 	}
 }

@@ -16,7 +16,7 @@ import { ClientOrderComponent } from './client-order/client-order.component'
 import { ClientProductListComponent } from './client-product-list/client-product-list.component'
 import { ProductComponent } from './product/product.component'
 import { MainPageComponent } from './main-page/main-page.component'
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { EffectsModule } from '@ngrx/effects'
@@ -48,6 +48,7 @@ import { orderItemReducer } from './store/orders/order-item.reducer'
 		StoreModule.forRoot({ products: gettingProductReducer, orderItems: orderItemReducer }),
 		StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
 		EffectsModule.forRoot([GettingProductEffect]),
+		ReactiveFormsModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent],

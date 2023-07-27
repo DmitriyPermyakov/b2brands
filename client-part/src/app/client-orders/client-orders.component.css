@@ -1,100 +1,336 @@
-@import url("../../styles.css");
+@import url('../../styles.css');
 
 .client-orders {
-    display: block;
-    height: 100vh;
-    width: 100%;
-    background-color: var(--background);
+	display: block;
+	height: 100vh;
+	width: 100%;
+	background-color: var(--background);
 
-    font-size: inherit;
+	font-size: inherit;
 
-    position: relative;
-    z-index: 0;
-    overflow: hidden;
+	position: relative;
+	z-index: 0;
+	overflow: hidden;
 }
 
 .orders {
-    display: block;
-    height: 100%;
+	display: block;
+	height: 100%;
 
-    margin: 0;
-    padding: 0 8.125em;    
-    overflow-y: scroll;
-    overflow-x: hidden;
+	margin: 0;
+	padding: 0 8.125em 13em;
+	overflow-y: scroll;
+	overflow-x: hidden;
 }
 
 .orders-title {
-    margin-right: .4em;
-    padding: 1em 0;
-    color: var(--secondary-text);
-    font-size: 1.3em;
+	margin-right: 0.4em;
+	padding: 1em 0;
+	color: var(--secondary-text);
+	font-size: 1.3em;
 
-    text-align: end;
+	text-align: end;
 }
 .product-nav-bar {
-    display: flex;        
-    
-    width: 2em;
-    height: 2em;
+	display: flex;
 
-    align-items: center;
-    justify-content: center;
-    background-color: var(--background);
+	width: 2em;
+	height: 2em;
 
-    position: absolute;
-    top: 2%;
-    left: 2%;
-    z-index: 1;  
+	align-items: center;
+	justify-content: center;
+	background-color: var(--background);
+
+	position: absolute;
+	top: 2%;
+	left: 2%;
+	z-index: 1;
 }
 
-.arrow-back-icon {            
-    width: 100%;    
-    cursor: pointer;
+.order-form-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: var(--modal-bg);
+	z-index: 1;
+}
+
+.order-form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+
+	padding: 5em 5em;
+
+	width: 30em;
+	height: 45em;
+
+	background-color: var(--card);
+	border-radius: 10px;
+	position: relative;
+}
+
+.form-controls-container {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+
+	width: 100%;
+}
+
+.form-title {
+	margin-bottom: 3em;
+	font-size: 1.2em;
+	color: var(--secondary-text);
+}
+
+.form-control {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+
+	width: 100%;
+}
+
+.form-control + .form-control {
+	margin-top: 1.5em;
+}
+
+.form-label {
+	margin-bottom: 0.5em;
+	font-size: 0.8em;
+	color: var(--secondary-text);
+}
+
+.form-input {
+	padding: 0.6em 0.7em;
+	width: 100%;
+	font-family: inherit;
+	font-size: 1em;
+	border: 1px solid var(--secondary-text);
+	border-radius: 5px;
+}
+
+.form-input:hover,
+.form-input:active,
+.form-input:focus {
+	border: 1px solid var(--outline);
+	box-shadow: 0px 0px 5px var(--outline);
+	outline: none;
+}
+
+.form-input.ng-invalid.ng-touched {
+	border: 1px solid red;
+}
+.form-input.ng-invalid.ng-touched:hover,
+.form-input.ng-invalid.ng-touched:active,
+.form-input.ng-invalid.ng-touched:focus {
+	border: 1px solid red;
+	box-shadow: 0px 0px 5px red;
+	outline: none;
+}
+
+.btn {
+	display: inline;
+	padding: 0.8em 3.5em;
+
+	font-family: inherit;
+	font-size: 0.8em;
+	color: var(--secondary-text);
+
+	background-color: transparent;
+	border: 1px solid var(--secondary-text);
+	border-radius: 5px;
+
+	cursor: pointer;
+}
+
+.submit-btn {
+	font-size: 0.8em;
+	background-color: transparent;
+	align-self: flex-end;
+}
+
+.close-form-button {
+	display: inline-block;
+
+	width: 1.5em;
+	height: 1.5em;
+	position: absolute;
+
+	top: 4%;
+	right: 7%;
+
+	transform: rotate(45deg);
+	cursor: pointer;
+}
+
+.close-form-button svg {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.close-form-button:hover svg * {
+	stroke: var(--outline);
+}
+
+.arrow-back-icon {
+	width: 100%;
+	cursor: pointer;
 }
 .arrow-back-icon svg {
-    display: block;
-    width: 100%;     
-    height: 100%;   
+	display: block;
+	width: 100%;
+	height: 100%;
 }
 
 .arrow-back-icon:hover svg * {
-    stroke: var(--outline);
+	stroke: var(--outline);
+}
+
+.approve-order {
+	font-size: 1em;
+	background-color: var(--background);
+
+	position: absolute;
+	bottom: 5em;
+	right: 9.1em;
+}
+
+.btn:hover {
+	border: 1px solid var(--outline);
+	box-shadow: 0px 0px 5px var(--outline);
+}
+
+button:disabled:hover {
+	border: 1px solid var(--secondary-text);
+	box-shadow: none;
+	outline: none;
+}
+
+@media (min-width: 600px) and (max-width: 900px) {
+	/* .order-form-container {
+		display: none;
+	} */
+	.order-form {
+		padding: 10em 10em;
+
+		width: 70em;
+		height: 90em;
+
+		border-radius: 10px;
+	}
+
+	.form-title {
+		margin-bottom: 2em;
+		font-size: 3.5em;
+		color: var(--secondary-text);
+	}
+
+	.form-control + .form-control {
+		margin-top: 4em;
+	}
+
+	.form-label {
+		margin-bottom: 0.2em;
+		font-size: 2em;
+	}
+
+	.form-input {
+		padding: 0.6em 0.7em;
+		font-size: 2.5em;
+	}
+
+	.submit-btn {
+		font-size: 2em;
+	}
+	.approve-order {
+		font-size: 2.5em;
+		bottom: 5em;
+		right: 9.1em;
+	}
 }
 
 @media (max-width: 600px) {
+	.orders {
+		margin: 0;
+		padding: 21em 5em 1em;
+	}
 
-    .orders {
-        margin: 0;
-        padding: 21em 5em 1em;
-    }
+	.orders-title {
+		font-size: 5em;
+		text-align: start;
+	}
 
-    .orders-title {
-        font-size: 5em;
-        text-align: start;
-    }
+	.product-nav-bar {
+		display: flex;
+		padding: 2em 4em;
+		width: 100%;
+		height: 21em;
 
-    .product-nav-bar {
-        display: flex;        
-        padding: 2em 4em ;
-        width: 100%;
-        height: 21em;
+		align-items: center;
+		justify-content: flex-start;
+		background-color: var(--background);
+		/* background-color: var(--card); */
+		box-shadow: 0 0 5px 1px var(--dark-shadow);
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 1;
+	}
 
-        align-items: center;
-        justify-content: flex-start;
-        background-color: var(--background);
-        /* background-color: var(--card); */
-        box-shadow: 0 0 5px 1px var(--dark-shadow);     
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 1;  
-    }
+	.arrow-back-icon {
+		display: block;
+		width: 1.5625em;
+		height: 1.5625em;
 
-    .arrow-back-icon {   
-        display: block;
-        width: 1.5625em;
-        height: 1.5625em;
-    
-        position: relative;        
-    }
+		position: relative;
+	}
+
+	.order-form {
+		padding: 10em 10em;
+
+		width: 90em;
+		height: 140em;
+
+		border-radius: 10px;
+	}
+
+	.form-title {
+		margin-bottom: 2em;
+		font-size: 6em;
+		color: var(--secondary-text);
+	}
+
+	.form-control + .form-control {
+		margin-top: 6em;
+	}
+
+	.form-label {
+		margin-bottom: 0.2em;
+		font-size: 4.5em;
+	}
+
+	.form-input {
+		padding: 0.6em 0.7em;
+		font-size: 5em;
+	}
+
+	.submit-btn {
+		font-size: 4em;
+	}
+	.approve-order {
+		font-size: 5em;
+		bottom: 3em;
+		right: 3em;
+	}
 }
