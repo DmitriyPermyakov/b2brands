@@ -1,23 +1,22 @@
 import { AfterContentInit, AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { ProductsService } from '../services/products.service'
-import { OrderItem } from '../interfaces/orderItem.interface'
-import { IProduct } from '../interfaces/product.interface'
-import { IProductColor } from '../interfaces/productColor.interface'
+import { Store, select } from '@ngrx/store'
 import { fromEvent, debounceTime, Subscription, Observable } from 'rxjs'
 import { switchMap } from 'rxjs'
-import { ClientOrdersService } from '../services/client-orders.service'
-import { Store, select } from '@ngrx/store'
+
+import { IProduct } from '../interfaces/product.interface'
+import { IProductColor } from '../interfaces/productColor.interface'
 import { productSelector } from '../store/products/products.selector'
 import { addOrderItemAction } from '../store/orders/order-item.action'
 import { orderItemSelector } from '../store/orders/order-item.selector'
+import { OrderItem } from '../interfaces/orderItem.interface'
 
 @Component({
-	selector: 'app-client-product-card',
-	templateUrl: './client-product-card.component.html',
-	styleUrls: ['./client-product-card.component.css'],
+	selector: 'app-product-card',
+	templateUrl: './product-card.component.html',
+	styleUrls: ['./product-card.component.css'],
 })
-export class ClientProductCardComponent implements OnInit, AfterContentInit, AfterViewInit, OnDestroy {
+export class ProductCardComponent implements OnInit, AfterContentInit, AfterViewInit, OnDestroy {
 	@ViewChild('colors') colorsRef!: ElementRef
 	@ViewChild('prints') printsRef!: ElementRef
 	@ViewChild('prevBtn') prevColorBtnRef!: ElementRef

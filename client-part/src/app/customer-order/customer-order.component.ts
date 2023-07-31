@@ -1,14 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input } from '@angular/core'
 import { OrderItem } from '../interfaces/orderItem.interface'
 import { Store } from '@ngrx/store'
 import { changeAmountOfOrderItemAction, removeOrderItemAction } from '../store/orders/order-item.action'
 
 @Component({
 	selector: 'app-client-order',
-	templateUrl: './client-order.component.html',
-	styleUrls: ['./client-order.component.css'],
+	templateUrl: './customer-order.component.html',
+	styleUrls: ['./customer-order.component.css'],
 })
-export class ClientOrderComponent {
+export class CustomerOrderComponent {
 	@Input() public productItem!: OrderItem
 
 	constructor(private store: Store) {}

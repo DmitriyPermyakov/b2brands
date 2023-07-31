@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { OrderItem } from '../interfaces/orderItem.interface'
-import { ClientOrdersService } from '../services/client-orders.service'
+
 import { Store, select } from '@ngrx/store'
 import { Observable, map, switchMap } from 'rxjs'
 import { orderItemSelector } from '../store/orders/order-item.selector'
@@ -10,10 +10,10 @@ import { ClientOrder } from '../interfaces/clientOrder.interface'
 
 @Component({
 	selector: 'app-client-orders',
-	templateUrl: './client-orders.component.html',
-	styleUrls: ['./client-orders.component.css'],
+	templateUrl: './customer-orders.component.html',
+	styleUrls: ['./customer-orders.component.css'],
 })
-export class ClientOrdersComponent implements OnInit {
+export class CustomerOrdersComponent implements OnInit {
 	public orderItems$: Observable<ReadonlyArray<OrderItem>>
 	public isOrderNotEmpty$: Observable<boolean>
 	public form: FormGroup

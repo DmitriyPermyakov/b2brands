@@ -3,19 +3,19 @@ import { BrowserModule } from '@angular/platform-browser'
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
-import { IntroPageComponent } from './intro-page/intro-page.component'
-import { WorkingEasyComponent } from './working-easy/working-easy.component'
-import { WorkInRussiaComponent } from './work-in-russia/work-in-russia.component'
-import { PartnersComponent } from './partners/partners.component'
-import { ClientProductCardComponent } from './client-product-card/client-product-card.component'
-import { ClientOrdersComponent } from './client-orders/client-orders.component'
-import { QuantityComponent } from './quantiti/quantity.component'
+import { IntroPageComponent } from './landing/intro-page/intro-page.component'
+import { WorkingEasyComponent } from './landing/working-easy/working-easy.component'
+import { WorkInRussiaComponent } from './landing/work-in-russia/work-in-russia.component'
+import { PartnersComponent } from './landing/partners/partners.component'
+import { ProductCardComponent } from './product-card/product-card.component'
+import { CustomerOrdersComponent } from './customer-orders/customer-orders.component'
+import { QuantityComponent } from './quantity/quantity.component'
 import { NavBarComponent } from './nav-bar/nav-bar.component'
 import { MobileBackgroundLineComponent } from './mobile-background-line/mobile-background-line.component'
-import { ClientOrderComponent } from './client-order/client-order.component'
-import { ClientProductListComponent } from './client-product-list/client-product-list.component'
+import { CustomerOrderComponent } from './customer-order/customer-order.component'
+import { ProductListComponent } from './product-list/product-list.component'
 import { ProductComponent } from './product/product.component'
-import { MainPageComponent } from './main-page/main-page.component'
+import { MainPageComponent } from './landing/main-page/main-page.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
@@ -31,13 +31,13 @@ import { orderItemReducer } from './store/orders/order-item.reducer'
 		WorkingEasyComponent,
 		WorkInRussiaComponent,
 		PartnersComponent,
-		ClientProductCardComponent,
-		ClientOrdersComponent,
+		ProductCardComponent,
+		CustomerOrdersComponent,
 		QuantityComponent,
 		NavBarComponent,
 		MobileBackgroundLineComponent,
-		ClientOrderComponent,
-		ClientProductListComponent,
+		CustomerOrderComponent,
+		ProductListComponent,
 		ProductComponent,
 		MainPageComponent,
 	],
