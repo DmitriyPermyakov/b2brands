@@ -23,7 +23,8 @@ import { EffectsModule } from '@ngrx/effects'
 import { gettingProductReducer } from './store/products/products.reducer'
 import { GettingProductEffect } from './store/products/products.effect'
 import { orderItemReducer } from './store/orders/order-item.reducer';
-import { LoginFormComponent } from './login-form/login-form.component'
+import { LoginFormComponent } from './login-form/login-form.component';
+import { ProfileComponent } from './profile/profile.component'
 
 @NgModule({
 	declarations: [
@@ -42,6 +43,7 @@ import { LoginFormComponent } from './login-form/login-form.component'
 		ProductComponent,
 		MainPageComponent,
   LoginFormComponent,
+  ProfileComponent,
 	],
 	imports: [
 		BrowserModule,

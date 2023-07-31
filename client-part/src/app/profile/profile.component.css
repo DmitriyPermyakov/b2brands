@@ -1,0 +1,190 @@
+.profile-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	width: 100%;
+	background-color: var(--background);
+
+	font-family: inherit;
+	font-size: inherit;
+	color: inherit;
+}
+
+.profile-form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+
+	padding: 4.3em 4.5em 0;
+
+	width: 26em;
+	height: 37em;
+
+	border-radius: 10px;
+	background-color: var(--card);
+	box-shadow: 0 0 20px 1px var(--dark-shadow);
+}
+
+.profile-image {
+	width: 11em;
+	height: 11em;
+
+	border-radius: 50%;
+
+	cursor: pointer;
+}
+
+.inputs {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr auto;
+	padding-top: 4em;
+	margin-bottom: 0;
+	transition: all 1s;
+}
+
+.inputs:has(.additional:hover) {
+	grid-template-rows: 1fr auto;
+	padding-top: 0;
+	margin-bottom: 4em;
+}
+
+.main {
+	grid-row: 1 / 2;
+}
+
+.additional {
+	opacity: 0;
+	transition: opacity 1s;
+}
+
+.additional:hover {
+	opacity: 100%;
+}
+
+.bordered-input {
+	padding: 0.5em 0;
+	width: 100%;
+	background-color: transparent;
+	border: none;
+	border-bottom: 1px solid var(--secondary-text);
+
+	color: var(--secondary-text);
+	font-size: 1em;
+	font-family: inherit;
+}
+
+input:hover,
+input:active,
+input:focus {
+	outline: none;
+}
+
+.bordered-input:hover {
+	border-color: var(--main-text);
+}
+
+.password-with-icon {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	width: 100%;
+
+	border-bottom: 1px solid var(--secondary-text);
+}
+
+.password-with-icon:hover {
+	border-color: var(--main-text);
+}
+
+.non-bordered-input {
+	padding: 0.5em 0;
+	width: 100%;
+	background-color: transparent;
+	border: none;
+
+	color: var(--secondary-text);
+	font-size: 1em;
+	font-family: inherit;
+}
+
+.edit-password-icon {
+	width: 35px;
+	height: 35px;
+}
+
+.edit-password-icon:hover {
+	cursor: pointer;
+}
+
+.edit-password-icon:hover svg * {
+	stroke: var(--main-text);
+}
+
+.edit-password-icon svg {
+	width: 100%;
+	height: 100%;
+}
+
+.form-buttons {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+
+	width: 100%;
+}
+
+.form-buttons button {
+	font-size: 1em;
+	font-family: inherit;
+	color: var(--secondary-text);
+	cursor: pointer;
+}
+
+.form-buttons button:hover {
+	color: var(--main-text);
+}
+
+button + button {
+	margin-left: 2em;
+}
+
+@media (min-width: 600px) and (max-width: 900px) {
+	.profile-container {
+		font-size: 2.5em;
+	}
+}
+
+@media (min-width: 600px) and (max-width: 1200px) and (orientation: landscape) {
+	.profile-container {
+		font-size: 1.5em;
+	}
+}
+
+@media (max-width: 600px) {
+	.profile-container {
+		font-size: 4.5em;
+	}
+
+	.profile-form {
+		padding: 4.3em 3em 0;
+		width: 100%;
+		height: 100%;
+	}
+}
+
+@media (min-width: 600px) and (max-width: 900px) and (orientation: landscape) {
+	.profile-container {
+		font-size: 1.5em;
+	}
+
+	.profile-form {
+		padding: 3em 3em 0;
+		width: 100%;
+		height: 100%;
+	}
+}

@@ -5,6 +5,7 @@ import { ProductListComponent } from './product-list/product-list.component'
 import { ProductCardComponent } from './product-card/product-card.component'
 import { CustomerOrdersComponent } from './customer-orders/customer-orders.component'
 import { LoginFormComponent } from './login-form/login-form.component'
+import { ProfileComponent } from './profile/profile.component'
 
 const routes: Routes = [
 	{ path: '', component: MainPageComponent },
@@ -12,6 +13,7 @@ const routes: Routes = [
 	{ path: 'products/:id', component: ProductCardComponent },
 	{ path: 'orders', component: CustomerOrdersComponent },
 	{ path: 'login', component: LoginFormComponent },
+	{ path: 'profile', component: ProfileComponent },
 ]
 
 @NgModule({
