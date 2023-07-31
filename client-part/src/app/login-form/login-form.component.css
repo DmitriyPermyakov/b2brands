@@ -1,0 +1,132 @@
+.login-form-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	width: 100%;
+	background-color: var(--background);
+
+	font-family: inherit;
+}
+
+.login-form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+
+	padding: 7em 6em 0;
+
+	width: 34em;
+	height: 20em;
+
+	border: none;
+	border-radius: 10px;
+	background-color: var(--card);
+
+	box-shadow: 0 0 20px 1px var(--dark-shadow);
+}
+
+.login-form-title {
+	align-self: flex-start;
+	margin-bottom: 1.1em;
+
+	font-size: 1.3em;
+	font-weight: normal;
+	color: var(--secondary-text);
+}
+
+.login-form-input {
+	width: 100%;
+
+	margin-bottom: 0.7em;
+	padding: 0.3em 0;
+
+	border: none;
+	border-bottom: 1px solid var(--secondary-text);
+	background-color: transparent;
+
+	font-family: inherit;
+	font-size: 0.8em;
+	color: inherit;
+}
+
+.login-form-input:hover,
+.login-form-input:active,
+.login-form-input:focus,
+.login-form-input:target {
+	border-bottom: 1px solid var(--main-text);
+	outline: none;
+}
+
+.restore-password {
+	align-self: flex-end;
+	margin-bottom: 4.3em;
+
+	font-size: 0.7em;
+	color: var(--secondary-text);
+	text-decoration: none;
+}
+
+.restore-password:hover,
+.restore-password:active,
+.restore-password:focus,
+.restore-password:target {
+	outline: none;
+	color: var(--main-text);
+}
+
+.login-form-btn {
+	padding: 0.8em 4em;
+
+	border: 1px solid var(--secondary-text);
+	border-radius: 5px;
+
+	font-family: inherit;
+	font-size: 0.7em;
+	color: var(--secondary-text);
+	cursor: pointer;
+}
+
+.login-form-btn:hover {
+	border-color: var(--main-text);
+	color: var(--main-text);
+}
+
+@media (min-width: 600px) and (max-width: 900px) {
+	.login-form-container {
+		font-size: 2.5rem;
+	}
+}
+
+@media (min-width: 600px) and (max-width: 1200px) and (orientation: landscape) {
+	.login-form-container {
+		font-size: 1.6rem;
+	}
+}
+
+@media (max-width: 600px) {
+	.login-form-container {
+		font-size: 6rem;
+	}
+
+	.login-form {
+		padding: 7em 2em;
+		width: 100%;
+		height: 100%;
+	}
+}
+
+@media (min-width: 600px) and (max-width: 900px) and (orientation: landscape) {
+	.login-form-container {
+		font-size: 6rem;
+	}
+
+	.login-form {
+		padding: 3em 2em;
+		width: 100%;
+		height: 100%;
+
+		font-size: 0.5em;
+	}
+}

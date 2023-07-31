@@ -18,24 +18,22 @@
 	color-scheme: dark;
 }
 
-/* 
-:root {
-    --intro-section-bg-light: #fcfcfc;
-    --intro-section-bg-dark: #ffffff;
-    --main-text: #3b3b3b;
-    --secondary-text: #4b4b4b;
-    --text-shadow: #807f7f;
-    --text-intro-button: #dcdcdc;
-    
+/* :root {
+	--intro-section-bg-light: #fcfcfc;
+	--intro-section-bg-dark: #ffffff;
+	--main-text: #3b3b3b;
+	--secondary-text: #4b4b4b;
+	--text-shadow: #807f7f;
+	--text-intro-button: #dcdcdc;
 
-    --background: #ffffff;
-    --card: #fefefe ;
-    --card: #fefefe83 ;
-    --outline: #656565 ;
-    --map: #ababab;
-    --dark-shadow: #aeaeae;
-    --new-price: #f75858;
-    color-scheme: light;
+	--background: #ffffff;
+	--card: #fefefe;
+	--card: #fefefe83;
+	--outline: #656565;
+	--map: #ababab;
+	--dark-shadow: #aeaeae;
+	--new-price: #f75858;
+	color-scheme: light;
 } */
 
 *,

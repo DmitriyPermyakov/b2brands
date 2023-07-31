@@ -22,7 +22,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { EffectsModule } from '@ngrx/effects'
 import { gettingProductReducer } from './store/products/products.reducer'
 import { GettingProductEffect } from './store/products/products.effect'
-import { orderItemReducer } from './store/orders/order-item.reducer'
+import { orderItemReducer } from './store/orders/order-item.reducer';
+import { LoginFormComponent } from './login-form/login-form.component'
 
 @NgModule({
 	declarations: [
@@ -40,6 +41,7 @@ import { orderItemReducer } from './store/orders/order-item.reducer'
 		ProductListComponent,
 		ProductComponent,
 		MainPageComponent,
+  LoginFormComponent,
 	],
 	imports: [
 		BrowserModule,
