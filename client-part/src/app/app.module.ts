@@ -22,9 +22,14 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { EffectsModule } from '@ngrx/effects'
 import { gettingProductReducer } from './store/products/products.reducer'
 import { GettingProductEffect } from './store/products/products.effect'
-import { orderItemReducer } from './store/orders/order-item.reducer';
-import { LoginFormComponent } from './login-form/login-form.component';
+import { orderItemReducer } from './store/orders/order-item.reducer'
+import { LoginFormComponent } from './login-form/login-form.component'
 import { ProfileComponent } from './profile/profile.component'
+import { AdminOrdersListComponent } from './admin-orders-list/admin-orders-list.component'
+import { AdminOrderComponent } from './admin-order/admin-order.component'
+import { ListContainerComponent } from './list-container/list-container.component'
+import { AccountButtonsComponent } from './account-buttons/account-buttons.component';
+import { EditOrderComponent } from './edit-order/edit-order.component'
 
 @NgModule({
 	declarations: [
@@ -42,8 +47,13 @@ import { ProfileComponent } from './profile/profile.component'
 		ProductListComponent,
 		ProductComponent,
 		MainPageComponent,
-  LoginFormComponent,
-  ProfileComponent,
+		LoginFormComponent,
+		ProfileComponent,
+		AdminOrdersListComponent,
+		AdminOrderComponent,
+		ListContainerComponent,
+		AccountButtonsComponent,
+  EditOrderComponent,
 	],
 	imports: [
 		BrowserModule,

@@ -14,6 +14,7 @@
 	--dark-shadow: #1c1c1c;
 	--new-price: #f75858;
 	--modal-bg: #292929a1;
+	--active: #3e3e3e;
 
 	color-scheme: dark;
 }
@@ -89,6 +90,10 @@ html::-webkit-scrollbar-track {
 html::-webkit-scrollbar-thumb {
 	border-radius: 5px;
 	background-color: var(--main-text);
+}
+
+html::-webkit-scrollbar-corner {
+	display: none;
 }
 
 .loading-icon {

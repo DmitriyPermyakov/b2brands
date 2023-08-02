@@ -14,7 +14,7 @@
 			</button>
 		</nav>
 		<p class="orders-title">Ваш заказ:</p>
-		<app-client-order *ngFor="let item of orderItems$ | async" [productItem]="item"></app-client-order>
+		<app-customer-order *ngFor="let item of orderItems$ | async" [productItem]="item"></app-customer-order>
 		<button class="approve-order btn" [disabled]="!(isOrderNotEmpty$ | async)" (click)="approveOrder()">
 			Заказать
 		</button>

@@ -1,0 +1,23 @@
+<section class="order-list-container">
+	<app-account-buttons></app-account-buttons>
+	<div class="order-sort-btn">
+		<div class="sort-btns">
+			<button class="active-orders grouped" routerLinkActive="active" [routerLink]="['/admin', 'active-orders']">
+				Активные заказы
+			</button>
+			<button
+				class="completed-orders grouped"
+				routerLinkActive="active"
+				[routerLink]="['/admin', 'completed-orders']"
+			>
+				Завершенные заказы
+			</button>
+			<button class="products grouped" routerLinkActive="active" [routerLink]="['/admin', 'products']">
+				Товары
+			</button>
+		</div>
+		<button class="add">Добавить</button>
+	</div>
+
+	<router-outlet></router-outlet>
+</section>

@@ -9,7 +9,7 @@ import { PhoneValidator } from '../validators/phoneValidator'
 import { ClientOrder } from '../interfaces/clientOrder.interface'
 
 @Component({
-	selector: 'app-client-orders',
+	selector: 'app-customer-orders',
 	templateUrl: './customer-orders.component.html',
 	styleUrls: ['./customer-orders.component.css'],
 })

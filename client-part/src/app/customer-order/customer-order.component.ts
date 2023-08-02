@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store'
 import { changeAmountOfOrderItemAction, removeOrderItemAction } from '../store/orders/order-item.action'
 
 @Component({
-	selector: 'app-client-order',
+	selector: 'app-customer-order',
 	templateUrl: './customer-order.component.html',
 	styleUrls: ['./customer-order.component.css'],
 })

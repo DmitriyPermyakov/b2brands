@@ -13,7 +13,6 @@ export class GettingProductEffect {
 		this.actions$.pipe(
 			ofType(gettingProductAction),
 			exhaustMap(() => {
-				console.log('working')
 				return this.productsService.getAll().pipe(map((products) => gettingProductActionSuccess({ products })))
 			}),
 			catchError((errorResponse: HttpErrorResponse) => {

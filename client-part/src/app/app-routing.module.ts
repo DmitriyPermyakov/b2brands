@@ -6,6 +6,9 @@ import { ProductCardComponent } from './product-card/product-card.component'
 import { CustomerOrdersComponent } from './customer-orders/customer-orders.component'
 import { LoginFormComponent } from './login-form/login-form.component'
 import { ProfileComponent } from './profile/profile.component'
+import { AdminOrdersListComponent } from './admin-orders-list/admin-orders-list.component'
+import { ListContainerComponent } from './list-container/list-container.component'
+import { EditOrderComponent } from './edit-order/edit-order.component'
 
 const routes: Routes = [
 	{ path: '', component: MainPageComponent },
@@ -14,6 +17,16 @@ const routes: Routes = [
 	{ path: 'orders', component: CustomerOrdersComponent },
 	{ path: 'login', component: LoginFormComponent },
 	{ path: 'profile', component: ProfileComponent },
+	{
+		path: 'admin',
+		component: AdminOrdersListComponent,
+		children: [
+			{ path: 'active-orders', component: ListContainerComponent },
+			{ path: 'completed-orders', component: ListContainerComponent },
+			{ path: 'products', component: ListContainerComponent },
+		],
+	},
+	{ path: 'admin/orders/:id', component: EditOrderComponent },
 ]
 
 @NgModule({
