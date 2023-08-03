@@ -7,8 +7,11 @@ import { Component } from '@angular/core'
 })
 export class EditOrderComponent {
 	public editable: boolean = false
-	edit() {
+	edit(): void {
 		this.editable = true
-		console.log('click')
+	}
+
+	cancel(): void {
+		this.editable = false
 	}
 }

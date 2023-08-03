@@ -17,6 +17,7 @@
 	justify-items: center;
 
 	margin: 0 2em;
+	color: var(--secondary-text);
 }
 
 .titles .contacts {
@@ -57,7 +58,7 @@
 	justify-items: center;
 
 	margin: 1.5em 2em 1em;
-	padding: 2.5em 1em 2.5em 0;
+	padding: 1em 1em 1em 0;
 
 	color: var(--secondary-text);
 
@@ -66,6 +67,11 @@
 	border-radius: 10px;
 	box-shadow: 0 0 20px 1px var(--dark-shadow);
 	overflow: hidden;
+	transition: 0.2s;
+}
+
+.general-info.edit {
+	padding: 2em 1em 2em 0;
 }
 
 .number {
@@ -86,7 +92,7 @@
 }
 
 .edit-icon {
-	display: block;
+	/* display: block; */
 	grid-column: 8 / 9;
 
 	width: 2.1875em;
@@ -120,7 +126,8 @@
 }
 
 .hidden {
-	animation: hidden 0.2s linear 0s 1 forwards normal;
+	display: none;
+	animation: hidden 0.2s linear 0s 1 normal forwards;
 }
 
 .showed {
@@ -171,7 +178,7 @@ textarea {
 	display: flex;
 	align-items: center;
 
-	padding: 40px 0;
+	padding: 2.1875em 0 2.1875em 1em;
 	width: 90%;
 	height: 100%;
 	vertical-align: middle;
@@ -192,17 +199,15 @@ textarea {
 }
 
 textarea::-webkit-scrollbar {
-	width: 0.3vw;
-	background-color: transparent;
+	display: none;
 }
 
 textarea::-webkit-scrollbar-track {
-	background-color: transparent;
+	display: none;
 }
 
 textarea::-webkit-scrollbar-thumb {
-	border-radius: 5px;
-	background-color: var(--main-text);
+	display: none;
 }
 
 textarea::-webkit-scrollbar-corner {
@@ -220,6 +225,10 @@ textarea::-webkit-scrollbar-corner {
 .arrow-back svg {
 	width: 100%;
 	height: 100%;
+}
+
+.arrow-back:hover svg * {
+	stroke: var(--outline);
 }
 
 .position-info {
@@ -248,21 +257,17 @@ textarea::-webkit-scrollbar-corner {
 
 	display: grid;
 	grid-template-columns: 2fr 2fr 1fr;
-	grid-template-rows: 30% auto;
+	grid-template-rows: 100% auto;
 	align-items: center;
 	justify-items: center;
 
 	width: 100%;
 	height: 100%;
-	transition: 1s;
+	transition: 0.2s;
 }
 
-.resizable-part:hover {
-	grid-template-rows: 100% auto;
-}
-
-.resizable-part:hover .save-cancel-btns {
-	opacity: 0;
+.resizable-part.edit {
+	grid-template-rows: 40% auto;
 }
 
 .resizable-part .amount {
@@ -290,7 +295,7 @@ textarea::-webkit-scrollbar-corner {
 	grid-row: 2 / 3;
 	justify-self: end;
 
-	margin: 3em 1em 0;
+	margin: 2em 1em 0;
 
 	display: flex;
 	align-items: center;
@@ -305,6 +310,10 @@ textarea::-webkit-scrollbar-corner {
 	font-size: 1em;
 	color: var(--secondary-text);
 	font-family: inherit;
+}
+.save-cancel-btns button:hover {
+	color: var(--main-text);
+	border-color: var(--outline);
 }
 
 .save-cancel-btns button + button {
