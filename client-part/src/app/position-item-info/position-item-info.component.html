@@ -1,4 +1,4 @@
-<div class="item" [ngClass]="{ edit: editable }">
+<form class="item" [ngClass]="{ edit: editable }">
 	<p class="item-number">{{ index + 1 + '/' + itemLength }}</p>
 	<div class="item-images-container">
 		<div class="item-image" [ngClass]="{ outlined: editable }" (click)="showImages()">
@@ -43,13 +43,14 @@
 			<option value="Завершен">Завершен</option>
 		</select>
 	</div>
-	<textarea class="item-comment" autocomplete="off" [disabled]="!editable" [ngClass]="{ outlined: editable }">
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem voluptas, architecto porro 
-magnam inventore cum laboriosam optio 
-beatae distinctio,
- quisquam eum earum ducimus doloremque saepe nostrum. 
- Possimus molestias delectus provident.</textarea
+	<textarea
+		class="item-comment"
+		autocomplete="off"
+		[disabled]="!editable"
+		[ngClass]="{ outlined: editable }"
+		[value]="item.comment"
 	>
+	</textarea>
 	<div class="resizable-part" [ngClass]="{ edit: editable }">
 		<app-quantity class="quantity" [inputQuantity]="item.amount" [editable]="editable"></app-quantity>
 		<p class="total-price">{{ item.amount * item.price + 'p.' }}</p>
@@ -64,7 +65,12 @@ beatae distinctio,
 				<circle cx="16.6057" cy="36.8243" r="2.45455" transform="rotate(31.1108 16.6057 36.8243)" fill="#A2A2A2" />
 			</svg>
 		</div>
-		<div class="remove-icon" #removeBtn [ngClass]="{ showed: editable, hidden: !editable }">
+		<div
+			class="remove-icon"
+			#removeBtn
+			[ngClass]="{ showed: editable, hidden: !editable }"
+			(click)="removePosition(index)"
+		>
 			<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path
 					d="M11 15.0823L14.4498 37.1309C14.6021 38.1043 15.4405 38.8218 16.4258 38.8218H31.5747C32.5599 38.8218 33.3983 38.1043 33.5506 37.1309L37.0004 15.0823"
@@ -79,8 +85,8 @@ beatae distinctio,
 			</svg>
 		</div>
 		<div class="save-cancel-btns">
-			<button class="save-btn" [disabled]="!editable">Сохранить</button>
+			<button class="save-btn" [disabled]="!editable" type="submit">Сохранить</button>
 			<button class="cancel-btn" [disabled]="!editable" (click)="cancel()">Отмена</button>
 		</div>
 	</div>
-</div>
+</form>

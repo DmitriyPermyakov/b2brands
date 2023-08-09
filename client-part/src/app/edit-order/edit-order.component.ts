@@ -28,10 +28,9 @@ export class EditOrderComponent implements OnInit {
 	}
 
 	addItem(p: IProduct) {
-		console.log(p)
 		this.isSelectProductVisible = false
 		let orderItem: OrderItem = {
-			id: 'asdfasf',
+			id: Math.random().toString(),
 			name: p.name,
 			vendorCode: p.code,
 			color: p.productColors[0],
@@ -39,10 +38,15 @@ export class EditOrderComponent implements OnInit {
 			amount: 1,
 			price: p.newPrice,
 			status: 'В заказе',
-			comment: '',
+			comment:
+				'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem voluptas, architecto porro magnam inventore cum laboriosam optio beatae distinctio, quisquam eum earum ducimus doloremque saepe nostrum. Possimus molestias delectus provident.',
 		}
-
+		console.log(orderItem)
 		this.order.orderItems.push(orderItem)
+	}
+
+	removeItem(index: number) {
+		this.order.orderItems.splice(index, 1)
 	}
 
 	cancel(): void {

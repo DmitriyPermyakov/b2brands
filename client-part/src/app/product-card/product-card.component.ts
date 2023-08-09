@@ -95,7 +95,8 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 			price: this.product.newPrice,
 			amount: this.productAmount,
 			status: 'В заказе',
-			comment: '',
+			comment:
+				'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero itaque, ullam tenetur consequatur perspiciatis reiciendis in officia maiores? Adipisci facilis animi architecto voluptatum sapiente, dicta molestias delectus possimus nulla voluptas!',
 		}
 
 		this.store.dispatch(addOrderItemAction({ orderItem }))

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core'
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core'
 import { OrderItem } from '../interfaces/orderItem.interface'
 
 import { IProduct } from '../interfaces/product.interface'
@@ -13,6 +13,7 @@ export class PositionItemInfoComponent implements OnInit, AfterViewInit {
 	@Input() item: OrderItem
 	@Input() itemLength: number
 	@Input() index: number
+	@Output() onRemoveItem: EventEmitter<number> = new EventEmitter()
 	@ViewChild('container') scrollContainer: ElementRef
 	@ViewChild('itemImage') itemImage: ElementRef
 
@@ -20,15 +21,19 @@ export class PositionItemInfoComponent implements OnInit, AfterViewInit {
 	public editable: boolean = false
 	public showImage: boolean = false
 
+	private initialItem: OrderItem = new OrderItem()
+
 	constructor(private productsService: ProductsService) {}
 	ngOnInit(): void {}
-	ngAfterViewInit(): void {}
+	ngAfterViewInit(): void {
+		this.initialItem = Object.assign(this.initialItem, this.item)
+		console.log(this.initialItem)
+	}
 
 	edit(): void {
 		this.editable = true
 		this.productsService.getByVendor(this.item.vendorCode).subscribe((p) => {
 			this.product = p
-			console.log(this.product)
 		})
 	}
 
@@ -44,12 +49,27 @@ export class PositionItemInfoComponent implements OnInit, AfterViewInit {
 	}
 
 	cancel(): void {
-		this.editable = false
-		this.showImage = false
+		this.resetValues()
+		console.log('asfas', this.item)
 	}
 
 	scroll(event: WheelEvent): void {
 		event.preventDefault()
 		this.scrollContainer.nativeElement.scrollLeft += event.deltaY
+	}
+
+	removePosition(id: number) {
+		this.onRemoveItem.emit(id)
+		this.cancelEdit()
+	}
+
+	private resetValues() {
+		this.item = Object.assign(this.item, this.initialItem)
+		this.cancelEdit()
+	}
+
+	private cancelEdit() {
+		this.editable = false
+		this.showImage = false
 	}
 }
