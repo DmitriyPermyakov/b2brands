@@ -220,4 +220,8 @@ export class ProductsService {
 			s.next(this.product.find((p) => p.id == id))
 		})
 	}
+
+	getByVendor(vendor: string): Observable<IProduct> {
+		return new Observable((s) => s.next(this.product.find((p) => p.code === vendor)))
+	}
 }

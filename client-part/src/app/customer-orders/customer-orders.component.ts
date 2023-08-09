@@ -51,6 +51,7 @@ export class CustomerOrdersComponent implements OnInit {
 
 			console.log(clientOrder)
 			this.isFormVisible = false
+			localStorage.setItem('client-order', JSON.stringify(clientOrder))
 			if (orderSub) orderSub.unsubscribe()
 		}
 	}

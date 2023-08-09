@@ -1,6 +1,6 @@
 <section class="container">
 	<app-account-buttons></app-account-buttons>
-	<div class="arrow-back">
+	<div class="arrow-back" [routerLink]="['/admin/active-orders']">
 		<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M20 3L5.2901 18.6293C4.5653 19.3994 4.5653 20.6006 5.2901 21.3707L20 37"
@@ -27,13 +27,20 @@
 					class="phone"
 					[ngClass]="{ outlined: editable }"
 					type="tel"
-					value="+7 812 345 45 45"
+					[value]="order.contacts.phone"
 					[disabled]="!editable"
 				/>
 				<input
 					class="name"
 					type="text"
-					value="Смирнова Валентина"
+					[value]="order.contacts.name"
+					[disabled]="!editable"
+					[ngClass]="{ outlined: editable }"
+				/>
+				<input
+					class="email"
+					type="email"
+					[value]="order.contacts.email"
 					[disabled]="!editable"
 					[ngClass]="{ outlined: editable }"
 				/>
@@ -105,6 +112,27 @@
 				</div>
 			</div>
 		</div>
-		<div class="position-info"></div>
+		<div class="position-item-info">
+			<div class="item-container">
+				<app-position-item-info
+					*ngFor="let item of order.orderItems; index as i"
+					[item]="item"
+					[index]="i"
+					[itemLength]="order.orderItems.length"
+				></app-position-item-info>
+				<button class="add-item-btn" *ngIf="editable" (click)="showProductModal()">
+					<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<rect x="0.5" y="0.5" width="47" height="47" rx="4.5" stroke="#A2A2A2" />
+						<path d="M12 24H36" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
+						<path d="M24 12L24 36" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
+					</svg>
+				</button>
+			</div>
+		</div>
 	</form>
+	<app-add-order-item
+		[isSelectProductVisible]="isSelectProductVisible"
+		(onCloseProductModal)="closeProductModal($event)"
+		(onSelectProduct)="addItem($event)"
+	></app-add-order-item>
 </section>

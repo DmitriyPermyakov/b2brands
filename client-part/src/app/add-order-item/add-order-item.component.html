@@ -1,0 +1,21 @@
+<section class="add-order-item-container" [ngClass]="{ visible: isVisible }">
+	<div class="add-order-item-card">
+		<p class="search">
+			<input type="text" />
+		</p>
+		<div class="products">
+			<div class="product" *ngFor="let p of products" (click)="selectProduct(p)">
+				<div class="product-image">
+					<img class="image" [src]="p.productColors[0].leftSmallUrl" alt="" />
+				</div>
+				<div class="info">
+					<label class="name-label" for="name">Название</label>
+					<p class="name">{{ p.name }}</p>
+					<label class="code-label" for="code">Артикул:</label>
+					<p class="code">{{ p.code }}</p>
+				</div>
+			</div>
+		</div>
+		<button class="close" (click)="close()">Отмена</button>
+	</div>
+</section>

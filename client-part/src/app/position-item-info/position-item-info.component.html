@@ -1,0 +1,86 @@
+<div class="item" [ngClass]="{ edit: editable }">
+	<p class="item-number">{{ index + 1 + '/' + itemLength }}</p>
+	<div class="item-images-container">
+		<div class="item-image" [ngClass]="{ outlined: editable }" (click)="showImages()">
+			<img class="item-img" #itemImage [src]="item.color.rightSmallUrl" [alt]="item.color.value" />
+		</div>
+		<div class="product-images" *ngIf="showImage" (wheel)="scroll($event)" #container>
+			<div class="image-with-shadow" *ngFor="let img of product.productColors">
+				<img class="item-img hover" [src]="img.rightSmallUrl" [alt]="img.value" (click)="setImage($event)" />
+			</div>
+		</div>
+	</div>
+
+	<div class="item-info">
+		<label class="name-label" for="name">Название:</label>
+		<input class="item-name" type="text" name="name" [value]="item.name" />
+		<label class="vendor-label" for="vendor">Артикул:</label>
+		<input class="item-vendor" type="text" name="vendor" [value]="item.vendorCode" [disabled]="true" />
+		<label class="print-label" for="print">Нанесение:</label>
+		<select class="item-print" name="print" [disabled]="true" *ngIf="!editable">
+			<option [value]="item.printType">{{ item.printType }}</option>
+		</select>
+		<select class="item-print outlined" name="print" [disabled]="false" *ngIf="editable">
+			<option
+				*ngFor="let print of product.print; index as i"
+				[selected]="product.print[i] == item.printType"
+				[value]="print"
+			>
+				{{ print }}
+			</option>
+		</select>
+		<label class="status-label" for="status">Статус:</label>
+		<select
+			class="item-status"
+			name="status"
+			[value]="item.status"
+			[disabled]="!editable"
+			[ngClass]="{ outlined: editable }"
+		>
+			<option value="В заказе">В заказе</option>
+			<option value="В производстве">В производстве</option>
+			<option value="Отправлен">Отправлен</option>
+			<option value="Завершен">Завершен</option>
+		</select>
+	</div>
+	<textarea class="item-comment" autocomplete="off" [disabled]="!editable" [ngClass]="{ outlined: editable }">
+Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem voluptas, architecto porro 
+magnam inventore cum laboriosam optio 
+beatae distinctio,
+ quisquam eum earum ducimus doloremque saepe nostrum. 
+ Possimus molestias delectus provident.</textarea
+	>
+	<div class="resizable-part" [ngClass]="{ edit: editable }">
+		<app-quantity class="quantity" [inputQuantity]="item.amount" [editable]="editable"></app-quantity>
+		<p class="total-price">{{ item.amount * item.price + 'p.' }}</p>
+
+		<div class="edit-icon" #editBtn (click)="edit()" [ngClass]="{ hidden: editable, showed: !editable }">
+			<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path
+					d="M36.8624 10.8241L30.1687 6.78452C29.6958 6.49915 29.0812 6.65114 28.7958 7.12399L14.1704 31.3585C14.056 31.5479 14.0078 31.77 14.0332 31.9898L14.7661 38.3408C14.8412 38.9912 15.5106 39.3953 16.1211 39.1586L22.0818 36.8471C22.2881 36.7671 22.4621 36.621 22.5764 36.4315L37.2018 12.197C37.4872 11.7241 37.3352 11.1095 36.8624 10.8241Z"
+					stroke="#A2A2A2"
+					stroke-width="2"
+				/>
+				<circle cx="16.6057" cy="36.8243" r="2.45455" transform="rotate(31.1108 16.6057 36.8243)" fill="#A2A2A2" />
+			</svg>
+		</div>
+		<div class="remove-icon" #removeBtn [ngClass]="{ showed: editable, hidden: !editable }">
+			<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path
+					d="M11 15.0823L14.4498 37.1309C14.6021 38.1043 15.4405 38.8218 16.4258 38.8218H31.5747C32.5599 38.8218 33.3983 38.1043 33.5506 37.1309L37.0004 15.0823"
+					stroke="#A2A2A2"
+					stroke-width="2"
+					stroke-linecap="round"
+				/>
+				<path d="M14.7148 10.4998H33.2866" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
+				<path d="M20.6895 15.6069L20.6895 31.514" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
+				<path d="M27.3105 15.6069L27.3105 31.514" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
+				<path d="M20.2861 8.17834H27.7148" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
+			</svg>
+		</div>
+		<div class="save-cancel-btns">
+			<button class="save-btn" [disabled]="!editable">Сохранить</button>
+			<button class="cancel-btn" [disabled]="!editable" (click)="cancel()">Отмена</button>
+		</div>
+	</div>
+</div>

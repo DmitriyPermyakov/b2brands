@@ -29,7 +29,9 @@ import { AdminOrdersListComponent } from './admin-orders-list/admin-orders-list.
 import { AdminOrderComponent } from './admin-order/admin-order.component'
 import { ListContainerComponent } from './list-container/list-container.component'
 import { AccountButtonsComponent } from './account-buttons/account-buttons.component';
-import { EditOrderComponent } from './edit-order/edit-order.component'
+import { EditOrderComponent } from './edit-order/edit-order.component';
+import { PositionItemInfoComponent } from './position-item-info/position-item-info.component';
+import { AddOrderItemComponent } from './add-order-item/add-order-item.component'
 
 @NgModule({
 	declarations: [
@@ -54,6 +56,8 @@ import { EditOrderComponent } from './edit-order/edit-order.component'
 		ListContainerComponent,
 		AccountButtonsComponent,
   EditOrderComponent,
+  PositionItemInfoComponent,
+  AddOrderItemComponent,
 	],
 	imports: [
 		BrowserModule,

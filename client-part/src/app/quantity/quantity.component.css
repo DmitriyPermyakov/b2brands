@@ -1,81 +1,95 @@
-@import url("../../styles.css");
+@import url('../../styles.css');
 
 .quantity {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
 }
 
 .minus {
-    display: block;
-    height: 2.18em;
-    width: 2.18em;
+	display: block;
+	height: 2.18em;
+	width: 2.18em;
 
-    font-size: inherit;
+	font-size: inherit;
+	opacity: 100%;
+	transition: 0.2s;
 }
 
 .minus svg {
-    width: 100%;
-    height: auto;
+	width: 100%;
+	height: auto;
 }
 
 .minus:hover svg path {
-    stroke: var(--outline);
-    filter: drop-shadow(0 0 1px var(--outline));  
+	stroke: var(--outline);
+	filter: drop-shadow(0 0 1px var(--outline));
 }
 
-.quantity-number {  
-    margin: 0 1em;
-    padding: .8em;
-    
-    height: 3em;
-    min-width: 3em;
-    max-width: 5em;
+.plus.showed,
+.minus.showed {
+	opacity: 0;
+}
 
-    text-align: center;
+.quantity-number {
+	margin: 0 1em;
+	padding: 0.8em;
 
-    border: 2px solid var(--secondary-text);
-    border-radius: 5px;
+	height: 3em;
+	min-width: 3em;
+	max-width: 5em;
 
-    font-size: inherit;
+	text-align: center;
+
+	border: transparent;
+	background-color: transparent;
+	border-radius: 5px;
+
+	font-size: inherit;
+	transition: 0.2s;
+}
+
+.quantity-number.outlined {
+	border: 2px solid var(--secondary-text);
+	background-color: var(--card);
 }
 
 .quantity-number::-webkit-inner-spin-button,
 .quantity-number::-webkit-outer-spin-button {
-    display: none;
+	display: none;
 }
 
-
-.quantity-number:hover {    
-    text-shadow: 0px 0px 2px white;
+.quantity-number:hover {
+	text-shadow: 0px 0px 2px white;
 }
 
-.plus {    
-    display: block;
-    height: 2.18em;
-    width: 2.18em;
+.plus {
+	display: block;
+	height: 2.18em;
+	width: 2.18em;
 
-    font-size: inherit;
-    
+	font-size: inherit;
+	opacity: 100%;
+	transition: 0.2s;
 }
 
 .plus svg {
-    width: 100%;
-    height: 100%;
+	width: 100%;
+	height: 100%;
 }
 
 .plus:hover svg path {
-    stroke: var(--outline);
-    filter: drop-shadow(0 0 1px var(--outline));  
+	stroke: var(--outline);
+	filter: drop-shadow(0 0 1px var(--outline));
 }
 
 @media (max-width: 600px) {
-    .quantity {
-        justify-content: flex-end;
-        /* margin-top: 1em;
+	.quantity {
+		justify-content: flex-end;
+		/* margin-top: 1em;
         margin-right: 2em; */
-        
-        font-size: 5em;
-    }
+
+		font-size: 5em;
+	}
 }
