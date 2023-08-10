@@ -2,7 +2,7 @@
 	<p class="order-number">1/2</p>
 	<img class="order-image" [src]="productItem.color.rightSmallUrl" alt="" />
 	<div class="count-of-items">
-		<app-quantity [inputQuantity]="productItem.amount" (onQuantityChanged)="changeAmount($event)"></app-quantity>
+		<app-quantity [value]="productItem.amount"></app-quantity>
 	</div>
 	<div class="order-description">
 		<label class="name-label" for="name">Название:</label>

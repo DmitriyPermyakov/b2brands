@@ -1,61 +1,96 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output, forwardRef } from '@angular/core'
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
 
 @Component({
 	selector: 'app-quantity',
 	templateUrl: './quantity.component.html',
 	styleUrls: ['./quantity.component.css'],
+	providers: [
+		{
+			provide: NG_VALUE_ACCESSOR,
+			useExisting: forwardRef(() => QuantityComponent),
+			multi: true,
+		},
+	],
 })
-export class QuantityComponent implements OnInit {
-	@Input() inputQuantity!: number
+export class QuantityComponent implements OnInit, ControlValueAccessor {
 	@Input() editable: boolean = false
-	@Output() public onQuantityChanged: EventEmitter<number> = new EventEmitter<number>()
-	public quantity!: number
 	public quantityString: string
+
+	public onChanged = (value: number) => {}
+	public onTouched = () => {}
+
+	private touched = false
+
 	private pattern = /^[0-9]+$/
 	private currentValue: number
+	private _value: number
 
-	ngOnInit() {
-		if (!this.inputQuantity) {
-			this.quantity = 1
-			this.quantityString = this.quantity + 'шт.'
-		} else {
-			this.quantity = this.inputQuantity
-			this.quantityString = this.quantity + 'шт.'
-		}
-		this.currentValue = this.quantity
+	public get value(): number {
+		return this._value
 	}
 
+	@Input()
+	public set value(val: number) {
+		if (val >= 1) this._value = val
+		else this._value = 1
+	}
+
+	ngOnInit() {
+		if (!this.value) {
+			this.value = 1
+			this.quantityString = this.value + 'шт.'
+		}
+		this.quantityString = this.value.toString() + 'шт.'
+		this.currentValue = this.value
+	}
+
+	writeValue(value: any): void {
+		this.value = value
+	}
+	registerOnChange(fn: any): void {
+		this.onChanged = fn
+	}
+	registerOnTouched(fn: any): void {
+		this.onTouched = fn
+	}
+	// setDisabledState?(isDisabled: boolean): void {}
+
 	increase() {
-		if (this.quantity >= 99999) return
+		this.markAsTouched()
+		if (this.value >= 99999) return
 
-		this.quantity++
+		this.value++
 
-		this.onQuantityChanged.emit(this.quantity)
-		this.quantityString = this.quantity + 'шт.'
+		this.onChanged(this.value)
+		this.quantityString = this.value + 'шт.'
 	}
 
 	decrease() {
-		if (this.quantity > 1) {
-			this.quantity--
-			this.onQuantityChanged.emit(this.quantity)
-			this.quantityString = this.quantity + 'шт.'
+		this.markAsTouched()
+		if (this.value > 1) {
+			this.value--
+			this.onChanged(this.value)
+			this.quantityString = this.value + 'шт.'
 		}
 		return
 	}
 
 	onFocus(event: any): void {
+		this.markAsTouched()
 		event.target.value = event.target.value.slice(0, event.target.value.length - 3)
 	}
 	onBlur(event: any): void {
 		if (event.target.value == '') {
-			event.target.value = this.inputQuantity + 'шт.'
+			event.target.value = this.value + 'шт.'
 		} else {
 			event.target.value = event.target.value + 'шт.'
 		}
-		this.quantity = event.target.value.slice(0, event.target.value.length - 3)
-		this.onQuantityChanged.emit(this.quantity)
+		this.value = event.target.value.slice(0, event.target.value.length - 3)
+		this.onChanged(this.value)
 	}
 	onInput(event: any): void {
+		this.markAsTouched()
 		if (event.target.value.length > 5) event.target.value = this.currentValue
 
 		if (!this.pattern.test(event.target.value)) {
@@ -63,6 +98,13 @@ export class QuantityComponent implements OnInit {
 		}
 
 		this.currentValue = parseInt(event.target.value)
-		this.quantity = parseInt(event.target.value)
+		this.value = parseInt(event.target.value)
+	}
+
+	private markAsTouched() {
+		if (!this.touched) {
+			this.onTouched()
+			this.touched = true
+		}
 	}
 }

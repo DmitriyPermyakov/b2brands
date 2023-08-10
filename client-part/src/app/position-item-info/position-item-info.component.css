@@ -61,6 +61,7 @@
 .item-name {
 	grid-column: 2 / 3;
 	grid-row: 1 / 2;
+	pointer-events: none;
 }
 
 .vendor-label {
@@ -71,6 +72,7 @@
 .item-vendor {
 	grid-column: 2 / 3;
 	grid-row: 2 / 3;
+	pointer-events: none;
 }
 
 .print-label {
@@ -83,6 +85,7 @@
 	grid-row: 3 / 4;
 	overflow: hidden;
 	text-overflow: clip;
+	pointer-events: none;
 }
 
 .status-label {
@@ -262,6 +265,7 @@ textarea {
 .outlined {
 	outline: 1px solid var(--secondary-text);
 	border-radius: 3px;
+	pointer-events: all;
 }
 
 input.outlined:nth-child(even):not(:last-child) {

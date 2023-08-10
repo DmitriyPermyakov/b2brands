@@ -1,16 +1,16 @@
-<form class="item" [ngClass]="{ edit: editable }">
+<form class="item" [ngClass]="{ edit: editable }" [formGroup]="form">
 	<p class="item-number">{{ index + 1 + '/' + itemLength }}</p>
 	<div class="item-images-container">
-		<app-image-selector [product]="product" [disabled]="!editable" [value]="item.color"></app-image-selector>
+		<app-image-selector [product]="product" [editable]="!editable" formControlName="color"></app-image-selector>
 	</div>
 
 	<div class="item-info">
 		<label class="name-label" for="name">Название:</label>
-		<input class="item-name" type="text" name="name" [value]="item.name" />
+		<input class="item-name" type="text" name="name" formControlName="name" />
 		<label class="vendor-label" for="vendor">Артикул:</label>
-		<input class="item-vendor" type="text" name="vendor" [value]="item.vendorCode" [disabled]="true" />
+		<input class="item-vendor" type="text" name="vendor" formControlName="vendor" />
 		<label class="print-label" for="print">Нанесение:</label>
-		<select class="item-print" name="print" [disabled]="true" *ngIf="!editable">
+		<select class="item-print" name="print" *ngIf="!editable" formControlName="print">
 			<option [value]="item.printType">{{ item.printType }}</option>
 		</select>
 		<select
@@ -29,12 +29,15 @@
 			</option>
 		</select>
 		<label class="status-label" for="status">Статус:</label>
+		<!-- <select class="item-status" name="status">
+			<option [value]="item.status">{{ item.status }}</option>
+		</select> -->
 		<select
 			class="item-status"
 			name="status"
-			[value]="item.status"
-			[disabled]="!editable"
 			[ngClass]="{ outlined: editable }"
+			formControlName="status"
+			(change)="statusChanged($event)"
 		>
 			<option value="В заказе">В заказе</option>
 			<option value="В производстве">В производстве</option>
@@ -42,16 +45,10 @@
 			<option value="Завершен">Завершен</option>
 		</select>
 	</div>
-	<textarea
-		class="item-comment"
-		autocomplete="off"
-		[disabled]="!editable"
-		[ngClass]="{ outlined: editable }"
-		[value]="item.comment"
-	>
+	<textarea class="item-comment" autocomplete="off" [ngClass]="{ outlined: editable }" formControlName="comment">
 	</textarea>
 	<div class="resizable-part" [ngClass]="{ edit: editable }">
-		<app-quantity class="quantity" [inputQuantity]="item.amount" [editable]="editable"></app-quantity>
+		<app-quantity class="quantity" [editable]="editable" formControlName="amount"></app-quantity>
 		<p class="total-price">{{ item.amount * item.price + 'p.' }}</p>
 
 		<div class="edit-icon" #editBtn (click)="edit()" [ngClass]="{ hidden: editable, showed: !editable }">
@@ -84,7 +81,7 @@
 			</svg>
 		</div>
 		<div class="save-cancel-btns">
-			<button class="save-btn" [disabled]="!editable" type="submit">Сохранить</button>
+			<button class="save-btn" [disabled]="!editable" type="submit" (click)="onSubmit(form.value)">Сохранить</button>
 			<button class="cancel-btn" [disabled]="!editable" (click)="cancel()">Отмена</button>
 		</div>
 	</div>
