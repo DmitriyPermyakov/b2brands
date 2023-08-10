@@ -31,7 +31,8 @@ import { ListContainerComponent } from './list-container/list-container.componen
 import { AccountButtonsComponent } from './account-buttons/account-buttons.component';
 import { EditOrderComponent } from './edit-order/edit-order.component';
 import { PositionItemInfoComponent } from './position-item-info/position-item-info.component';
-import { AddOrderItemComponent } from './add-order-item/add-order-item.component'
+import { AddOrderItemComponent } from './add-order-item/add-order-item.component';
+import { ImageSelectorComponent } from './image-selector/image-selector.component'
 
 @NgModule({
 	declarations: [
@@ -58,6 +59,7 @@ import { AddOrderItemComponent } from './add-order-item/add-order-item.component
   EditOrderComponent,
   PositionItemInfoComponent,
   AddOrderItemComponent,
+  ImageSelectorComponent,
 	],
 	imports: [
 		BrowserModule,

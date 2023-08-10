@@ -1,14 +1,7 @@
 <form class="item" [ngClass]="{ edit: editable }">
 	<p class="item-number">{{ index + 1 + '/' + itemLength }}</p>
 	<div class="item-images-container">
-		<div class="item-image" [ngClass]="{ outlined: editable }" (click)="showImages()">
-			<img class="item-img" #itemImage [src]="item.color.rightSmallUrl" [alt]="item.color.value" />
-		</div>
-		<div class="product-images" *ngIf="showImage" (wheel)="scroll($event)" #container>
-			<div class="image-with-shadow" *ngFor="let img of product.productColors">
-				<img class="item-img hover" [src]="img.rightSmallUrl" [alt]="img.value" (click)="setImage($event)" />
-			</div>
-		</div>
+		<app-image-selector [product]="product" [disabled]="!editable" [value]="item.color"></app-image-selector>
 	</div>
 
 	<div class="item-info">
@@ -20,7 +13,13 @@
 		<select class="item-print" name="print" [disabled]="true" *ngIf="!editable">
 			<option [value]="item.printType">{{ item.printType }}</option>
 		</select>
-		<select class="item-print outlined" name="print" [disabled]="false" *ngIf="editable">
+		<select
+			class="item-print outlined"
+			name="print"
+			[disabled]="false"
+			*ngIf="editable"
+			(change)="printChanged($event)"
+		>
 			<option
 				*ngFor="let print of product.print; index as i"
 				[selected]="product.print[i] == item.printType"
