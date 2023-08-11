@@ -1,4 +1,4 @@
-<div class="item-image" [ngClass]="{ outlined: !editable }" (click)="showImages()">
+<div class="item-image" [ngClass]="{ outlined: !disabled }" (click)="showImages()">
 	<img class="item-img" #itemImage [src]="value.rightSmallUrl" [alt]="value.value" />
 </div>
 <div class="product-images" #container *ngIf="showImage" (wheel)="scroll($event)">

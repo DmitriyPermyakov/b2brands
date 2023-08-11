@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, forwardRef } from '@angular/core'
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, forwardRef } from '@angular/core'
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
 
 @Component({
@@ -14,8 +14,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
 	],
 })
 export class QuantityComponent implements OnInit, ControlValueAccessor {
-	@Input() editable: boolean = false
 	public quantityString: string
+	public disabled: boolean = true
 
 	public onChanged = (value: number) => {}
 	public onTouched = () => {}
@@ -32,16 +32,23 @@ export class QuantityComponent implements OnInit, ControlValueAccessor {
 
 	@Input()
 	public set value(val: number) {
-		if (val >= 1) this._value = val
-		else this._value = 1
+		if (val < 1) {
+			this._value = 1
+			this.quantityString = this._value + 'шт.'
+			this.onChanged(this._value)
+		} else {
+			this._value = val
+			this.quantityString = this._value + 'шт.'
+			this.onChanged(this._value)
+		}
+		console.log(this._value)
 	}
 
 	ngOnInit() {
+		console.log('value is ' + this.value)
 		if (!this.value) {
 			this.value = 1
-			this.quantityString = this.value + 'шт.'
 		}
-		this.quantityString = this.value.toString() + 'шт.'
 		this.currentValue = this.value
 	}
 
@@ -54,24 +61,21 @@ export class QuantityComponent implements OnInit, ControlValueAccessor {
 	registerOnTouched(fn: any): void {
 		this.onTouched = fn
 	}
-	// setDisabledState?(isDisabled: boolean): void {}
+	setDisabledState?(isDisabled: boolean): void {
+		this.disabled = isDisabled
+	}
 
 	increase() {
 		this.markAsTouched()
 		if (this.value >= 99999) return
 
 		this.value++
-
-		this.onChanged(this.value)
-		this.quantityString = this.value + 'шт.'
 	}
 
 	decrease() {
 		this.markAsTouched()
 		if (this.value > 1) {
 			this.value--
-			this.onChanged(this.value)
-			this.quantityString = this.value + 'шт.'
 		}
 		return
 	}
@@ -87,7 +91,6 @@ export class QuantityComponent implements OnInit, ControlValueAccessor {
 			event.target.value = event.target.value + 'шт.'
 		}
 		this.value = event.target.value.slice(0, event.target.value.length - 3)
-		this.onChanged(this.value)
 	}
 	onInput(event: any): void {
 		this.markAsTouched()

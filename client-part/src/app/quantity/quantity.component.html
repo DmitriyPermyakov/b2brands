@@ -1,5 +1,5 @@
 <div class="quantity">
-	<button class="minus" (click)="decrease()" [disabled]="!editable" [ngClass]="{ showed: !editable }">
+	<button class="minus" (click)="decrease()" [disabled]="disabled" [ngClass]="{ showed: disabled }">
 		<svg width="26" height="2" viewBox="0 0 26 2" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path d="M1 1H25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
 		</svg>
@@ -7,14 +7,15 @@
 	<input
 		class="quantity-number"
 		type="text"
-		[ngClass]="{ outlined: editable }"
-		[disabled]="!editable"
+		[ngClass]="{ outlined: !disabled }"
+		[disabled]="disabled"
 		[value]="quantityString"
 		(input)="onInput($event)"
 		(focus)="onFocus($event)"
 		(blur)="onBlur($event)"
+		[value]="quantityString"
 	/>
-	<button class="plus" (click)="increase()" [disabled]="!editable" [ngClass]="{ showed: !editable }">
+	<button class="plus" (click)="increase()" [disabled]="disabled" [ngClass]="{ showed: disabled }">
 		<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path d="M1 13H25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
 			<path d="M13 1L13 25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />

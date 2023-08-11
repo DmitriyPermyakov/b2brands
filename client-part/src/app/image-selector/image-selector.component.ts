@@ -17,12 +17,13 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/f
 })
 export class ImageSelectorComponent implements ControlValueAccessor {
 	@Input() product: IProduct
-	@Input() editable: boolean = true
+	// @Input() editable: boolean = true
 
 	@ViewChild('container') scrollContainer: ElementRef
 	@ViewChild('itemImage') itemImage: ElementRef
 
 	public showImage: boolean = false
+	public disabled: boolean = true
 
 	public onChange = (color: IProductColor) => {}
 	public onTouched = () => {}
@@ -48,12 +49,12 @@ export class ImageSelectorComponent implements ControlValueAccessor {
 	registerOnTouched(fn: any): void {
 		this.onTouched = fn
 	}
-	// setDisabledState?(isDisabled: boolean): void {
-	// 	console.log('set disable state')
-	// }
+	setDisabledState?(isDisabled: boolean): void {
+		this.disabled = isDisabled
+	}
 
 	showImages(): void {
-		if (!this.editable) this.showImage = true
+		if (!this.disabled) this.showImage = true
 	}
 
 	setImage(color: IProductColor): void {

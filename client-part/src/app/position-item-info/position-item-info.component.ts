@@ -51,6 +51,7 @@ export class PositionItemInfoComponent implements OnInit, AfterViewInit {
 	}
 
 	cancel(): void {
+		this.resetForm()
 		this.disableFormControls()
 	}
 
@@ -68,6 +69,18 @@ export class PositionItemInfoComponent implements OnInit, AfterViewInit {
 			status: new FormControl({ value: this.item.status, disabled: true }),
 			comment: new FormControl({ value: this.item.comment, disabled: true }),
 			amount: new FormControl({ value: this.item.amount, disabled: true }),
+		})
+	}
+
+	private resetForm() {
+		this.form.setValue({
+			name: this.item.name,
+			vendor: this.item.vendorCode,
+			color: this.item.color,
+			print: this.item.printType,
+			status: this.item.status,
+			comment: this.item.comment,
+			amount: this.item.amount,
 		})
 	}
 

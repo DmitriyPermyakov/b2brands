@@ -1,7 +1,7 @@
 <form class="item" [ngClass]="{ edit: editable }" [formGroup]="form">
 	<p class="item-number">{{ index + 1 + '/' + itemLength }}</p>
 	<div class="item-images-container">
-		<app-image-selector [product]="product" [editable]="!editable" formControlName="color"></app-image-selector>
+		<app-image-selector [product]="product" formControlName="color"></app-image-selector>
 	</div>
 
 	<div class="item-info">
@@ -30,6 +30,7 @@
 		</select>
 		<label class="status-label" for="status">Статус:</label>
 		<!-- <select class="item-status" name="status">
+			#TODO: make status interface from backend
 			<option [value]="item.status">{{ item.status }}</option>
 		</select> -->
 		<select
@@ -48,8 +49,8 @@
 	<textarea class="item-comment" autocomplete="off" [ngClass]="{ outlined: editable }" formControlName="comment">
 	</textarea>
 	<div class="resizable-part" [ngClass]="{ edit: editable }">
-		<app-quantity class="quantity" [editable]="editable" formControlName="amount"></app-quantity>
-		<p class="total-price">{{ item.amount * item.price + 'p.' }}</p>
+		<app-quantity class="quantity" formControlName="amount"></app-quantity>
+		<p class="total-price">{{ form.get('amount').value * item.price + 'p.' }}</p>
 
 		<div class="edit-icon" #editBtn (click)="edit()" [ngClass]="{ hidden: editable, showed: !editable }">
 			<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
