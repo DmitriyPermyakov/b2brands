@@ -41,11 +41,9 @@ export class QuantityComponent implements OnInit, ControlValueAccessor {
 			this.quantityString = this._value + 'шт.'
 			this.onChanged(this._value)
 		}
-		console.log(this._value)
 	}
 
 	ngOnInit() {
-		console.log('value is ' + this.value)
 		if (!this.value) {
 			this.value = 1
 		}

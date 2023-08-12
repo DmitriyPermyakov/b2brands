@@ -46,6 +46,11 @@ export class CustomerOrdersComponent implements OnInit {
 					phone: this.form.value.phone,
 					email: this.form.value.email,
 				},
+				// #TODO: fix dates
+				dateOfCreation: new Date(Date.now()),
+				dateOfCompletion: new Date(Date.now()),
+				status: 'В заказе',
+				comment: 'Сделать как можно быстрее',
 				orderItems: orderItems,
 			}
 

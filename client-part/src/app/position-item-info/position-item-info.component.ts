@@ -1,53 +1,54 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core'
-import { OrderItem } from '../interfaces/orderItem.interface'
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { FormControl, FormGroup } from '@angular/forms'
 
 import { IProduct } from '../interfaces/product.interface'
 import { ProductsService } from '../services/products.service'
-import { FormControl, FormGroup } from '@angular/forms'
+import { Subscription } from 'rxjs'
 
 @Component({
 	selector: 'app-position-item-info',
 	templateUrl: './position-item-info.component.html',
 	styleUrls: ['./position-item-info.component.css'],
 })
-export class PositionItemInfoComponent implements OnInit, AfterViewInit {
-	@Input() item: OrderItem
+export class PositionItemInfoComponent implements OnInit {
+	@Input() item
 	@Input() itemLength: number
 	@Input() index: number
 	@Output() onRemoveItem: EventEmitter<number> = new EventEmitter()
 
 	public product: IProduct
 	public editable: boolean = false
-	public form: FormGroup
+	public initialForm: FormGroup
+	public price: number
+	private amountChangeSubscription: Subscription
 
-	constructor(private productsService: ProductsService) {}
+	constructor(private productsService: ProductsService, private changeDetectorRef: ChangeDetectorRef) {}
 	ngOnInit(): void {
-		this.initForm()
+		this.disableFormControls()
+		this.initialForm = this.initResetForm(this.item)
+		this.price = this.item.controls['amount'].value * this.item.controls['price'].value
+		this.item.controls['amount'].valueChanges.subscribe(() => {
+			this.price = this.item.controls['amount'].value * this.item.controls['price'].value
+		})
 	}
-	ngAfterViewInit(): void {}
 
 	onSubmit(value) {
-		console.log(value)
 		this.disableFormControls()
 	}
 
 	edit(): void {
-		this.productsService.getByVendor(this.item.vendorCode).subscribe((p) => {
+		this.productsService.getByVendor(this.item.get('vendor').value).subscribe((p) => {
 			this.product = p
 			this.enableFormsControls()
 		})
 	}
 
 	printChanged(event: any) {
-		this.form.get('print').setValue(event.target.value)
+		this.item.get('print').setValue(event.target.value)
 	}
 
 	statusChanged(event: any) {
-		this.form.get('status').setValue(event.target.value)
-	}
-
-	colorChanged(event: any) {
-		console.log('color changed')
+		this.item.get('status').setValue(event.target.value)
 	}
 
 	cancel(): void {
@@ -60,45 +61,35 @@ export class PositionItemInfoComponent implements OnInit, AfterViewInit {
 		this.disableFormControls()
 	}
 
-	private initForm() {
-		this.form = new FormGroup({
-			color: new FormControl({ value: this.item.color, disabled: true }),
-			name: new FormControl({ value: this.item.name, disabled: false }),
-			vendor: new FormControl({ value: this.item.vendorCode, disabled: false }),
-			print: new FormControl({ value: this.item.printType, disabled: true }),
-			status: new FormControl({ value: this.item.status, disabled: true }),
-			comment: new FormControl({ value: this.item.comment, disabled: true }),
-			amount: new FormControl({ value: this.item.amount, disabled: true }),
+	private initResetForm(data: FormGroup): FormGroup {
+		const form = new FormGroup({
+			id: new FormControl(),
+			color: new FormControl(),
+			name: new FormControl(),
+			vendor: new FormControl(),
+			print: new FormControl(),
+			status: new FormControl(),
+			comment: new FormControl(),
+			amount: new FormControl(),
+			price: new FormControl(),
 		})
+
+		Object.keys(data.controls).forEach((c) => form.controls[c].setValue(data.controls[c].value))
+
+		return form
 	}
 
 	private resetForm() {
-		this.form.setValue({
-			name: this.item.name,
-			vendor: this.item.vendorCode,
-			color: this.item.color,
-			print: this.item.printType,
-			status: this.item.status,
-			comment: this.item.comment,
-			amount: this.item.amount,
-		})
+		Object.keys(this.item.controls).forEach((c) => this.item.controls[c].setValue(this.initialForm.controls[c].value))
 	}
 
 	private enableFormsControls() {
 		this.editable = true
-		this.form.get('color').enable()
-		this.form.get('print').enable()
-		this.form.get('status').enable()
-		this.form.get('comment').enable()
-		this.form.get('amount').enable()
+		Object.keys(this.item.controls).forEach((c) => this.item.get(c).enable())
 	}
 
 	private disableFormControls() {
 		this.editable = false
-		this.form.get('color').disable()
-		this.form.get('print').disable()
-		this.form.get('status').disable()
-		this.form.get('comment').disable()
-		this.form.get('amount').disable()
+		Object.keys(this.item.controls).forEach((c) => this.item.get(c).disable())
 	}
 }

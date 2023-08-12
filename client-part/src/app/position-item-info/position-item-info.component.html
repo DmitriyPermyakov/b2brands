@@ -1,4 +1,4 @@
-<form class="item" [ngClass]="{ edit: editable }" [formGroup]="form">
+<form class="item" [ngClass]="{ edit: editable }" [formGroup]="item">
 	<p class="item-number">{{ index + 1 + '/' + itemLength }}</p>
 	<div class="item-images-container">
 		<app-image-selector [product]="product" formControlName="color"></app-image-selector>
@@ -11,7 +11,7 @@
 		<input class="item-vendor" type="text" name="vendor" formControlName="vendor" />
 		<label class="print-label" for="print">Нанесение:</label>
 		<select class="item-print" name="print" *ngIf="!editable" formControlName="print">
-			<option [value]="item.printType">{{ item.printType }}</option>
+			<option [value]="item.controls['print'].value" selected>{{ item.controls['print'].value }}</option>
 		</select>
 		<select
 			class="item-print outlined"
@@ -22,7 +22,7 @@
 		>
 			<option
 				*ngFor="let print of product.print; index as i"
-				[selected]="product.print[i] == item.printType"
+				[selected]="product.print[i] == item.controls['print'].value"
 				[value]="print"
 			>
 				{{ print }}
@@ -50,7 +50,7 @@
 	</textarea>
 	<div class="resizable-part" [ngClass]="{ edit: editable }">
 		<app-quantity class="quantity" formControlName="amount"></app-quantity>
-		<p class="total-price">{{ form.get('amount').value * item.price + 'p.' }}</p>
+		<p class="total-price">{{ price }}р.</p>
 
 		<div class="edit-icon" #editBtn (click)="edit()" [ngClass]="{ hidden: editable, showed: !editable }">
 			<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -82,7 +82,7 @@
 			</svg>
 		</div>
 		<div class="save-cancel-btns">
-			<button class="save-btn" [disabled]="!editable" type="submit" (click)="onSubmit(form.value)">Сохранить</button>
+			<button class="save-btn" [disabled]="!editable" type="submit" (click)="onSubmit(item.value)">Сохранить</button>
 			<button class="cancel-btn" [disabled]="!editable" (click)="cancel()">Отмена</button>
 		</div>
 	</div>

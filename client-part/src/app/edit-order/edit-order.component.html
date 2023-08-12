@@ -19,63 +19,43 @@
 		<p class="amount">Количество:</p>
 		<p class="total-amount">Сумма:</p>
 	</div>
-	<form class="form">
+	<form class="form" [formGroup]="form" (ngSubmit)="onSubmit(form)">
 		<div class="general-info" [ngClass]="{ edit: editable }">
 			<p class="number">1</p>
 			<div class="contacts">
-				<input
-					class="phone"
-					[ngClass]="{ outlined: editable }"
-					type="tel"
-					[value]="order.contacts.phone"
-					[disabled]="!editable"
-				/>
-				<input
-					class="name"
-					type="text"
-					[value]="order.contacts.name"
-					[disabled]="!editable"
-					[ngClass]="{ outlined: editable }"
-				/>
-				<input
-					class="email"
-					type="email"
-					[value]="order.contacts.email"
-					[disabled]="!editable"
-					[ngClass]="{ outlined: editable }"
-				/>
+				<input class="phone" [ngClass]="{ outlined: editable }" type="tel" formControlName="phone" />
+				<input class="name" type="text" [ngClass]="{ outlined: editable }" formControlName="name" />
+				<input class="email" type="email" [ngClass]="{ outlined: editable }" formControlName="email" />
 			</div>
 			<div class="dates">
 				<input
 					class="date-of-creation"
 					type="date"
-					value="2022-12-23"
-					[disabled]="!editable"
 					[ngClass]="{ outlined: editable }"
 					onfocus="this.showPicker()"
+					formControlName="dateOfCreation"
 				/>
 				<input
 					class="date-of-completion"
 					type="date"
-					value="2023-02-23"
-					[disabled]="!editable"
 					[ngClass]="{ outlined: editable }"
 					onfocus="this.showPicker()"
+					formControlName="dateOfCompletion"
 				/>
 				<span>Осталось 2 недели</span>
 			</div>
-			<select class="status" [disabled]="!editable" [ngClass]="{ outlined: editable }">
-				<option value="">В заказе</option>
-				<option selected value="">В производстве</option>
-				<option value="">Отправлен заказчику</option>
-				<option value="">Завершен</option>
+			<select class="status" [ngClass]="{ outlined: editable }" formControlName="status">
+				<option value="В заказе">В заказе</option>
+				<option selected value="В производстве">В производстве</option>
+				<option value="Отправлен заказчику">Отправлен заказчику</option>
+				<option value="Завершен">Завершен</option>
 			</select>
-			<textarea class="comment" autocomplete="off" [disabled]="!editable" [ngClass]="{ outlined: editable }">
+			<textarea class="comment" autocomplete="off" [ngClass]="{ outlined: editable }" formControlName="comment">
 Сделать как можно быстрее, т.к. заказ попал на праздничние дни. </textarea
 			>
 			<div class="resizable-part" [ngClass]="{ edit: editable }">
-				<p class="amount">315шт.</p>
-				<p class="total-amount">50 748p.</p>
+				<p class="amount">{{ count }}шт.</p>
+				<p class="total-amount">{{ totalPrice }}p.</p>
 				<div class="edit-icon" #editBtn (click)="edit()" [ngClass]="{ hidden: editable, showed: !editable }">
 					<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path
@@ -107,7 +87,7 @@
 					</svg>
 				</div>
 				<div class="save-cancel-btns">
-					<button class="save-btn" [disabled]="!editable">Сохранить</button>
+					<button class="save-btn" [disabled]="!editable" type="submit">Сохранить</button>
 					<button class="cancel-btn" [disabled]="!editable" (click)="cancel()">Отмена</button>
 				</div>
 			</div>
@@ -115,7 +95,8 @@
 		<div class="position-item-info">
 			<div class="item-container">
 				<app-position-item-info
-					*ngFor="let item of order.orderItems; index as i"
+					formArrayName="orderItems"
+					*ngFor="let item of orderItems.controls; index as i"
 					[item]="item"
 					[index]="i"
 					[itemLength]="order.orderItems.length"

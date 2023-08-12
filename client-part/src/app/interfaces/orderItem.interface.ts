@@ -6,7 +6,7 @@ export class OrderItem {
 	vendorCode!: string
 	color!: IProductColor
 	printType!: string
-	amount: number
+	amount!: number
 	price!: number
 	status!: string
 	comment!: string
