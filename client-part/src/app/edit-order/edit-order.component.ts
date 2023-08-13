@@ -99,7 +99,7 @@ export class EditOrderComponent implements OnInit {
 			}, 0)
 
 			this.totalPrice = this.orderItems.controls.reduce((acc, controls) => {
-				return acc + controls.get('price').value
+				return acc + controls.get('price').value * controls.get('amount').value
 			}, 0)
 		})
 	}

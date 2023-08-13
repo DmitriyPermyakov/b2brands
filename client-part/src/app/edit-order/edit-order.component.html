@@ -99,7 +99,7 @@
 					*ngFor="let item of orderItems.controls; index as i"
 					[item]="item"
 					[index]="i"
-					[itemLength]="order.orderItems.length"
+					[itemLength]="orderItems.controls.length"
 					(onRemoveItem)="removeItem($event)"
 				></app-position-item-info>
 				<button class="add-item-btn" *ngIf="editable" (click)="showProductModal()">
