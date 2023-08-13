@@ -1,14 +1,14 @@
 <section class="profile-container">
-	<form class="profile-form">
+	<form class="profile-form" [formGroup]="form">
 		<img class="profile-image" src="../../assets/icons/profile.svg" alt="" />
-		<div class="inputs">
+		<div class="inputs" [ngClass]="{ edit: editing }">
 			<div class="main">
-				<input class="bordered-input" type="text" placeholder="Имя" />
-				<input class="bordered-input" type="text" placeholder="Фамилия" />
-				<input class="bordered-input" type="email" placeholder="Email" />
+				<input class="bordered-input" type="text" placeholder="Имя" formControlName="name" />
+				<input class="bordered-input" type="text" placeholder="Фамилия" formControlName="lastName" />
+				<input class="bordered-input" type="email" placeholder="Email" formControlName="email" />
 				<div class="password-with-icon">
-					<input class="non-bordered-input" type="password" placeholder="Пароль" />
-					<div class="edit-password-icon">
+					<input class="non-bordered-input" type="password" placeholder="Пароль" formControlName="password" />
+					<div class="edit-password-icon" (click)="toggleEdit()">
 						<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path
 								d="M36.8624 10.8241L30.1687 6.78452C29.6958 6.49915 29.0812 6.65114 28.7958 7.12399L14.1704 31.3585C14.056 31.5479 14.0078 31.77 14.0332 31.9898L14.7661 38.3408C14.8412 38.9912 15.5106 39.3953 16.1211 39.1586L22.0818 36.8471C22.2881 36.7671 22.4621 36.621 22.5764 36.4315L37.2018 12.197C37.4872 11.7241 37.3352 11.1095 36.8624 10.8241Z"
@@ -27,8 +27,8 @@
 				</div>
 			</div>
 			<div class="additional">
-				<input class="bordered-input" type="password" placeholder="Новый пароль" />
-				<input class="bordered-input" type="password" placeholder="Подтвердите пароль" />
+				<input class="bordered-input" type="password" placeholder="Новый пароль" formControlName="newPassword" />
+				<input class="bordered-input" type="password" placeholder="Подтвердите пароль" [disabled]="!editing" />
 			</div>
 		</div>
 		<div class="form-buttons">

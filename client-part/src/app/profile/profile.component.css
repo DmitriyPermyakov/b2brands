@@ -42,10 +42,10 @@
 	grid-template-rows: 1fr auto;
 	padding-top: 4em;
 	margin-bottom: 0;
-	transition: all 1s;
+	transition: all 0.2s;
 }
 
-.inputs:has(.additional:hover) {
+.inputs.edit {
 	grid-template-rows: 1fr auto;
 	padding-top: 0;
 	margin-bottom: 4em;
@@ -57,10 +57,10 @@
 
 .additional {
 	opacity: 0;
-	transition: opacity 1s;
+	transition: opacity 0.2s;
 }
 
-.additional:hover {
+.edit .additional {
 	opacity: 100%;
 }
 
