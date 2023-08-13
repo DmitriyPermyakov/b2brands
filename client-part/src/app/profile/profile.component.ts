@@ -17,7 +17,7 @@ export class ProfileComponent implements OnInit {
 			name: [{ value: 'Alex', disabled: false }],
 			lastName: [{ value: 'Polozov', disabled: false }],
 			email: [{ value: 'polozov@gmail.com', disabled: false }],
-			password: [{ value: 'password', disabled: true }],
+			password: [{ value: '', disabled: true }],
 			newPassword: [{ value: '', disabled: true }],
 		})
 	}
@@ -29,7 +29,9 @@ export class ProfileComponent implements OnInit {
 			this.form.controls['newPassword'].enable()
 		} else {
 			this.form.controls['password'].disable()
+			this.form.controls['password'].setValue('')
 			this.form.controls['newPassword'].disable()
+			this.form.controls['newPassword'].setValue('')
 		}
 	}
 }
