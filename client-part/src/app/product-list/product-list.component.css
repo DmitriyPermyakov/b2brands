@@ -47,17 +47,6 @@
 }
 
 .arrow-back-icon {
-	width: 100%;
-	cursor: pointer;
-}
-
-.arrow-back-icon:hover svg * {
-	stroke: var(--outline);
-}
-.arrow-back-icon svg {
-	display: block;
-	width: 100%;
-	height: 100%;
 }
 
 @media (max-width: 600px) {

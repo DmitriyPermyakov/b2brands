@@ -93,35 +93,11 @@
 
 .edit-icon {
 	grid-column: 8 / 9;
-
-	width: 2.1875em;
-	height: 2.1875em;
-}
-
-.edit-icon svg {
-	width: 100%;
-	height: 100%;
-}
-
-.edit-icon:hover svg * {
-	stroke: var(--outline);
 }
 
 .remove-icon {
 	display: none;
 	grid-column: 8 / 9;
-
-	width: 2.1875em;
-	height: 2.1875em;
-}
-
-.remove-icon svg {
-	width: 100%;
-	height: 100%;
-}
-
-.remove-icon:hover svg * {
-	stroke: var(--outline);
 }
 
 .hidden {
@@ -214,20 +190,9 @@ textarea::-webkit-scrollbar-corner {
 }
 
 .arrow-back {
-	width: 35px;
-	height: 35px;
 	position: absolute;
 	top: 2em;
 	left: 2em;
-}
-
-.arrow-back svg {
-	width: 100%;
-	height: 100%;
-}
-
-.arrow-back:hover svg * {
-	stroke: var(--outline);
 }
 
 .resizable-part {
@@ -344,16 +309,4 @@ button:disabled {
 .add-item-btn {
 	display: block;
 	margin: 1em auto;
-	width: 2em;
-	height: 2em;
-	cursor: pointer;
-}
-
-.add-item-btn:hover svg * {
-	stroke: var(--outline);
-}
-
-.add-item-btn svg {
-	width: 100%;
-	height: 100%;
 }

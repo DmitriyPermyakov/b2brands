@@ -69,6 +69,22 @@ button:active {
 	outline: none;
 }
 
+.icon {
+	display: block;
+	width: 2.18rem;
+	height: 2.18rem;
+	cursor: pointer;
+}
+
+.icon svg {
+	display: block;
+	width: 100%;
+}
+
+.icon:hover * {
+	stroke: var(--outline);
+}
+
 .unselectable {
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;

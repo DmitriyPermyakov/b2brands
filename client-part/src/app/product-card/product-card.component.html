@@ -1,18 +1,18 @@
 <section class="products desktop">
 	<div class="container">
+		<button class="arrow-back-icon icon" [routerLink]="['/products']">
+			<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path
+					d="M20 3L5.2901 18.6293C4.5653 19.3994 4.5653 20.6006 5.2901 21.3707L20 37"
+					stroke="#A2A2A2"
+					stroke-width="3"
+					stroke-linecap="round"
+				/>
+				<path d="M6 20H36" stroke="#A2A2A2" stroke-width="3" stroke-linecap="round" />
+			</svg>
+		</button>
+		<app-account-buttons></app-account-buttons>
 		<div class="product-card">
-			<button class="arrow-back-icon" [routerLink]="['/products']">
-				<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path
-						d="M20 3L5.2901 18.6293C4.5653 19.3994 4.5653 20.6006 5.2901 21.3707L20 37"
-						stroke="#A2A2A2"
-						stroke-width="3"
-						stroke-linecap="round"
-					/>
-					<path d="M6 20H36" stroke="#A2A2A2" stroke-width="3" stroke-linecap="round" />
-				</svg>
-			</button>
-
 			<div class="images">
 				<img class="image front" [src]="productColor.frontSmallUrl" alt="front-image" />
 				<img class="image left" [src]="productColor.leftSmallUrl" alt="left-image" />
@@ -49,7 +49,7 @@
 
 			<div class="colors-prints">
 				<div class="colors-with-btns">
-					<button class="previous-color color-btn" #prevBtn (click)="previousColor()">
+					<button class="previous-color color-btn icon" #prevBtn (click)="previousColor()">
 						<svg width="30" height="16" viewBox="0 0 30 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M1.64648 15L15.6337 1" stroke="white" stroke-width="2" stroke-linecap="round" />
 							<path d="M15.6338 1L28.6465 15" stroke="white" stroke-width="2" stroke-linecap="round" />
@@ -63,7 +63,7 @@
 							[ngStyle]="{ 'background-color': c.value }"
 						></div>
 					</div>
-					<button class="next-color color-btn" #nextBtn (click)="nextColor()">
+					<button class="next-color color-btn icon" #nextBtn (click)="nextColor()">
 						<svg width="31" height="16" viewBox="0 0 31 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M2 1L15.9872 15" stroke="white" stroke-width="2" stroke-linecap="round" />
 							<path d="M15.9873 15L29.0001 1" stroke="white" stroke-width="2" stroke-linecap="round" />
@@ -81,7 +81,7 @@
 			<div class="to-cart-wrapper">
 				<button class="to-cart" (click)="addToCart()">В корзину</button>
 			</div>
-			<button class="cart-button" [routerLink]="['/orders']">
+			<button class="cart-button icon" [routerLink]="['/orders']">
 				<svg class="cart" width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<circle cx="17" cy="30" r="2" stroke="#A2A2A2" stroke-width="2" />
 					<circle cx="25" cy="30" r="2" stroke="#A2A2A2" stroke-width="2" />

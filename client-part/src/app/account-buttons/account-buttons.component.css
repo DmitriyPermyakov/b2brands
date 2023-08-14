@@ -4,23 +4,11 @@
 	justify-content: center;
 
 	position: absolute;
-	top: 2em;
+	top: 1.6em;
 	right: 3em;
 }
 
 .profile {
-	width: 40px;
-	height: 40px;
-	cursor: pointer;
-}
-
-.profile svg {
-	width: 100%;
-	height: 100%;
-}
-
-.profile:hover .outer {
-	stroke: var(--outline);
 }
 
 .profile:hover .body,

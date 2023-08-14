@@ -56,8 +56,8 @@
 			<div class="resizable-part" [ngClass]="{ edit: editable }">
 				<p class="amount">{{ count }}шт.</p>
 				<p class="total-amount">{{ totalPrice }}p.</p>
-				<div class="edit-icon" #editBtn (click)="edit()" [ngClass]="{ hidden: editable, showed: !editable }">
-					<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<div class="edit-icon icon" #editBtn (click)="edit()" [ngClass]="{ hidden: editable, showed: !editable }">
+					<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path
 							d="M36.8624 10.8241L30.1687 6.78452C29.6958 6.49915 29.0812 6.65114 28.7958 7.12399L14.1704 31.3585C14.056 31.5479 14.0078 31.77 14.0332 31.9898L14.7661 38.3408C14.8412 38.9912 15.5106 39.3953 16.1211 39.1586L22.0818 36.8471C22.2881 36.7671 22.4621 36.621 22.5764 36.4315L37.2018 12.197C37.4872 11.7241 37.3352 11.1095 36.8624 10.8241Z"
 							stroke="#A2A2A2"
@@ -72,8 +72,8 @@
 						/>
 					</svg>
 				</div>
-				<div class="remove-icon" #removeBtn [ngClass]="{ showed: editable, hidden: !editable }">
-					<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<div class="remove-icon icon" #removeBtn [ngClass]="{ showed: editable, hidden: !editable }">
+					<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path
 							d="M11 15.0823L14.4498 37.1309C14.6021 38.1043 15.4405 38.8218 16.4258 38.8218H31.5747C32.5599 38.8218 33.3983 38.1043 33.5506 37.1309L37.0004 15.0823"
 							stroke="#A2A2A2"
@@ -102,8 +102,8 @@
 					[itemLength]="orderItems.controls.length"
 					(onRemoveItem)="removeItem($event)"
 				></app-position-item-info>
-				<button class="add-item-btn" *ngIf="editable" (click)="showProductModal()">
-					<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<button class="add-item-btn icon" *ngIf="editable" (click)="showProductModal()">
+					<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<rect x="0.5" y="0.5" width="47" height="47" rx="4.5" stroke="#A2A2A2" />
 						<path d="M12 24H36" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
 						<path d="M24 12L24 36" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />

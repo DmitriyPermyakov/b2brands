@@ -219,22 +219,13 @@
 }
 
 .color-btn {
-	width: 2.5em;
-	height: 2.5em;
+	width: 3em;
+	height: 3em;
 
 	background-color: transparent;
 	border: none;
 	outline: none;
 	cursor: pointer;
-}
-
-.color-btn path {
-	stroke: var(--secondary-text);
-}
-
-.color-btn:hover path {
-	stroke: var(--outline);
-	filter: drop-shadow(0 0 1px var(--outline));
 }
 
 .previous-color {
@@ -379,23 +370,12 @@
 }
 
 .cart-button {
-	display: block;
-	width: 2.18rem;
-	height: 2.18rem;
-
-	background: transparent;
-	border: none;
-	outline: none;
-
 	position: absolute;
 	left: 95%;
 	top: 4%;
-
-	cursor: pointer;
 }
 
 .cart-button:hover .cart * {
-	stroke: var(--outline);
 }
 
 .cart {
@@ -419,9 +399,6 @@
 }
 
 .arrow-back-icon {
-	width: 1.5625em;
-	height: 1.5625em;
-
 	position: absolute;
 	top: 3%;
 	left: 2%;
