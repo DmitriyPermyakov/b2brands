@@ -10,6 +10,7 @@ import { productSelector } from '../store/products/products.selector'
 import { addOrderItemAction } from '../store/orders/order-item.action'
 import { orderItemSelector } from '../store/orders/order-item.selector'
 import { OrderItem } from '../interfaces/orderItem.interface'
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 
 @Component({
 	selector: 'app-product-card',
@@ -22,6 +23,13 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 	@ViewChild('prevBtn') prevColorBtnRef!: ElementRef
 	@ViewChild('nextBtn') nextColorBtnRef!: ElementRef
 
+	public productCardForm: FormGroup
+
+	public get productPropsArray(): FormArray {
+		return this.productCardForm.controls['properties'] as FormArray
+	}
+
+	public isAuthenticated: true
 	public cartIconDotActive: boolean = false
 
 	public product!: IProduct
@@ -41,7 +49,9 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 	private changeImageOnScrollSub!: Subscription
 	private changeImageOnClickSub!: Subscription
 
-	constructor(private activatedRoute: ActivatedRoute, private store: Store) {}
+	constructor(private activatedRoute: ActivatedRoute, private store: Store, private fb: FormBuilder) {
+		this.initProductCardForm()
+	}
 
 	ngOnInit(): void {
 		let id = this.activatedRoute.snapshot.paramMap.get('id')
@@ -53,6 +63,8 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 		})
 
 		this.checkLocalStorageOnCurrentProduct()
+
+		this.setProductCardFormValues()
 		this.ordersItem$ = this.store.pipe(select(orderItemSelector))
 		this.checkAmoutOfOrderItems()
 	}
@@ -123,6 +135,35 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 
 	public quantityChanged(count: number) {
 		this.productAmount = count
+	}
+
+	private initProductCardForm() {
+		this.productCardForm = this.fb.group({
+			id: [{ value: '', disabled: true }],
+			name: [{ value: '', disabled: true }, Validators.required],
+			code: [{ value: '', disabled: true }, Validators.required],
+			description: [{ value: '', disabled: true }],
+			properties: this.fb.array([]),
+		})
+	}
+
+	private setProductCardFormValues() {
+		this.productCardForm.patchValue({
+			id: this.product.id,
+			name: this.product.name,
+			code: this.product.code,
+			description: this.product.description,
+		})
+
+		this.product.productProps.forEach((p) =>
+			this.productPropsArray.push(
+				new FormGroup({
+					id: new FormControl({ value: p.id, disabled: true }),
+					name: new FormControl({ value: p.name, disabled: false }),
+					value: new FormControl({ value: p.value, disabled: false }),
+				})
+			)
+		)
 	}
 
 	private checkLocalStorageOnCurrentProduct() {

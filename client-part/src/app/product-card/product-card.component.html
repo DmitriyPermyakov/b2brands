@@ -12,7 +12,7 @@
 			</svg>
 		</button>
 		<app-account-buttons></app-account-buttons>
-		<div class="product-card">
+		<form class="product-card" [formGroup]="productCardForm">
 			<div class="images">
 				<img class="image front" [src]="productColor.frontSmallUrl" alt="front-image" />
 				<img class="image left" [src]="productColor.leftSmallUrl" alt="left-image" />
@@ -21,20 +21,22 @@
 			</div>
 
 			<div class="name-of-product">
-				<p class="name">{{ product.name }}</p>
-				<p class="articul">Артикул: {{ product.code }}</p>
+				<input class="name" type="text" formControlName="name" />
+				<p class="vendor-container">
+					<span class="vendor-label">Артикул: </span>
+					<input class="vendor" type="text" formControlName="code" />
+				</p>
 			</div>
 			<div class="description-wrapper">
-				<p class="description">{{ product.description }}</p>
+				<textarea class="description" formControlName="description"></textarea>
 
 				<div class="properties">
-					<p class="property" *ngFor="let p of product.productProps">
-						<span>{{ p.name }}</span>
-						<span class="dots"
-							>...........................................................................................................</span
-						>
-						<span>{{ p.value }}</span>
-					</p>
+					<app-product-properties
+						class="prop"
+						*ngFor="let props of productPropsArray.controls"
+						formArrayName="properties"
+						[props]="props"
+					></app-product-properties>
 				</div>
 			</div>
 
@@ -50,7 +52,7 @@
 			<div class="colors-prints">
 				<div class="colors-with-btns">
 					<button class="previous-color color-btn icon" #prevBtn (click)="previousColor()">
-						<svg width="30" height="16" viewBox="0 0 30 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<svg viewBox="0 0 30 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M1.64648 15L15.6337 1" stroke="white" stroke-width="2" stroke-linecap="round" />
 							<path d="M15.6338 1L28.6465 15" stroke="white" stroke-width="2" stroke-linecap="round" />
 						</svg>
@@ -64,7 +66,7 @@
 						></div>
 					</div>
 					<button class="next-color color-btn icon" #nextBtn (click)="nextColor()">
-						<svg width="31" height="16" viewBox="0 0 31 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<svg viewBox="0 0 31 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M2 1L15.9872 15" stroke="white" stroke-width="2" stroke-linecap="round" />
 							<path d="M15.9873 15L29.0001 1" stroke="white" stroke-width="2" stroke-linecap="round" />
 						</svg>
@@ -104,7 +106,7 @@
 					<circle cx="1.5" cy="1.5" r="1.5" transform="matrix(1 0 0 -1 0 3)" fill="#FEFEFE" />
 				</svg>
 			</button>
-		</div>
+		</form>
 	</div>
 </section>
 

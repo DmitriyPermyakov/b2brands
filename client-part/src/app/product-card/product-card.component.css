@@ -17,7 +17,7 @@
 .container {
 	display: grid;
 	grid-template-columns: 1fr 8fr 1fr;
-	grid-template-rows: 1fr;
+	grid-template-rows: 1fr auto 1fr;
 
 	padding: 10.625em 0;
 
@@ -35,12 +35,11 @@
 
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
-	grid-template-rows: 1fr minmax(0, 8fr) 1fr;
+	grid-template-rows: 1fr auto 1fr;
 
 	padding: 3.75em 6.25em;
 
-	width: 100%;
-	aspect-ratio: 1.9 / 1;
+	width: 95%;
 
 	background-color: var(--card);
 	border-radius: 10px;
@@ -49,19 +48,37 @@
 	position: relative;
 }
 
+/* input {
+	font-size: inherit;
+	font-weight: inherit;
+	font-family: inherit;
+	color: inherit;
+} */
+
 .name-of-product {
 	grid-column: 1 / 2;
 	grid-row: 1 / 2;
 	display: block;
 
-	font-size: 2em;
 	color: var(--main-text);
 	align-self: flex-start;
 }
 
-.articul {
+.name {
+	font-size: 2em;
+	max-width: 86%;
+	color: var(--main-text);
+}
+
+.vendor-label {
 	padding-top: 0.5em;
-	font-size: 0.5em;
+	font-size: 1em;
+	color: var(--secondary-text);
+}
+
+.vendor {
+	font-size: 1em;
+
 	color: var(--secondary-text);
 }
 
@@ -71,53 +88,35 @@
 
 	display: grid;
 	grid-template-columns: 1fr;
-	grid-template-rows: 1fr 1fr;
+	grid-template-rows: auto auto;
+
+	align-content: space-around;
+	align-items: center;
+
+	height: 100%;
 }
 .description {
 	grid-row: 1 / 2;
 
 	padding-top: 1.5em;
-	padding-right: 2.5em;
+	margin-right: 3.5em;
 
+	max-height: 13em;
+	max-width: 39ch;
+	min-height: 20ch;
 	font-size: 1em;
 	line-height: 1.6;
+	font-family: inherit;
 	color: var(--secondary-text);
+
 	overflow: hidden;
 }
 
 .properties {
 	grid-row: 2 / 3;
-
+	display: inline-block;
+	width: 86%;
 	overflow: hidden;
-}
-
-.properties p {
-	padding-right: 2.5em;
-
-	font-size: 1em;
-	line-height: 1.6;
-	color: var(--secondary-text);
-}
-
-.property {
-	display: flex;
-	flex-wrap: nowrap;
-	justify-content: space-between;
-
-	margin-right: 1em;
-}
-
-.property > span {
-	flex: 0 0 auto;
-}
-
-.property .dots {
-	flex: 1 1 auto;
-	overflow: hidden;
-}
-
-.property + .property {
-	margin-top: 0.5em;
 }
 
 .images {
@@ -290,7 +289,7 @@
 
 	display: flex;
 	flex-direction: column;
-	padding: 0 2em 2.4em 2em;
+	padding: 0 1em 2.4em 1em;
 
 	justify-content: center;
 	align-items: flex-start;
@@ -311,7 +310,7 @@
 }
 
 .type-of-print.selected {
-	font-size: 1.2em;
+	font-size: 1.1em;
 	color: var(--main-text);
 }
 
@@ -611,17 +610,6 @@
 
 	.properties {
 		font-size: 5em;
-	}
-	.properties p {
-		padding-right: 0;
-
-		font-size: 1em;
-		line-height: 1;
-		color: var(--secondary-text);
-	}
-
-	.properties p + p {
-		margin-top: 1em;
 	}
 
 	.color-print-container {

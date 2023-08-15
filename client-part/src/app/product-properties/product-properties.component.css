@@ -1,0 +1,66 @@
+.property {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: center;
+
+	width: 100%;
+	margin-right: 3.5em;
+	margin-bottom: 0.5em;
+}
+input {
+	flex: 0 1 auto;
+	font-size: 0.9em;
+	border-radius: 0.2em;
+	border-color: transparent;
+	border: none;
+	color: var(--secondary-text);
+	background: transparent;
+	transition: all 0.2s;
+}
+
+.prop-name {
+	padding: 0;
+	text-align: start;
+	transition: all 0.2s;
+}
+
+.prop-value {
+	padding: 0;
+	text-align: end;
+	transition: all 0.2s;
+}
+
+input.edit {
+	border: 1px solid var(--secondary-text);
+}
+
+.prop-name.edit {
+	padding: 0.1em 0 0.1em 0.2em;
+	min-width: 15ch;
+}
+
+.prop-value.edit {
+	padding: 0.1em 0.2em 0.1em 0;
+	min-width: 15ch;
+}
+
+.property .dots {
+	flex: 0 1 auto;
+	color: var(--secondary-text);
+	overflow: hidden;
+}
+
+@media (max-width: 600) {
+	.properties p {
+		padding-right: 0;
+
+		font-size: 1em;
+		line-height: 1;
+		color: var(--secondary-text);
+	}
+
+	.properties p + p {
+		margin-top: 1em;
+	}
+}

@@ -28,11 +28,13 @@ import { ProfileComponent } from './profile/profile.component'
 import { AdminOrdersListComponent } from './admin-orders-list/admin-orders-list.component'
 import { AdminOrderComponent } from './admin-order/admin-order.component'
 import { ListContainerComponent } from './list-container/list-container.component'
-import { AccountButtonsComponent } from './account-buttons/account-buttons.component';
-import { EditOrderComponent } from './edit-order/edit-order.component';
-import { PositionItemInfoComponent } from './position-item-info/position-item-info.component';
-import { AddOrderItemComponent } from './add-order-item/add-order-item.component';
+import { AccountButtonsComponent } from './account-buttons/account-buttons.component'
+import { EditOrderComponent } from './edit-order/edit-order.component'
+import { PositionItemInfoComponent } from './position-item-info/position-item-info.component'
+import { AddOrderItemComponent } from './add-order-item/add-order-item.component'
 import { ImageSelectorComponent } from './image-selector/image-selector.component'
+import { ProductPropertiesComponent } from './product-properties/product-properties.component';
+import { InputWidthDirective } from './directives/input-width/input-width.directive'
 
 @NgModule({
 	declarations: [
@@ -56,10 +58,12 @@ import { ImageSelectorComponent } from './image-selector/image-selector.componen
 		AdminOrderComponent,
 		ListContainerComponent,
 		AccountButtonsComponent,
-  EditOrderComponent,
-  PositionItemInfoComponent,
-  AddOrderItemComponent,
-  ImageSelectorComponent,
+		EditOrderComponent,
+		PositionItemInfoComponent,
+		AddOrderItemComponent,
+		ImageSelectorComponent,
+		ProductPropertiesComponent,
+  InputWidthDirective,
 	],
 	imports: [
 		BrowserModule,
