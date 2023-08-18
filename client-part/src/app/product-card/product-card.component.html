@@ -14,10 +14,10 @@
 		<app-account-buttons></app-account-buttons>
 		<form class="product-card" [formGroup]="productCardForm">
 			<div class="images">
-				<img class="image front" [src]="productColor.frontSmallUrl" alt="front-image" />
+				<!-- <img class="image front" [src]="productColor.frontSmallUrl" alt="front-image" />
 				<img class="image left" [src]="productColor.leftSmallUrl" alt="left-image" />
 				<img class="image bottom" [src]="productColor.bottomSmallUrl" alt="bottom-image" />
-				<img class="image right" [src]="productColor.rightSmallUrl" alt="right-image" />
+				<img class="image right" [src]="productColor.rightSmallUrl" alt="right-image" /> -->
 			</div>
 
 			<div class="name-of-product">
@@ -30,11 +30,10 @@
 			<div class="description-wrapper">
 				<textarea class="description" formControlName="description"></textarea>
 
-				<div class="properties">
+				<div class="properties" formArrayName="properties">
 					<app-product-properties
 						class="prop"
 						*ngFor="let props of productPropsArray.controls"
-						formArrayName="properties"
 						[props]="props"
 					></app-product-properties>
 				</div>
@@ -50,32 +49,11 @@
 			</div>
 
 			<div class="colors-prints">
-				<div class="colors-with-btns">
-					<button class="previous-color color-btn icon" #prevBtn (click)="previousColor()">
-						<svg viewBox="0 0 30 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M1.64648 15L15.6337 1" stroke="white" stroke-width="2" stroke-linecap="round" />
-							<path d="M15.6338 1L28.6465 15" stroke="white" stroke-width="2" stroke-linecap="round" />
-						</svg>
-					</button>
-
-					<div class="color-items" (wheel)="onScrollColors($event)" #colors>
-						<div
-							class="color"
-							*ngFor="let c of product.productColors"
-							[ngStyle]="{ 'background-color': c.value }"
-						></div>
-					</div>
-					<button class="next-color color-btn icon" #nextBtn (click)="nextColor()">
-						<svg viewBox="0 0 31 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M2 1L15.9872 15" stroke="white" stroke-width="2" stroke-linecap="round" />
-							<path d="M15.9873 15L29.0001 1" stroke="white" stroke-width="2" stroke-linecap="round" />
-						</svg>
-					</button>
-				</div>
+				<app-colors-list [colorsControl]="productColorsControl"></app-colors-list>
 
 				<div class="print-container">
 					<p class="print-title">Виды нанесения:</p>
-					<div class="prints" #prints (wheel)="onScrollPrints($event)">
+					<div class="prints" #prints>
 						<p class="type-of-print" *ngFor="let p of product.print; index as i">{{ p }}</p>
 					</div>
 				</div>

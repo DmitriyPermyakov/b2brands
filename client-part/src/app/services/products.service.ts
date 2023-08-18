@@ -119,30 +119,6 @@ export class ProductsService {
 				print: ['Шелкография', 'Шелкотрансферная печать', 'Печать флексом, флоком', 'DTF печать', 'Вышивка'],
 				productColors: [
 					{
-						id: '1',
-						value: '#33ff00',
-						frontSmallUrl: '../../assets/caps/front.png',
-						leftSmallUrl: '../../assets/caps/left.png',
-						bottomSmallUrl: '../../assets/caps/back.png',
-						rightSmallUrl: '../../assets/caps/right.png',
-					},
-					{
-						id: '2',
-						value: '#ff0000',
-						frontSmallUrl: '../../assets/caps/red-front.png',
-						leftSmallUrl: '../../assets/caps/red-left.png',
-						bottomSmallUrl: '../../assets/caps/red-back.png',
-						rightSmallUrl: '../../assets/caps/red-right.png',
-					},
-					{
-						id: '3',
-						value: '#002cff',
-						frontSmallUrl: '../../assets/caps/front.png',
-						leftSmallUrl: '../../assets/caps/left.png',
-						bottomSmallUrl: '../../assets/caps/back.png',
-						rightSmallUrl: '../../assets/caps/right.png',
-					},
-					{
 						id: '4',
 						value: '#ff00f3',
 						frontSmallUrl: '../../assets/caps/front.png',

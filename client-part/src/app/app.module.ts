@@ -33,8 +33,9 @@ import { EditOrderComponent } from './edit-order/edit-order.component'
 import { PositionItemInfoComponent } from './position-item-info/position-item-info.component'
 import { AddOrderItemComponent } from './add-order-item/add-order-item.component'
 import { ImageSelectorComponent } from './image-selector/image-selector.component'
-import { ProductPropertiesComponent } from './product-properties/product-properties.component';
+import { ProductPropertiesComponent } from './product-properties/product-properties.component'
 import { InputWidthDirective } from './directives/input-width/input-width.directive'
+import { ColorsListComponent } from './colors-list/colors-list.component'
 
 @NgModule({
 	declarations: [
@@ -63,7 +64,8 @@ import { InputWidthDirective } from './directives/input-width/input-width.direct
 		AddOrderItemComponent,
 		ImageSelectorComponent,
 		ProductPropertiesComponent,
-  InputWidthDirective,
+		InputWidthDirective,
+		ColorsListComponent,
 	],
 	imports: [
 		BrowserModule,

@@ -1,0 +1,25 @@
+<div class="colors-with-btns">
+	<button class="previous-color color-btn icon" #prevBtn (click)="previousColor()">
+		<svg viewBox="0 0 30 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M1.64648 15L15.6337 1" stroke="white" stroke-width="2" stroke-linecap="round" />
+			<path d="M15.6338 1L28.6465 15" stroke="white" stroke-width="2" stroke-linecap="round" />
+		</svg>
+	</button>
+	<div class="color-items" (wheel)="onScrollColors($event)" #colors>
+		<div class="color" *ngFor="let c of colorsControl.value" [ngStyle]="{ 'background-color': c.value }"></div>
+	</div>
+
+	<button class="next-color color-btn icon" #nextBtn (click)="nextColor()">
+		<svg viewBox="0 0 31 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M2 1L15.9872 15" stroke="white" stroke-width="2" stroke-linecap="round" />
+			<path d="M15.9873 15L29.0001 1" stroke="white" stroke-width="2" stroke-linecap="round" />
+		</svg>
+	</button>
+	<input class="color-picker" type="color" value="#A2A2A2" #colorInput (change)="colorPickerChangedValue($event)" />
+	<button class="add icon" (click)="showColorInput()">
+		<svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M1 13H25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
+			<path d="M13 1L13 25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
+		</svg>
+	</button>
+</div>
