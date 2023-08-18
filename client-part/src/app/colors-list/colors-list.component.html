@@ -5,7 +5,7 @@
 			<path d="M15.6338 1L28.6465 15" stroke="white" stroke-width="2" stroke-linecap="round" />
 		</svg>
 	</button>
-	<div class="color-items" (wheel)="onScrollColors($event)" #colors>
+	<div class="color-items" #colors>
 		<div class="color" *ngFor="let c of colorsControl.value" [ngStyle]="{ 'background-color': c.value }"></div>
 	</div>
 

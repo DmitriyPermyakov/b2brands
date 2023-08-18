@@ -1,14 +1,15 @@
-import { AfterContentInit, AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core'
+import { AfterContentInit, AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core'
 
 import { FormControl } from '@angular/forms'
 import { Scroller } from '../classes/scroller'
+import { Subscription, fromEvent, map, throttleTime } from 'rxjs'
 
 @Component({
 	selector: 'app-colors-list',
 	templateUrl: './colors-list.component.html',
 	styleUrls: ['./colors-list.component.css'],
 })
-export class ColorsListComponent implements AfterViewInit, AfterContentInit {
+export class ColorsListComponent implements AfterViewInit, AfterContentInit, OnDestroy {
 	@ViewChild('colors') colorsRef!: ElementRef
 	@ViewChild('colorInput') colorInputRef!: ElementRef
 	@Input() colorsControl: FormControl
@@ -17,6 +18,7 @@ export class ColorsListComponent implements AfterViewInit, AfterContentInit {
 	private colorsCount: number = 0
 
 	private scroller: Scroller
+	private scrollSub: Subscription
 
 	constructor() {}
 
@@ -27,11 +29,17 @@ export class ColorsListComponent implements AfterViewInit, AfterContentInit {
 		this.scroller = new Scroller(this.colorsCount, this.colorsRef)
 
 		this.scroller.initStartClasses()
+		this.scrollSub = fromEvent(this.colorsRef.nativeElement, 'wheel')
+			.pipe(
+				throttleTime(200),
+				map((e) => e)
+			)
+			.subscribe((e: WheelEvent) => {
+				this.scroller.onScroll(e)
+			})
 	}
 
-	public onScrollColors(event: WheelEvent) {
-		this.scroller.onScroll(event)
-	}
+	public onScrollColors(event: WheelEvent) {}
 
 	public previousColor() {
 		this.scroller.onScrollUp()
@@ -48,5 +56,9 @@ export class ColorsListComponent implements AfterViewInit, AfterContentInit {
 	public colorPickerChangedValue(event) {
 		console.log(event.target.value)
 		console.log(5 % 5)
+	}
+
+	ngOnDestroy(): void {
+		if (this.scrollSub) this.scrollSub.unsubscribe()
 	}
 }
