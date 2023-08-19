@@ -79,15 +79,17 @@
 .color.first {
 	/* width: 1.625em;
 	height: 1.625em; */
-	filter: blur(2px);
-	opacity: 1;
 }
 
 .first-prev {
+	filter: blur(2px);
+	opacity: 1;
 	transform: translate3d(0, -4rem, -8rem);
 }
 
 .first-next {
+	filter: blur(2px);
+	opacity: 1;
 	transform: translate3d(0, 4rem, -8rem);
 }
 
@@ -99,10 +101,14 @@
 }
 
 .second-prev {
+	filter: blur(2px);
+	opacity: 0.7;
 	transform: translate3d(0, -10rem, -20rem);
 }
 
 .second-next {
+	filter: blur(2px);
+	opacity: 0.7;
 	transform: translate3d(0, 10rem, -20rem);
 }
 

@@ -11,31 +11,31 @@ export class Scroller {
 		this._countOfElements = countOfElements
 	}
 
-	private set Counter(countOfElements: number) {
-		console.log('counter is ' + (5 % 5))
-		console.log('rear ' + (5 % 6))
+	private set Selected(countOfElements: number) {
 		if (countOfElements <= 2) {
-			this._counter = 0
+			this._selected = 0
 			return
 		}
 
 		if (countOfElements >= 6) {
-			this._counter = 2
+			this._selected = 2
 			return
 		}
 
-		this._counter = Math.trunc(countOfElements / 2)
+		this._selected = Math.trunc(countOfElements / 2)
 	}
 
 	private _countOfElements: number
-	private _counter: number
+	private _selected: number
 	private _parentElement: ElementRef
-	private _startIndex: number
+
+	private classMapIndexes: Map<string, number> = new Map()
+	private hiddenClassMapIndexes: Map<string, number[]> = new Map()
 
 	constructor(countOfElements: number, parentElement: ElementRef) {
 		this.ParentElement = parentElement
 		this.CountOfElements = countOfElements
-		this.Counter = countOfElements
+		this.Selected = countOfElements
 	}
 
 	// private initPrintStartClasses(element: ElementRef, index: number) {
@@ -43,22 +43,34 @@ export class Scroller {
 	// }
 
 	public initStartClasses() {
-		this._parentElement.nativeElement.children[this._counter - 2]?.classList.add('second')
-		this._parentElement.nativeElement.children[this._counter - 2]?.classList.add('second-prev')
-		this._parentElement.nativeElement.children[this._counter - 1]?.classList.add('first')
-		this._parentElement.nativeElement.children[this._counter - 1]?.classList.add('first-prev')
-		this._parentElement.nativeElement.children[this._counter]?.classList.add('selected')
-		this._parentElement.nativeElement.children[this._counter + 1]?.classList.add('first')
-		this._parentElement.nativeElement.children[this._counter + 1]?.classList.add('first-next')
-		this._parentElement.nativeElement.children[this._counter + 2]?.classList.add('second')
-		this._parentElement.nativeElement.children[this._counter + 2]?.classList.add('second-next')
+		switch (this._countOfElements) {
+			case 1:
+				this.getElement(0).classList.add(ClassesEnum.selected)
+				break
+			case 2:
+				this.setClassedForTwoElements()
+				this.setClassesDictionaryForTwoElements()
+				break
+			case 3:
+				this.setClassesForThreeElements()
+				this.setClassesDictionaryForThreeElements()
+				break
+			case 4:
+				this.setClassesForFourElements()
+				this.setClassesDictionaryForFourElements()
+				break
+			case 5:
+				this.setClassesForFiveElements()
+				this.setClassesDictionaryForFiveElements()
+				break
+			default:
+				this.hiddenClassMapIndexes.set(ClassesEnum.hidden, [])
+				this.setClassesDictionaryForFiveElements()
+				this.setClassesForMoreThanFiveElements()
+				break
+		}
 
-		if (this._countOfElements > 5)
-			for (let i = 5; i < this._countOfElements; i++) {
-				this.getElement(i)?.classList.add('hidden')
-			}
-
-		this._startIndex = this._counter
+		console.log(this.classMapIndexes)
 	}
 
 	public onScroll(event: WheelEvent) {
@@ -72,64 +84,204 @@ export class Scroller {
 	}
 
 	public onScrollUp() {
-		this._counter--
-		if (this._counter < 0) this._counter = this._countOfElements - 1
-		this.scrollUpChangeSelectedClass(this._counter)
+		this._selected--
+		if (this._selected < 0) this._selected = this._countOfElements - 1
+		this.scrollUpChangeSelectedClass()
+		console.log(this._selected)
 	}
 
 	public onScrollDown() {
-		this._counter++
-		if (this._counter > this._countOfElements - 1) this._counter = 0
-
-		this.scrollDownChangeSelectedClass(this._counter)
+		this._selected++
+		if (this._selected > this._countOfElements - 1) this._selected = 0
+		this.scrollDownChangeSelectedClass()
 	}
 
-	public scrollUpChangeSelectedClass(index: number) {
-		this.getElement(this.setIndex(index, -2))?.classList.remove('hidden')
-		this.getElement(this.setIndex(index, -2))?.classList.add('second')
-		this.getElement(this.setIndex(index, -2))?.classList.add('second-prev')
-		this.getElement(this.setIndex(index, -1))?.classList.remove('second-prev')
-		this.getElement(this.setIndex(index, -1))?.classList.remove('second')
-		this.getElement(this.setIndex(index, -1))?.classList.add('first-prev')
-		this.getElement(this.setIndex(index, -1))?.classList.add('first')
-		this.getElement(this.setIndex(index, 0))?.classList.remove('first')
-		this.getElement(this.setIndex(index, 0))?.classList.remove('first-prev')
-		this.getElement(this.setIndex(index, 0))?.classList.add('selected')
-		this.getElement(this.setIndex(index, 1))?.classList.remove('selected')
-		this.getElement(this.setIndex(index, 1))?.classList.add('first')
-		this.getElement(this.setIndex(index, 1))?.classList.add('first-next')
-		this.getElement(this.setIndex(index, 2))?.classList.remove('first-next')
-		this.getElement(this.setIndex(index, 2))?.classList.remove('first')
-		this.getElement(this.setIndex(index, 2))?.classList.add('second')
-		this.getElement(this.setIndex(index, 2))?.classList.add('second-next')
-		this.getElement(this.setIndex(index, 3))?.classList.remove('second-next')
-		this.getElement(this.setIndex(index, 3))?.classList.remove('second')
-		this.getElement(this.setIndex(index, 3))?.classList.add('hidden')
+	public scrollUpChangeSelectedClass() {
+		//#region commented
+		// this.removeClass(index, -2, 'hidden')
+		// this.AddClass(index, -2, 'second-prev')
+		// this.removeClass(index, -1, 'second-prev')
+		// this.AddClass(index, -1, 'first-prev')
+		// this.removeClass(index, 0, 'first-prev')
+		// this.AddClass(index, 0, 'selected')
+		// this.removeClass(index, 1, 'selected')
+		// this.AddClass(index, 1, 'first-next')
+		// this.removeClass(index, 2, 'first-next')
+		// this.AddClass(index, 2, 'second-next')
+		// this.removeClass(index, 3, 'second-next')
+		// this.AddClass(index, 3, 'hidden')
+		//#endregion
+		this.moveClassesUp()
 	}
 
-	public scrollDownChangeSelectedClass(index: number) {
-		this.getElement(this.setIndex(index, 3))?.classList.add('hidden')
-		this.getElement(this.setIndex(index, 2))?.classList.remove('hidden')
-		this.getElement(this.setIndex(index, 2))?.classList.add('second-next')
-		this.getElement(this.setIndex(index, 2))?.classList.add('second')
-		this.getElement(this.setIndex(index, 1))?.classList.remove('second')
-		this.getElement(this.setIndex(index, 1))?.classList.remove('second-next')
-		this.getElement(this.setIndex(index, 1))?.classList.add('first-next')
-		this.getElement(this.setIndex(index, 1))?.classList.add('first')
-		this.getElement(this.setIndex(index, 0))?.classList.remove('first')
-		this.getElement(this.setIndex(index, 0))?.classList.remove('first-next')
-		this.getElement(this.setIndex(index, 0))?.classList.add('selected')
-		this.getElement(this.setIndex(index, -1))?.classList.remove('selected')
-		this.getElement(this.setIndex(index, -1))?.classList.add('first')
-		this.getElement(this.setIndex(index, -1))?.classList.add('first-prev')
-		this.getElement(this.setIndex(index, -2))?.classList.remove('first')
-		this.getElement(this.setIndex(index, -2))?.classList.remove('first-prev')
-		this.getElement(this.setIndex(index, -2))?.classList.add('second')
-		this.getElement(this.setIndex(index, -2))?.classList.add('second-prev')
-		this.getElement(this.setIndex(index, -3))?.classList.remove('second')
-		this.getElement(this.setIndex(index, -3))?.classList.remove('second-prev')
+	public scrollDownChangeSelectedClass() {
+		// this.AddClass(index, 3, 'hidden')
+		// this.removeClass(index, 2, 'hidden')
+		// this.AddClass(index, 2, 'second-next')
+		// this.removeClass(index, 1, 'second-next')
+		// this.AddClass(index, 1, 'first-next')
+		// this.removeClass(index, 0, 'first-next')
+		// this.AddClass(index, 0, 'selected')
+		// this.removeClass(index, -1, 'selected')
+		// this.AddClass(index, -1, 'first-prev')
+		// this.removeClass(index, -2, 'first-prev')
+		// this.AddClass(index, -2, 'second-prev')
+		// this.removeClass(index, -3, 'second-prev')
+		this.moveClassesDown()
 	}
 
+	private moveClassesUp() {
+		switch (this._countOfElements) {
+			case 2:
+				this.moveUp(ClassesEnum.selected)
+				this.moveUp(ClassesEnum.firstNext)
+				break
+			case 3:
+				this.moveUp(ClassesEnum.firstPrev)
+				this.moveUp(ClassesEnum.firstNext)
+				this.moveUp(ClassesEnum.selected)
+				break
+			case 4:
+				this.moveUp(ClassesEnum.secondPrev)
+				this.moveUp(ClassesEnum.firstPrev)
+				this.moveUp(ClassesEnum.selected)
+				this.moveUp(ClassesEnum.firstNext)
+				break
+			case 5:
+				this.moveUp(ClassesEnum.secondPrev)
+				this.moveUp(ClassesEnum.firstPrev)
+				this.moveUp(ClassesEnum.selected)
+				this.moveUp(ClassesEnum.firstNext)
+				this.moveUp(ClassesEnum.secondNext)
+				break
+			default:
+				this.moveUp(ClassesEnum.secondPrev)
+				this.moveUp(ClassesEnum.firstPrev)
+				this.moveUp(ClassesEnum.selected)
+				this.moveUp(ClassesEnum.firstNext)
+				this.moveUp(ClassesEnum.secondNext)
+				this.moveUpHidden()
+				break
+		}
+	}
+
+	private moveClassesDown() {
+		switch (this._countOfElements) {
+			case 2:
+				this.moveDown(ClassesEnum.selected)
+				this.moveDown(ClassesEnum.firstNext)
+				break
+			case 3:
+				this.moveDown(ClassesEnum.firstPrev)
+				this.moveDown(ClassesEnum.firstNext)
+				this.moveDown(ClassesEnum.selected)
+				break
+			case 4:
+				this.moveDown(ClassesEnum.secondPrev)
+				this.moveDown(ClassesEnum.firstPrev)
+				this.moveDown(ClassesEnum.selected)
+				this.moveDown(ClassesEnum.firstNext)
+				break
+			case 5:
+				this.moveDown(ClassesEnum.secondPrev)
+				this.moveDown(ClassesEnum.firstPrev)
+				this.moveDown(ClassesEnum.selected)
+				this.moveDown(ClassesEnum.firstNext)
+				this.moveDown(ClassesEnum.secondNext)
+				break
+			default:
+				this.moveDown(ClassesEnum.secondPrev)
+				this.moveDown(ClassesEnum.firstPrev)
+				this.moveDown(ClassesEnum.selected)
+				this.moveDown(ClassesEnum.firstNext)
+				this.moveDown(ClassesEnum.secondNext)
+				this.moveDownHidden()
+				break
+		}
+	}
+
+	private moveUp(className: string) {
+		let index = this.classMapIndexes.get(className)
+		if (index <= 0) {
+			this.getElement(index)?.classList.remove(className)
+			this.getElement(this._countOfElements - 1)?.classList.add(className)
+			this.classMapIndexes.set(className, this._countOfElements - 1)
+			return
+		}
+
+		this.getElement(index - 1)?.classList.add(className)
+		this.getElement(index)?.classList.remove(className)
+		this.classMapIndexes.set(className, index - 1)
+	}
+
+	private moveDown(className) {
+		let index = this.classMapIndexes.get(className)
+		if (index >= this._countOfElements - 1) {
+			this.getElement(index)?.classList.remove(className)
+			this.getElement(0)?.classList.add(className)
+			this.classMapIndexes.set(className, 0)
+			return
+		}
+		this.getElement(index)?.classList.remove(className)
+		this.getElement(index + 1)?.classList.add(className)
+		this.classMapIndexes.set(className, index + 1)
+	}
+
+	private moveUpHidden() {
+		if (this._countOfElements > 5) {
+			let length = this.hiddenClassMapIndexes.get(ClassesEnum.hidden).length
+			for (let i = 0; i < length; i++) {
+				let index = this.hiddenClassMapIndexes.get(ClassesEnum.hidden)[i]
+				this.changeUpHiddenClasses(index, i, ClassesEnum.hidden)
+			}
+		}
+	}
+
+	private moveDownHidden() {
+		if (this._countOfElements > 5) {
+			let length = this.hiddenClassMapIndexes.get(ClassesEnum.hidden).length
+			for (let i = 0; i < length; i++) {
+				let index = this.hiddenClassMapIndexes.get(ClassesEnum.hidden)[i]
+				this.changeDownHiddenClasses(index, i, ClassesEnum.hidden)
+			}
+		}
+	}
+
+	private changeUpHiddenClasses(index: number, i: number, className: string) {
+		if (index <= 0) {
+			this.getElement(index)?.classList.remove(className)
+			this.getElement(this._countOfElements - 1)?.classList.add(className)
+
+			this.hiddenClassMapIndexes.get(ClassesEnum.hidden).splice(i, 1, this._countOfElements - 1)
+			return
+		}
+
+		this.getElement(index - 1)?.classList.add(className)
+		this.getElement(index)?.classList.remove(className)
+		this.hiddenClassMapIndexes.get(ClassesEnum.hidden).splice(i, 1, index - 1)
+	}
+
+	private changeDownHiddenClasses(index: number, i: number, className: string) {
+		if (index >= this._countOfElements - 1) {
+			this.getElement(index)?.classList.remove(className)
+			this.getElement(0)?.classList.add(className)
+
+			this.hiddenClassMapIndexes.get(ClassesEnum.hidden).splice(i, 1, 0)
+			return
+		}
+
+		this.getElement(index)?.classList.remove(className)
+		this.getElement(index + 1)?.classList.add(className)
+		this.hiddenClassMapIndexes.get(ClassesEnum.hidden).splice(i, 1, index + 1)
+	}
+
+	private removeClass(index: number, bias: number, className: string) {
+		this.getElement(this.setIndex(index, bias))?.classList.remove(className)
+	}
+
+	private AddClass(index: number, bias: number, className: string) {
+		this.getElement(this.setIndex(index, bias))?.classList.add(className)
+	}
 	private setIndex(index: number, bias: number): number {
 		if (index + bias < 0) {
 			return this._countOfElements + index + bias
@@ -143,4 +295,69 @@ export class Scroller {
 	private getElement(index: number) {
 		return this._parentElement.nativeElement.children[index]
 	}
+
+	private setClassedForTwoElements() {
+		this.getElement(0).classList.add(ClassesEnum.selected)
+		this.getElement(1).classList.add(ClassesEnum.firstNext)
+	}
+
+	private setClassesDictionaryForTwoElements() {
+		this.classMapIndexes.set(ClassesEnum.selected, 0)
+		this.classMapIndexes.set(ClassesEnum.firstNext, 1)
+	}
+
+	private setClassesForThreeElements() {
+		this.getElement(0).classList.add(ClassesEnum.firstPrev)
+		this.getElement(1).classList.add(ClassesEnum.selected)
+		this.getElement(2).classList.add(ClassesEnum.firstNext)
+	}
+
+	private setClassesDictionaryForThreeElements() {
+		this.classMapIndexes.set(ClassesEnum.firstPrev, 0)
+		this.classMapIndexes.set(ClassesEnum.selected, 1)
+		this.classMapIndexes.set(ClassesEnum.firstNext, 2)
+	}
+
+	private setClassesForFourElements() {
+		this.getElement(0).classList.add(ClassesEnum.secondPrev)
+		this.getElement(1).classList.add(ClassesEnum.firstPrev)
+		this.getElement(2).classList.add(ClassesEnum.selected)
+		this.getElement(3).classList.add(ClassesEnum.firstNext)
+	}
+
+	private setClassesDictionaryForFourElements() {
+		this.classMapIndexes.set(ClassesEnum.secondPrev, 0)
+		this.classMapIndexes.set(ClassesEnum.firstPrev, 1)
+		this.classMapIndexes.set(ClassesEnum.selected, 2)
+		this.classMapIndexes.set(ClassesEnum.firstNext, 3)
+	}
+
+	private setClassesForFiveElements() {
+		this.setClassesForFourElements()
+		this.getElement(4).classList.add(ClassesEnum.secondNext)
+	}
+
+	private setClassesDictionaryForFiveElements() {
+		this.setClassesDictionaryForFourElements()
+		this.classMapIndexes.set(ClassesEnum.secondNext, 4)
+	}
+
+	private setClassesForMoreThanFiveElements() {
+		this.setClassesForFiveElements()
+
+		for (let i = 5; i < this._countOfElements; i++) {
+			this.getElement(i)?.classList.add(ClassesEnum.hidden)
+			this.hiddenClassMapIndexes.get(ClassesEnum.hidden).push(i)
+		}
+		console.log(this.hiddenClassMapIndexes.get(ClassesEnum.hidden))
+	}
+}
+
+export const enum ClassesEnum {
+	selected = 'selected',
+	firstPrev = 'first-prev',
+	firstNext = 'first-next',
+	secondPrev = 'second-prev',
+	secondNext = 'second-next',
+	hidden = 'hidden',
 }
