@@ -69,8 +69,6 @@ export class Scroller {
 				this.setClassesForMoreThanFiveElements()
 				break
 		}
-
-		console.log(this.classMapIndexes)
 	}
 
 	public onScroll(event: WheelEvent) {
@@ -87,7 +85,6 @@ export class Scroller {
 		this._selected--
 		if (this._selected < 0) this._selected = this._countOfElements - 1
 		this.scrollUpChangeSelectedClass()
-		console.log(this._selected)
 	}
 
 	public onScrollDown() {
@@ -349,7 +346,6 @@ export class Scroller {
 			this.getElement(i)?.classList.add(ClassesEnum.hidden)
 			this.hiddenClassMapIndexes.get(ClassesEnum.hidden).push(i)
 		}
-		console.log(this.hiddenClassMapIndexes.get(ClassesEnum.hidden))
 	}
 }
 
