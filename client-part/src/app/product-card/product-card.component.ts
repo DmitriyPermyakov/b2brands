@@ -32,6 +32,10 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 		return this.productCardForm.controls['colors'] as FormControl
 	}
 
+	public get productPrintsControl(): FormControl {
+		return this.productCardForm.controls['prints'] as FormControl
+	}
+
 	public isAuthenticated: true
 	public cartIconDotActive: boolean = false
 
@@ -126,6 +130,7 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 			code: [{ value: '', disabled: true }, Validators.required],
 			description: [{ value: '', disabled: true }],
 			colors: [{ value: '', disabled: false }],
+			prints: [{ value: '', disabled: false }],
 			properties: this.fb.array([]),
 		})
 	}
@@ -137,6 +142,7 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 			code: this.product.code,
 			description: this.product.description,
 			colors: this.product.productColors,
+			prints: this.product.print,
 		})
 		this.setProductProps()
 	}
@@ -162,6 +168,10 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 		}
 	}
 
+	private checkAmoutOfOrderItems() {
+		this.ordersItem$.subscribe((o) => (this.cartIconDotActive = o.length > 0))
+	}
+
 	private getSelectedTypeOfPrint(): string {
 		let children: HTMLCollection = this.printsRef.nativeElement.children
 		let print: string | undefined | null = Array.from(children).find((el) =>
@@ -174,9 +184,8 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 		return print
 	}
 
-	private checkAmoutOfOrderItems() {
-		this.ordersItem$.subscribe((o) => (this.cartIconDotActive = o.length > 0))
-	}
+	//#region change image
+
 	// private changeImageOnScroll() {
 	// 	let changeImage = fromEvent(this.colorsRef.nativeElement, 'wheel').pipe(
 	// 		debounceTime(1000),
@@ -194,6 +203,8 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 
 	// 	this.changeImageOnClickSub = changeImage.subscribe((color) => (this.productColor = color))
 	// }
+
+	//#endregion
 
 	private setImage(element: ElementRef) {
 		let children: HTMLCollection = element.nativeElement.children

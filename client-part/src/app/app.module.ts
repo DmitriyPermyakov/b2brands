@@ -35,7 +35,8 @@ import { AddOrderItemComponent } from './add-order-item/add-order-item.component
 import { ImageSelectorComponent } from './image-selector/image-selector.component'
 import { ProductPropertiesComponent } from './product-properties/product-properties.component'
 import { InputWidthDirective } from './directives/input-width/input-width.directive'
-import { ColorsListComponent } from './colors-list/colors-list.component'
+import { ColorsListComponent } from './colors-list/colors-list.component';
+import { PrintsListComponent } from './prints-list/prints-list.component'
 
 @NgModule({
 	declarations: [
@@ -66,6 +67,7 @@ import { ColorsListComponent } from './colors-list/colors-list.component'
 		ProductPropertiesComponent,
 		InputWidthDirective,
 		ColorsListComponent,
+  PrintsListComponent,
 	],
 	imports: [
 		BrowserModule,

@@ -1,0 +1,6 @@
+<div class="print-container">
+	<p class="print-title">Виды нанесения:</p>
+	<div class="prints" #prints>
+		<p class="type-of-print" *ngFor="let p of printsControl.value; index as i">{{ p }}</p>
+	</div>
+</div>

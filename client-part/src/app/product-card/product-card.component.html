@@ -51,12 +51,7 @@
 			<div class="colors-prints">
 				<app-colors-list [colorsControl]="productColorsControl"></app-colors-list>
 
-				<div class="print-container">
-					<p class="print-title">Виды нанесения:</p>
-					<div class="prints" #prints>
-						<p class="type-of-print" *ngFor="let p of product.print; index as i">{{ p }}</p>
-					</div>
-				</div>
+				<app-prints-list [printsControl]="productPrintsControl"></app-prints-list>
 			</div>
 			<div class="to-cart-wrapper">
 				<button class="to-cart" (click)="addToCart()">В корзину</button>

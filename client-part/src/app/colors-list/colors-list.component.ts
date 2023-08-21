@@ -9,7 +9,7 @@ import { Subscription, fromEvent, map, throttleTime } from 'rxjs'
 	templateUrl: './colors-list.component.html',
 	styleUrls: ['./colors-list.component.css'],
 })
-export class ColorsListComponent implements AfterViewInit, AfterContentInit, OnDestroy {
+export class ColorsListComponent implements AfterViewInit, OnDestroy {
 	@ViewChild('colors') colorsRef!: ElementRef
 	@ViewChild('colorInput') colorInputRef!: ElementRef
 	@Input() colorsControl: FormControl
@@ -19,10 +19,6 @@ export class ColorsListComponent implements AfterViewInit, AfterContentInit, OnD
 
 	private scroller: Scroller
 	private scrollSub: Subscription
-
-	constructor() {}
-
-	ngAfterContentInit(): void {}
 
 	ngAfterViewInit(): void {
 		this.colorsCount = this.colorsControl.value.length
@@ -38,8 +34,6 @@ export class ColorsListComponent implements AfterViewInit, AfterContentInit, OnD
 				this.scroller.onScroll(e)
 			})
 	}
-
-	public onScrollColors(event: WheelEvent) {}
 
 	public previousColor() {
 		this.scroller.onScrollUp()
