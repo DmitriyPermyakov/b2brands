@@ -29,13 +29,8 @@
 			</div>
 			<div class="description-wrapper">
 				<textarea class="description" formControlName="description"></textarea>
-
-				<div class="properties" formArrayName="properties">
-					<app-product-properties
-						class="prop"
-						*ngFor="let props of productPropsArray.controls"
-						[props]="props"
-					></app-product-properties>
+				<div class="properties">
+					<app-product-properties class="prop" [props]="productPropsControl"></app-product-properties>
 				</div>
 			</div>
 

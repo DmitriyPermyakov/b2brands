@@ -1,7 +1,19 @@
-<div class="property" [formGroup]="props">
-	<input class="prop-name" type="text" [inputWidth]="nameWidth" formControlName="name" />
+<div class="property" *ngFor="let p of props.value">
+	<p class="prop-name">{{ p.name }}</p>
 	<span class="dots"
 		>...........................................................................................................</span
 	>
-	<input class="prop-value" type="text" [inputWidth]="valueWidth" formControlName="value" />
+	<p class="prop-value">{{ p.value }}</p>
+</div>
+<div class="inputs-container" [ngClass]="{ visible: isVisibleInput }">
+	<div class="inputs">
+		<input type="text" #name (keydown.enter)="onChangeName($event)" (change)="onChangeName($event)" />
+		<input type="text" #value (change)="onChangeValue($event)" />
+	</div>
+	<button class="add icon" (click)="toggleVisibilityInput()">
+		<svg _ngcontent-dxn-c13="" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path _ngcontent-dxn-c13="" d="M1 13H25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
+			<path _ngcontent-dxn-c13="" d="M13 1L13 25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
+		</svg>
+	</button>
 </div>

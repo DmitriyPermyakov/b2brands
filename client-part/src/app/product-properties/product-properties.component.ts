@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core'
-import { FormGroup } from '@angular/forms'
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core'
+import { FormControl } from '@angular/forms'
 
 @Component({
 	selector: 'app-product-properties',
@@ -7,26 +7,44 @@ import { FormGroup } from '@angular/forms'
 	styleUrls: ['./product-properties.component.css'],
 })
 export class ProductPropertiesComponent implements OnInit {
-	@Input() props
-	public valueWidth: number
-	public nameWidth: number
+	@Input() props: FormControl
+	@ViewChild('name') name: ElementRef
+	@ViewChild('value') value: ElementRef
 
-	private get Name() {
-		return (this.props as FormGroup).controls['name']
+	public isVisibleInput: boolean = false
+
+	ngOnInit(): void {}
+
+	onChangeName(event: Event) {
+		event.preventDefault()
+		this.value.nativeElement.focus()
 	}
-	private get Value() {
-		return (this.props as FormGroup).controls['value']
+
+	onChangeValue(event: Event) {
+		if (this.name.nativeElement.value === '') {
+			event.preventDefault()
+			this.name.nativeElement.focus()
+			return
+		}
+
+		if (this.value.nativeElement.value === '') return
+
+		console.log(
+			this.props.value.push({
+				id: 'asfdasfsa',
+				name: this.name.nativeElement.value,
+				value: this.value.nativeElement.value,
+			})
+		)
 	}
 
-	ngOnInit(): void {
-		this.valueWidth = this.Value.value.length
-		this.nameWidth = this.Name.value.length
-		this.Name.valueChanges.subscribe((c) => {
-			this.nameWidth = this.Name.value.length
-		})
-
-		this.Value.valueChanges.subscribe((c) => {
-			this.valueWidth = this.Value.value.length
-		})
+	toggleVisibilityInput() {
+		if (this.isVisibleInput === true) {
+			this.name.nativeElement.value = ''
+			this.value.nativeElement.value = ''
+			this.isVisibleInput = false
+		} else {
+			this.isVisibleInput = true
+		}
 	}
 }

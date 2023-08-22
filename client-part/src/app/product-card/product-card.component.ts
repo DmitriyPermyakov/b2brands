@@ -24,8 +24,8 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 
 	public productCardForm: FormGroup
 
-	public get productPropsArray(): FormArray {
-		return this.productCardForm.controls['properties'] as FormArray
+	public get productPropsControl(): FormControl {
+		return this.productCardForm.controls['properties'] as FormControl
 	}
 
 	public get productColorsControl(): FormControl {
@@ -125,13 +125,13 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 
 	private initProductCardForm() {
 		this.productCardForm = this.fb.group({
-			id: [{ value: '', disabled: true }],
-			name: [{ value: '', disabled: true }, Validators.required],
-			code: [{ value: '', disabled: true }, Validators.required],
-			description: [{ value: '', disabled: true }],
+			id: [{ value: '', disabled: false }],
+			name: [{ value: '', disabled: false }, Validators.required],
+			code: [{ value: '', disabled: false }, Validators.required],
+			description: [{ value: '', disabled: false }],
 			colors: [{ value: '', disabled: false }],
 			prints: [{ value: '', disabled: false }],
-			properties: this.fb.array([]),
+			properties: [{ value: '', disables: false }],
 		})
 	}
 
@@ -143,20 +143,8 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 			description: this.product.description,
 			colors: this.product.productColors,
 			prints: this.product.print,
+			properties: this.product.productProps,
 		})
-		this.setProductProps()
-	}
-
-	private setProductProps() {
-		this.product.productProps.forEach((p) =>
-			this.productPropsArray.push(
-				new FormGroup({
-					id: new FormControl({ value: p.id, disabled: true }),
-					name: new FormControl({ value: p.name, disabled: false }),
-					value: new FormControl({ value: p.value, disabled: false }),
-				})
-			)
-		)
 	}
 
 	private checkLocalStorageOnCurrentProduct() {
