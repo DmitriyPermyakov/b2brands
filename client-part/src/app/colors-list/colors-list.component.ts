@@ -15,16 +15,14 @@ export class ColorsListComponent implements AfterViewInit, OnDestroy {
 	@Input() colorsControl: FormControl
 
 	private selectedColorIndex: number = 0
-	private colorsCount: number = 0
 
 	private scroller: Scroller
 	private scrollSub: Subscription
 
 	ngAfterViewInit(): void {
-		this.colorsCount = this.colorsControl.value.length
-		this.scroller = new Scroller(this.colorsCount, this.colorsRef)
+		this.scroller = new Scroller(this.colorsControl.value.length, this.colorsRef)
 
-		this.scroller.initStartClasses()
+		this.scroller.initStartClasses(this.colorsControl.value.length)
 		this.scrollSub = fromEvent(this.colorsRef.nativeElement, 'wheel')
 			.pipe(
 				throttleTime(200),

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core'
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core'
 import { FormControl } from '@angular/forms'
 import { Scroller } from '../classes/scroller'
 import { Subscription, fromEvent, map, throttleTime } from 'rxjs'
@@ -11,6 +11,9 @@ import { Subscription, fromEvent, map, throttleTime } from 'rxjs'
 export class PrintsListComponent implements AfterViewInit {
 	@Input('printsControl') printsControl: FormControl
 	@ViewChild('prints') printsRef: ElementRef
+	@ViewChild('printInput') input: ElementRef
+
+	public isInputVisible: boolean = false
 
 	private selectedPrintIndex: number = 0
 	private printCount: number = 0
@@ -18,11 +21,12 @@ export class PrintsListComponent implements AfterViewInit {
 	private scroller: Scroller
 	private scrollSub: Subscription
 
-	ngAfterViewInit(): void {
-		this.printCount = this.printsControl.value.length
-		this.scroller = new Scroller(this.printCount, this.printsRef)
+	constructor(private ref: ChangeDetectorRef) {}
 
-		this.scroller.initStartClasses()
+	ngAfterViewInit(): void {
+		this.scroller = new Scroller(this.printsControl.value.length, this.printsRef)
+
+		this.scroller.initStartClasses(this.printsControl.value.length)
 		this.scrollSub = fromEvent(this.printsRef.nativeElement, 'wheel')
 			.pipe(
 				throttleTime(200),
@@ -31,5 +35,28 @@ export class PrintsListComponent implements AfterViewInit {
 			.subscribe((e: WheelEvent) => {
 				this.scroller.onScroll(e)
 			})
+	}
+
+	public addPrint(event: Event) {
+		event.preventDefault()
+		if (this.input.nativeElement.value !== '') {
+			// this.printsControl.value.push(this.input.nativeElement.value)
+			this.printsControl.value.splice(4, 0, this.input.nativeElement.value)
+			this.ref.detectChanges()
+			// this.scroller.initStartClasses(this.printsControl.value.length)
+			// this.scroller.updateClassesAfterAdding(this.printsControl.value.length)
+			this.scroller.scrollToAdded()
+			this.input.nativeElement.value = ''
+			this.isInputVisible = false
+		} else this.isInputVisible = false
+	}
+
+	public toggleInputVisibility() {
+		if (this.isInputVisible === true) {
+			this.input.nativeElement.value = ''
+			this.isInputVisible = false
+		} else {
+			this.isInputVisible = true
+		}
 	}
 }

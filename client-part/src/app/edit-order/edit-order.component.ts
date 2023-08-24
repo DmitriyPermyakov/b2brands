@@ -86,7 +86,7 @@ export class EditOrderComponent implements OnInit {
 			dateOfCompletion: [{ value: this.getDate(this.order.dateOfCompletion), disabled: true }],
 			status: [{ value: this.order.status, disabled: true }],
 			comment: [{ value: this.order.comment, disabled: true }],
-			orderItems: this.order.orderItems,
+			orderItems: this.fb.array([]),
 		})
 
 		this.loadOrderItems(this.order.orderItems, this.form)

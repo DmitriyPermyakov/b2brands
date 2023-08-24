@@ -42,8 +42,11 @@ export class Scroller {
 	// 	this.initStartClasses(element, index)
 	// }
 
-	public initStartClasses() {
+	public initStartClasses(countOfElements: number) {
+		this.CountOfElements = countOfElements
 		switch (this._countOfElements) {
+			case 0:
+				break
 			case 1:
 				this.getElement(0).classList.add(ClassesEnum.selected)
 				break
@@ -62,6 +65,7 @@ export class Scroller {
 			case 5:
 				this.setClassesForFiveElements()
 				this.setClassesDictionaryForFiveElements()
+				this.hiddenClassMapIndexes.set(ClassesEnum.hidden, [])
 				break
 			default:
 				this.hiddenClassMapIndexes.set(ClassesEnum.hidden, [])
@@ -72,6 +76,7 @@ export class Scroller {
 	}
 
 	public onScroll(event: WheelEvent) {
+		if (this._countOfElements === 0) return
 		if (event.deltaY < 0) {
 			this.onScrollUp()
 		}
@@ -79,6 +84,17 @@ export class Scroller {
 		if (event.deltaY > 0) {
 			this.onScrollDown()
 		}
+	}
+
+	public scrollToAdded() {
+		let i = this.classMapIndexes.get('selected')
+		let interval = setInterval(() => {
+			this.onScrollDown()
+			i++
+			if (i >= this._countOfElements - 1) {
+				clearInterval(interval)
+			}
+		}, 100)
 	}
 
 	public onScrollUp() {
@@ -164,6 +180,8 @@ export class Scroller {
 
 	private moveClassesDown() {
 		switch (this._countOfElements) {
+			case 1:
+				break
 			case 2:
 				this.moveDown(ClassesEnum.selected)
 				this.moveDown(ClassesEnum.firstNext)
@@ -237,7 +255,8 @@ export class Scroller {
 	private moveDownHidden() {
 		if (this._countOfElements > 5) {
 			let length = this.hiddenClassMapIndexes.get(ClassesEnum.hidden).length
-			for (let i = 0; i < length; i++) {
+			console.log('move ' + length)
+			for (let i = length - 1; i >= 0; i--) {
 				let index = this.hiddenClassMapIndexes.get(ClassesEnum.hidden)[i]
 				this.changeDownHiddenClasses(index, i, ClassesEnum.hidden)
 			}
@@ -346,7 +365,30 @@ export class Scroller {
 			this.getElement(i)?.classList.add(ClassesEnum.hidden)
 			this.hiddenClassMapIndexes.get(ClassesEnum.hidden).push(i)
 		}
+
+		console.log(this.hiddenClassMapIndexes.get(ClassesEnum.hidden))
 	}
+
+	// updateClassesAfterAdding(countOfElements: number) {
+	// 	this.CountOfElements = countOfElements
+	// 	switch (this._countOfElements) {
+	// 		case 0:
+	// 		case 1:
+	// 		case 2:
+	// 		case 3:
+	// 		case 4:
+	// 		case 5:
+	// 			break
+	// 		case 6:
+	// 			this.hiddenClassMapIndexes.get(ClassesEnum.hidden).push(this._countOfElements - 1)
+	// 			this.getElement(this._countOfElements - 1)?.classList.add('hidden')
+	// 			break
+	// 		default:
+	// 			this.hiddenClassMapIndexes.get(ClassesEnum.hidden).push(this._countOfElements - 1)
+	// 			this.getElement(this._countOfElements - 1)?.classList.add('first-next')
+	// 			break
+	// 	}
+	// }
 }
 
 export const enum ClassesEnum {

@@ -3,4 +3,13 @@
 	<div class="prints" #prints>
 		<p class="type-of-print" *ngFor="let p of printsControl.value; index as i">{{ p }}</p>
 	</div>
+	<div class="input-container" [ngClass]="{ visible: isInputVisible }">
+		<input type="text" #printInput (keydown.enter)="addPrint($event)" />
+		<button class="add icon" (click)="toggleInputVisibility()">
+			<svg _ngcontent-dxn-c13="" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path _ngcontent-dxn-c13="" d="M1 13H25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
+				<path _ngcontent-dxn-c13="" d="M13 1L13 25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
+			</svg>
+		</button>
+	</div>
 </div>

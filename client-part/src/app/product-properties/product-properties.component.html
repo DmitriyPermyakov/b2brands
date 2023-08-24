@@ -8,7 +8,7 @@
 <div class="inputs-container" [ngClass]="{ visible: isVisibleInput }">
 	<div class="inputs">
 		<input type="text" #name (keydown.enter)="onChangeName($event)" (change)="onChangeName($event)" />
-		<input type="text" #value (change)="onChangeValue($event)" />
+		<input type="text" #value (keydown.enter)="onChangeValue($event)" />
 	</div>
 	<button class="add icon" (click)="toggleVisibilityInput()">
 		<svg _ngcontent-dxn-c13="" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
