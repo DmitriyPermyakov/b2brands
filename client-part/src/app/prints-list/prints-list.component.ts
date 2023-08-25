@@ -40,12 +40,9 @@ export class PrintsListComponent implements AfterViewInit {
 	public addPrint(event: Event) {
 		event.preventDefault()
 		if (this.input.nativeElement.value !== '') {
-			// this.printsControl.value.push(this.input.nativeElement.value)
-			this.printsControl.value.splice(4, 0, this.input.nativeElement.value)
+			this.printsControl.value.push(this.input.nativeElement.value)
 			this.ref.detectChanges()
-			// this.scroller.initStartClasses(this.printsControl.value.length)
-			// this.scroller.updateClassesAfterAdding(this.printsControl.value.length)
-			this.scroller.scrollToAdded()
+			this.scroller.addItem(this.printsControl.value.length)
 			this.input.nativeElement.value = ''
 			this.isInputVisible = false
 		} else this.isInputVisible = false
