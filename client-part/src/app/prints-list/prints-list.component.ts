@@ -24,6 +24,7 @@ export class PrintsListComponent implements AfterViewInit {
 	constructor(private ref: ChangeDetectorRef) {}
 
 	ngAfterViewInit(): void {
+		this.setAttributes()
 		this.scroller = new Scroller(this.printsControl.value.length, this.printsRef, 'type-of-print')
 
 		this.scroller.initStartClasses(this.printsControl.value.length)
@@ -41,6 +42,10 @@ export class PrintsListComponent implements AfterViewInit {
 		event.preventDefault()
 		if (this.input.nativeElement.value !== '') {
 			this.printsControl.value.push(this.input.nativeElement.value)
+			this.printsRef.nativeElement.children[this.printsRef.nativeElement.children.length - 1].setAttribute(
+				'data-value',
+				this.input.nativeElement.value
+			)
 			this.ref.detectChanges()
 			this.scroller.addItem(this.printsControl.value.length)
 			this.input.nativeElement.value = ''
@@ -54,6 +59,12 @@ export class PrintsListComponent implements AfterViewInit {
 			this.isInputVisible = false
 		} else {
 			this.isInputVisible = true
+		}
+	}
+
+	private setAttributes(): void {
+		for (let i = 0; i < this.printsControl.value.length; i++) {
+			this.printsRef.nativeElement.children[i].setAttribute('data-value', this.printsControl.value[i])
 		}
 	}
 }

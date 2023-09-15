@@ -1,8 +1,18 @@
-import { AfterContentInit, AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core'
+import {
+	AfterContentInit,
+	AfterViewInit,
+	ChangeDetectorRef,
+	Component,
+	ElementRef,
+	Input,
+	OnDestroy,
+	ViewChild,
+} from '@angular/core'
 
 import { FormControl } from '@angular/forms'
 import { Scroller } from '../classes/scroller'
 import { Subscription, fromEvent, map, throttleTime } from 'rxjs'
+import { IProductColor } from '../interfaces/productColor.interface'
 
 @Component({
 	selector: 'app-colors-list',
@@ -19,7 +29,10 @@ export class ColorsListComponent implements AfterViewInit, OnDestroy {
 	private scroller: Scroller
 	private scrollSub: Subscription
 
+	constructor(private ref: ChangeDetectorRef) {}
+
 	ngAfterViewInit(): void {
+		this.setAttributes()
 		this.scroller = new Scroller(this.colorsControl.value.length, this.colorsRef, 'color')
 
 		this.scroller.initStartClasses(this.colorsControl.value.length)
@@ -46,11 +59,30 @@ export class ColorsListComponent implements AfterViewInit, OnDestroy {
 	}
 
 	public colorPickerChangedValue(event) {
-		console.log(event.target.value)
-		console.log(5 % 5)
+		let color: IProductColor = {
+			id: 'new element',
+			value: event.target.value,
+			frontSmallUrl: '',
+			bottomSmallUrl: '',
+			rightSmallUrl: '',
+			leftSmallUrl: '',
+		}
+		this.colorsControl.value.push(color)
+		this.colorsRef.nativeElement.children[this.colorsRef.nativeElement.children.length - 1].setAttribute(
+			'data-value',
+			color.value
+		)
+		this.ref.detectChanges()
+		this.scroller.addItem(this.colorsControl.value.length)
 	}
 
 	ngOnDestroy(): void {
 		if (this.scrollSub) this.scrollSub.unsubscribe()
+	}
+
+	private setAttributes(): void {
+		for (let i = 0; i < this.colorsControl.value.length; i++) {
+			this.colorsRef.nativeElement.children[i].setAttribute('data-value', this.colorsControl.value[i].value)
+		}
 	}
 }

@@ -38,7 +38,7 @@ export class Scroller {
 	private _parentElement: ElementRef
 	private _scrollingClass: string = ''
 
-	private _addedElementValue: string = ''
+	private _addedElementValueAttribut: string = ''
 
 	private _indexClassMap: Map<number, string> = new Map()
 	private _classIndexMap: Map<string, number> = new Map()
@@ -157,7 +157,7 @@ export class Scroller {
 			this.onScrollDown()
 			i++
 			if (i > this._countOfElements - 1) i = 0
-			if (this.getElement(i).innerHTML === this._addedElementValue) {
+			if (this.getElement(i).getAttribute('data-value') === this._addedElementValueAttribut) {
 				clearInterval(interval)
 				return
 			}
@@ -166,7 +166,7 @@ export class Scroller {
 
 	private placeElement(newElemClassName: string, oldElemClassName: string) {
 		this.getElement(this._countOfElements - 1).classList.add(newElemClassName)
-		this._addedElementValue = this.getElement(this._countOfElements - 1).innerHTML
+		this._addedElementValueAttribut = this.getElement(this._countOfElements - 1).getAttribute('data-value')
 		let oldItemIndex = this._classIndexMap.get(oldElemClassName)
 		if (oldItemIndex !== 0) {
 			let element = this.getElement(oldItemIndex)
