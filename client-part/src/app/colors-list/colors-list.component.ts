@@ -20,7 +20,7 @@ export class ColorsListComponent implements AfterViewInit, OnDestroy {
 	private scrollSub: Subscription
 
 	ngAfterViewInit(): void {
-		this.scroller = new Scroller(this.colorsControl.value.length, this.colorsRef)
+		this.scroller = new Scroller(this.colorsControl.value.length, this.colorsRef, 'color')
 
 		this.scroller.initStartClasses(this.colorsControl.value.length)
 		this.scrollSub = fromEvent(this.colorsRef.nativeElement, 'wheel')

@@ -25,9 +25,18 @@ export class Scroller {
 		this._selected = Math.trunc(countOfElements / 2)
 	}
 
+	private set ScrollingClass(value: string) {
+		if (value === '' || value === null || value === undefined) {
+			console.error('scrolling class not setted')
+		}
+
+		this._scrollingClass = value
+	}
+
 	private _countOfElements: number
 	private _selected: number
 	private _parentElement: ElementRef
+	private _scrollingClass: string = ''
 
 	private _addedElementValue: string = ''
 
@@ -41,10 +50,19 @@ export class Scroller {
 		ClassesEnum.secondPrev,
 	]
 
-	constructor(countOfElements: number, parentElement: ElementRef) {
+	private _classesForwardOrder = [
+		ClassesEnum.secondPrev,
+		ClassesEnum.firstPrev,
+		ClassesEnum.selected,
+		ClassesEnum.firstNext,
+		ClassesEnum.secondNext,
+	]
+
+	constructor(countOfElements: number, parentElement: ElementRef, scrollingClass: string) {
 		this.ParentElement = parentElement
 		this.CountOfElements = countOfElements
 		this.Selected = countOfElements
+		this.ScrollingClass = scrollingClass
 	}
 
 	public initStartClasses(countOfElements: number) {
@@ -155,6 +173,8 @@ export class Scroller {
 			this._parentElement.nativeElement.insertBefore(this.getElement(this._countOfElements - 1), element)
 		}
 		this.updateClassesDictionary()
+		console.log(this._classIndexMap)
+		console.log(this._indexClassMap)
 	}
 
 	private moveClassesUp() {
@@ -195,15 +215,22 @@ export class Scroller {
 	}
 
 	private setClassesDictionary() {
-		for (let index = 0; index < 5; index++) {
-			this._indexClassMap.set(index, this._classes[index])
-			this._classIndexMap.set(this._classes[index], index)
+		if (this._countOfElements <= 4) {
+			for (let index = 0; index < 4; index++) {
+				this._indexClassMap.set(index, this._classes[index])
+				this._classIndexMap.set(this._classes[index], index)
+			}
+		} else {
+			for (let index = 0; index < 5; index++) {
+				this._indexClassMap.set(index, this._classesForwardOrder[index])
+				this._classIndexMap.set(this._classesForwardOrder[index], index)
+			}
 		}
 	}
 
 	private updateClassesDictionary() {
 		for (let index = 0; index <= this._countOfElements - 1; index++) {
-			let className = this.getElement(index).className.replace('type-of-print ', '')
+			let className = this.getElement(index).className.replace(this._scrollingClass + ' ', '')
 			this._indexClassMap.set(index, className)
 			this._classIndexMap.set(className, index)
 		}
@@ -225,8 +252,7 @@ export class Scroller {
 	}
 
 	private setClassesForFiveElements() {
-		this.setClassesForFourElements()
-		this.getElement(4).classList.add(ClassesEnum.secondPrev)
+		for (let i = 0; i < 5; i++) this.getElement(i)?.classList.add(this._classesForwardOrder[i])
 	}
 
 	private setClassesForMoreThanFiveElements() {

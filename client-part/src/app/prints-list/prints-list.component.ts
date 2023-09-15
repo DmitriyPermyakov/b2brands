@@ -24,7 +24,7 @@ export class PrintsListComponent implements AfterViewInit {
 	constructor(private ref: ChangeDetectorRef) {}
 
 	ngAfterViewInit(): void {
-		this.scroller = new Scroller(this.printsControl.value.length, this.printsRef)
+		this.scroller = new Scroller(this.printsControl.value.length, this.printsRef, 'type-of-print')
 
 		this.scroller.initStartClasses(this.printsControl.value.length)
 		this.scrollSub = fromEvent(this.printsRef.nativeElement, 'wheel')
