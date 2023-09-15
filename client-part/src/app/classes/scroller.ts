@@ -230,7 +230,7 @@ export class Scroller {
 
 	private updateClassesDictionary() {
 		for (let index = 0; index <= this._countOfElements - 1; index++) {
-			let className = this.getElement(index).className.replace(this._scrollingClass + ' ', '')
+			let className = this.getElement(index).className.replace(this._scrollingClass, '').trim()
 			this._indexClassMap.set(index, className)
 			this._classIndexMap.set(className, index)
 		}
