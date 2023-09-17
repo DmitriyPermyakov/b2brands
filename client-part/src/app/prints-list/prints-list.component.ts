@@ -1,22 +1,19 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core'
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core'
 import { FormControl } from '@angular/forms'
 import { Scroller } from '../classes/scroller'
-import { Subscription, fromEvent, map, throttleTime } from 'rxjs'
+import { Subscription } from 'rxjs'
 
 @Component({
 	selector: 'app-prints-list',
 	templateUrl: './prints-list.component.html',
 	styleUrls: ['./prints-list.component.css'],
 })
-export class PrintsListComponent implements AfterViewInit {
+export class PrintsListComponent implements AfterViewInit, OnDestroy {
 	@Input('printsControl') printsControl: FormControl
 	@ViewChild('prints') printsRef: ElementRef
 	@ViewChild('printInput') input: ElementRef
 
 	public isInputVisible: boolean = false
-
-	private selectedPrintIndex: number = 0
-	private printCount: number = 0
 
 	private scroller: Scroller
 	private scrollSub: Subscription
@@ -28,20 +25,19 @@ export class PrintsListComponent implements AfterViewInit {
 		this.scroller = new Scroller(this.printsControl.value.length, this.printsRef, 'type-of-print')
 
 		this.scroller.initStartClasses(this.printsControl.value.length)
-		this.scrollSub = fromEvent(this.printsRef.nativeElement, 'wheel')
-			.pipe(
-				throttleTime(200),
-				map((e) => e)
-			)
-			.subscribe((e: WheelEvent) => {
-				this.scroller.onScroll(e)
-			})
+		this.scrollSub = this.scroller.scroll$.subscribe((e: WheelEvent) => {
+			this.scroller.onScroll(e)
+		})
+	}
+	ngOnDestroy(): void {
+		if (this.scrollSub) this.scrollSub.unsubscribe()
 	}
 
 	public addPrint(event: Event) {
 		event.preventDefault()
 		if (this.input.nativeElement.value !== '') {
-			this.printsControl.value.push(this.input.nativeElement.value)
+			this.printsControl.setValue([...this.printsControl.value, this.input.nativeElement.value])
+			// this.printsControl.value.push(this.input.nativeElement.value)
 			this.printsRef.nativeElement.children[this.printsRef.nativeElement.children.length - 1].setAttribute(
 				'data-value',
 				this.input.nativeElement.value

@@ -1,8 +1,7 @@
 import { AfterContentInit, AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { Store, select } from '@ngrx/store'
-import { fromEvent, debounceTime, Subscription, Observable } from 'rxjs'
-import { switchMap } from 'rxjs'
+import { Subscription, Observable } from 'rxjs'
 
 import { IProduct } from '../interfaces/product.interface'
 import { IProductColor } from '../interfaces/productColor.interface'
@@ -10,7 +9,7 @@ import { productSelector } from '../store/products/products.selector'
 import { addOrderItemAction } from '../store/orders/order-item.action'
 import { orderItemSelector } from '../store/orders/order-item.selector'
 import { OrderItem } from '../interfaces/orderItem.interface'
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 
 @Component({
 	selector: 'app-product-card',
@@ -53,6 +52,7 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 
 	private changeImageOnScrollSub!: Subscription
 	private changeImageOnClickSub!: Subscription
+	private amountOfOrdersSub: Subscription
 
 	constructor(private activatedRoute: ActivatedRoute, private store: Store, private fb: FormBuilder) {
 		this.initProductCardForm()
@@ -72,28 +72,28 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 		this.setProductCardFormValues()
 		this.ordersItem$ = this.store.pipe(select(orderItemSelector))
 		this.checkAmoutOfOrderItems()
+		this.productColor = {
+			id: 'new element',
+			value: '',
+			frontSmallUrl: '',
+			bottomSmallUrl: '',
+			rightSmallUrl: '',
+			leftSmallUrl: '',
+		}
 	}
 
 	ngAfterContentInit(): void {
 		this.printCount = this.product.print.length
-
-		// this.selectedPrintIndex = this.initSelectedIndex(this.printCount)
-
-		// this.productColor = this.product.productColors[this.selectedColorIndex]
+		// this.productColor = this.productColorsControl.value[0]
 	}
 
-	ngAfterViewInit() {
-		// this.initPrintStartClasses(this.printsRef, this.selectedPrintIndex)
-		// this.setColorValueAttribute(this.colorsRef)
-		// this.changeImageOnScroll()
-		// this.changeImageOnClick(this.prevColorBtnRef)
-		// this.changeImageOnClick(this.nextColorBtnRef)
-	}
+	ngAfterViewInit() {}
 
 	ngOnDestroy(): void {
 		if (this.changeImageOnScrollSub) this.changeImageOnScrollSub.unsubscribe()
 
 		if (this.changeImageOnClickSub) this.changeImageOnClickSub.unsubscribe()
+		if (this.amountOfOrdersSub) this.amountOfOrdersSub.unsubscribe()
 	}
 
 	public addToCart() {
@@ -115,9 +115,11 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 		this.checkAmoutOfOrderItems()
 	}
 
-	// public onScrollPrints(event: WheelEvent) {
-	// 	this.onScroll(event, this.printsRef, this.selectedPrintIndex)
-	// }
+	public onColorChanged(value: number) {
+		setTimeout(() => {
+			this.productColor = this.productColorsControl.value[value] as IProductColor
+		}, 0)
+	}
 
 	public quantityChanged(count: number) {
 		this.productAmount = count
@@ -157,7 +159,7 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 	}
 
 	private checkAmoutOfOrderItems() {
-		this.ordersItem$.subscribe((o) => (this.cartIconDotActive = o.length > 0))
+		this.amountOfOrdersSub = this.ordersItem$.subscribe((o) => (this.cartIconDotActive = o.length > 0))
 	}
 
 	private getSelectedTypeOfPrint(): string {
@@ -170,42 +172,5 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 			print = ''
 		}
 		return print
-	}
-
-	//#region change image
-
-	// private changeImageOnScroll() {
-	// 	let changeImage = fromEvent(this.colorsRef.nativeElement, 'wheel').pipe(
-	// 		debounceTime(1000),
-	// 		switchMap(() => this.setImage(this.colorsRef))
-	// 	)
-
-	// 	this.changeImageOnScrollSub = changeImage.subscribe((color) => (this.productColor = color))
-	// }
-
-	// private changeImageOnClick(buttonRef: ElementRef) {
-	// 	let changeImage = fromEvent(buttonRef.nativeElement, 'click').pipe(
-	// 		debounceTime(1000),
-	// 		switchMap(() => this.setImage(this.colorsRef))
-	// 	)
-
-	// 	this.changeImageOnClickSub = changeImage.subscribe((color) => (this.productColor = color))
-	// }
-
-	//#endregion
-
-	private setImage(element: ElementRef) {
-		let children: HTMLCollection = element.nativeElement.children
-		let colorValue: string | undefined | null = Array.from(children)
-			.find((el) => el.classList.contains('selected'))
-			?.getAttribute('color-value')
-
-		return this.product.productColors.filter((p) => p.value === colorValue)
-	}
-
-	private setColorValueAttribute(element: ElementRef) {
-		for (let i = 0; i < element.nativeElement.childElementCount; i++) {
-			element.nativeElement.children[i].setAttribute('color-value', this.product.productColors[i].value)
-		}
 	}
 }

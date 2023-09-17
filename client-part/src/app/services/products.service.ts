@@ -46,10 +46,10 @@ export class ProductsService {
 					{
 						id: '3',
 						value: '#002cff',
-						frontSmallUrl: '../../assets/caps/front.png',
-						leftSmallUrl: '../../assets/caps/left.png',
-						bottomSmallUrl: '../../assets/caps/back.png',
-						rightSmallUrl: '../../assets/caps/right.png',
+						frontSmallUrl: '../../assets/caps/cap-white.png',
+						leftSmallUrl: '../../assets/caps/cap-white.png',
+						bottomSmallUrl: '../../assets/caps/cap-white.png',
+						rightSmallUrl: '../../assets/caps/cap-white.png',
 					},
 					{
 						id: '4',

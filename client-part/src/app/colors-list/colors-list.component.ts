@@ -4,14 +4,17 @@ import {
 	ChangeDetectorRef,
 	Component,
 	ElementRef,
+	EventEmitter,
 	Input,
 	OnDestroy,
+	OnInit,
+	Output,
 	ViewChild,
 } from '@angular/core'
 
 import { FormControl } from '@angular/forms'
 import { Scroller } from '../classes/scroller'
-import { Subscription, fromEvent, map, throttleTime } from 'rxjs'
+import { Subscription } from 'rxjs'
 import { IProductColor } from '../interfaces/productColor.interface'
 
 @Component({
@@ -19,39 +22,42 @@ import { IProductColor } from '../interfaces/productColor.interface'
 	templateUrl: './colors-list.component.html',
 	styleUrls: ['./colors-list.component.css'],
 })
-export class ColorsListComponent implements AfterViewInit, OnDestroy {
+export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 	@ViewChild('colors') colorsRef!: ElementRef
 	@ViewChild('colorInput') colorInputRef!: ElementRef
 	@Input() colorsControl: FormControl
 
-	private selectedColorIndex: number = 0
-
+	@Output() onColorChanged: EventEmitter<number> = new EventEmitter()
 	private scroller: Scroller
 	private scrollSub: Subscription
+	private selectedItemChangedSub: Subscription
 
 	constructor(private ref: ChangeDetectorRef) {}
+	ngOnInit(): void {}
 
 	ngAfterViewInit(): void {
 		this.setAttributes()
 		this.scroller = new Scroller(this.colorsControl.value.length, this.colorsRef, 'color')
 
+		this.scrollSub = this.scroller.scroll$.subscribe((e: WheelEvent) => {
+			this.scroller.onScroll(e)
+			this.passSelectedColorIndex()
+		})
+
+		this.selectedItemChangedSub = this.scroller.selectedItemChanged.subscribe(() => {
+			this.passSelectedColorIndex()
+		})
 		this.scroller.initStartClasses(this.colorsControl.value.length)
-		this.scrollSub = fromEvent(this.colorsRef.nativeElement, 'wheel')
-			.pipe(
-				throttleTime(200),
-				map((e) => e)
-			)
-			.subscribe((e: WheelEvent) => {
-				this.scroller.onScroll(e)
-			})
 	}
 
 	public previousColor() {
 		this.scroller.onScrollUp()
+		this.passSelectedColorIndex()
 	}
 
 	public nextColor() {
 		this.scroller.onScrollDown()
+		this.passSelectedColorIndex()
 	}
 
 	public showColorInput() {
@@ -67,17 +73,39 @@ export class ColorsListComponent implements AfterViewInit, OnDestroy {
 			rightSmallUrl: '',
 			leftSmallUrl: '',
 		}
-		this.colorsControl.value.push(color)
+		// console.log(this.colorsControl.value)
+		// this.colorsControl.value.push(color)
+		// console.log(this.colorsControl.value)
+
+		this.colorsControl.setValue([...this.colorsControl.value, color])
+
+		this.ref.detectChanges()
 		this.colorsRef.nativeElement.children[this.colorsRef.nativeElement.children.length - 1].setAttribute(
 			'data-value',
 			color.value
 		)
-		this.ref.detectChanges()
 		this.scroller.addItem(this.colorsControl.value.length)
 	}
 
 	ngOnDestroy(): void {
 		if (this.scrollSub) this.scrollSub.unsubscribe()
+		if (this.selectedItemChangedSub) this.selectedItemChangedSub.unsubscribe()
+	}
+
+	private passSelectedColorIndex(): void {
+		let index = this.getSelectedColorIndex()
+		this.onColorChanged.emit(index)
+	}
+
+	private getSelectedColorIndex(): number {
+		let children: HTMLAllCollection = this.colorsRef.nativeElement.children
+		let colorValue: string | undefined | null = Array.from(children)
+			.find((el) => el.classList.contains('selected'))
+			?.getAttribute('data-value')
+
+		let index = this.colorsControl.value.findIndex((el) => el.value === colorValue)
+
+		return index
 	}
 
 	private setAttributes(): void {

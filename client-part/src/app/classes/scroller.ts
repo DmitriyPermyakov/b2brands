@@ -1,6 +1,10 @@
 import { ElementRef } from '@angular/core'
+import { Observable, Subject, fromEvent, map, throttleTime } from 'rxjs'
 
 export class Scroller {
+	public scroll$: Observable<any>
+	public selectedItemChanged: Subject<void> = new Subject()
+
 	private set ParentElement(element: ElementRef) {
 		if (element) this._parentElement = element
 		else console.log('Scroll service: parentElement didnt set')
@@ -34,7 +38,7 @@ export class Scroller {
 	}
 
 	private _countOfElements: number
-	private _selected: number
+	private _selected: number = 0
 	private _parentElement: ElementRef
 	private _scrollingClass: string = ''
 
@@ -63,6 +67,10 @@ export class Scroller {
 		this.CountOfElements = countOfElements
 		this.Selected = countOfElements
 		this.ScrollingClass = scrollingClass
+		this.scroll$ = fromEvent(parentElement.nativeElement, 'wheel').pipe(
+			throttleTime(200),
+			map((e) => e)
+		)
 	}
 
 	public initStartClasses(countOfElements: number) {
@@ -73,21 +81,27 @@ export class Scroller {
 				break
 			case 1:
 				this.getElement(0).classList.add(ClassesEnum.selected)
+				this.selectedItemChanged.next()
 				break
 			case 2:
 				this.setClassedForTwoElements()
+				this.selectedItemChanged.next()
 				break
 			case 3:
 				this.setClassesForThreeElements()
+				this.selectedItemChanged.next()
 				break
 			case 4:
 				this.setClassesForFourElements()
+				this.selectedItemChanged.next()
 				break
 			case 5:
 				this.setClassesForFiveElements()
+				this.selectedItemChanged.next()
 				break
 			default:
 				this.setClassesForMoreThanFiveElements()
+				this.selectedItemChanged.next()
 				break
 		}
 	}
@@ -125,11 +139,13 @@ export class Scroller {
 			case 1:
 				this.getElement(0).classList.add(ClassesEnum.selected)
 				this.updateClassesDictionary()
+				this._selected = this._classIndexMap.get('selected')
 				break
 			case 2:
 				this.getElement(1).classList.add(ClassesEnum.firstPrev)
 				this._parentElement.nativeElement.insertBefore(this.getElement(1), this.getElement(0))
 				this.updateClassesDictionary()
+				this._selected = this._classIndexMap.get('selected')
 				this.scrollToAdded()
 				break
 			case 3:
@@ -159,6 +175,7 @@ export class Scroller {
 			if (i > this._countOfElements - 1) i = 0
 			if (this.getElement(i).getAttribute('data-value') === this._addedElementValueAttribut) {
 				clearInterval(interval)
+				this.selectedItemChanged.next()
 				return
 			}
 		}, 100)
@@ -173,8 +190,7 @@ export class Scroller {
 			this._parentElement.nativeElement.insertBefore(this.getElement(this._countOfElements - 1), element)
 		}
 		this.updateClassesDictionary()
-		console.log(this._classIndexMap)
-		console.log(this._indexClassMap)
+		this._selected = this._classIndexMap.get('selected')
 	}
 
 	private moveClassesUp() {

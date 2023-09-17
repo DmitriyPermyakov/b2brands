@@ -14,10 +14,10 @@
 		<app-account-buttons></app-account-buttons>
 		<form class="product-card" [formGroup]="productCardForm">
 			<div class="images">
-				<!-- <img class="image front" [src]="productColor.frontSmallUrl" alt="front-image" />
+				<img class="image front" [src]="productColor.frontSmallUrl" alt="front-image" />
 				<img class="image left" [src]="productColor.leftSmallUrl" alt="left-image" />
 				<img class="image bottom" [src]="productColor.bottomSmallUrl" alt="bottom-image" />
-				<img class="image right" [src]="productColor.rightSmallUrl" alt="right-image" /> -->
+				<img class="image right" [src]="productColor.rightSmallUrl" alt="right-image" />
 			</div>
 
 			<div class="name-of-product">
@@ -44,7 +44,10 @@
 			</div>
 
 			<div class="colors-prints">
-				<app-colors-list [colorsControl]="productColorsControl"></app-colors-list>
+				<app-colors-list
+					[colorsControl]="productColorsControl"
+					(onColorChanged)="onColorChanged($event)"
+				></app-colors-list>
 
 				<app-prints-list [printsControl]="productPrintsControl"></app-prints-list>
 			</div>
