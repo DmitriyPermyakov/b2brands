@@ -14,10 +14,7 @@
 		<app-account-buttons></app-account-buttons>
 		<form class="product-card" [formGroup]="productCardForm">
 			<div class="images">
-				<img class="image front" [src]="productColor.frontSmallUrl" alt="front-image" />
-				<img class="image left" [src]="productColor.leftSmallUrl" alt="left-image" />
-				<img class="image bottom" [src]="productColor.bottomSmallUrl" alt="bottom-image" />
-				<img class="image right" [src]="productColor.rightSmallUrl" alt="right-image" />
+				<app-image-block [productColor]="productColor"></app-image-block>
 			</div>
 
 			<div class="name-of-product">

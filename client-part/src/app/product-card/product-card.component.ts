@@ -84,7 +84,6 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 
 	ngAfterContentInit(): void {
 		this.printCount = this.product.print.length
-		// this.productColor = this.productColorsControl.value[0]
 	}
 
 	ngAfterViewInit() {}

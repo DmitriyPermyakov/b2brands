@@ -35,8 +35,10 @@ import { AddOrderItemComponent } from './add-order-item/add-order-item.component
 import { ImageSelectorComponent } from './image-selector/image-selector.component'
 import { ProductPropertiesComponent } from './product-properties/product-properties.component'
 import { InputWidthDirective } from './directives/input-width/input-width.directive'
-import { ColorsListComponent } from './colors-list/colors-list.component';
+import { ColorsListComponent } from './colors-list/colors-list.component'
 import { PrintsListComponent } from './prints-list/prints-list.component'
+import { ImageBlockComponent } from './image-block/image-block.component'
+import { HttpClientModule } from '@angular/common/http'
 
 @NgModule({
 	declarations: [
@@ -67,7 +69,8 @@ import { PrintsListComponent } from './prints-list/prints-list.component'
 		ProductPropertiesComponent,
 		InputWidthDirective,
 		ColorsListComponent,
-  PrintsListComponent,
+		PrintsListComponent,
+		ImageBlockComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -77,6 +80,7 @@ import { PrintsListComponent } from './prints-list/prints-list.component'
 		StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
 		EffectsModule.forRoot([GettingProductEffect]),
 		ReactiveFormsModule,
+		HttpClientModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent],

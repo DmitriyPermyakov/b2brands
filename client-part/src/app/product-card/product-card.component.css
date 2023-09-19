@@ -130,46 +130,9 @@ input {
 	grid-column: 2 / 3;
 	grid-row: 2 / 3;
 
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
-	grid-template-rows: minmax(0, 2fr) 1fr;
-
-	align-items: center;
-	justify-items: center;
-}
-
-.image {
-	display: inline;
-
-	object-fit: contain;
-	aspect-ratio: 1/1;
-	filter: drop-shadow(1px 1px 10px var(--dark-shadow));
-}
-
-.image.front {
-	grid-column: span 3;
-	grid-row: 1 / 2;
-
-	width: 18.75em;
-}
-
-.image.left {
-	grid-column: 1 / 2;
-	grid-row: 2 / 3;
-
-	width: 9.375em;
-}
-
-.image.bottom {
-	grid-column: 2 / 3;
-	grid-row: 2 / 3;
-	width: 9.375em;
-}
-
-.image.right {
-	grid-column: 3 / 4;
-	grid-row: 2 / 3;
-	width: 9.375em;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
 }
 
 .price-quantity {

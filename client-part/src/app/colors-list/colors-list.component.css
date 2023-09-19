@@ -1,14 +1,11 @@
 .colors-with-btns {
-	/* grid-column: 1 / 2;
-	grid-row: 1 / 2; */
-
 	width: 100%;
 	height: 100%;
 	display: grid;
 	grid-template-columns: fit-content(35px);
 	grid-template-rows: auto auto auto;
 
-	justify-content: start;
+	justify-content: center;
 	align-content: center;
 	align-items: center;
 	justify-items: center;
@@ -28,15 +25,11 @@
 .previous-color {
 	grid-column: 1 / 2;
 	grid-row: 1 / 2;
-
-	margin-bottom: 0.625em;
 }
 
 .next-color {
 	grid-column: 1 / 2;
 	grid-row: 3 / 4;
-
-	margin-top: 0.625em;
 }
 
 .color-items {
@@ -61,8 +54,6 @@
 	height: 2.1875em;
 	position: absolute;
 	transition: all 0.2s;
-
-	/* pointer-events: none; */
 }
 
 .color.selected {
@@ -78,25 +69,23 @@
 }
 
 .color.first {
-	/* width: 1.625em;
-	height: 1.625em; */
+	width: 1rem;
+	height: 1rem;
 }
 
 .first-prev {
 	filter: blur(2px);
 	opacity: 1;
-	transform: translate3d(0, -4rem, -8rem);
+	transform: translate3d(0, -4.5rem, -12rem);
 }
 
 .first-next {
 	filter: blur(2px);
 	opacity: 1;
-	transform: translate3d(0, 4rem, -8rem);
+	transform: translate3d(0, 4.5rem, -12rem);
 }
 
 .color.second {
-	/* width: 0.875em;
-	height: 0.875em; */
 	filter: blur(2px);
 	opacity: 0.7;
 }
@@ -104,21 +93,20 @@
 .second-prev {
 	filter: blur(2px);
 	opacity: 0.7;
-	transform: translate3d(0, -10rem, -20rem);
+	transform: translate3d(0, -13rem, -40rem);
 }
 
 .second-next {
 	filter: blur(2px);
 	opacity: 0.7;
-	transform: translate3d(0, 10rem, -20rem);
+	transform: translate3d(0, 13rem, -40rem);
 }
 
 .hidden {
-	/* display: none; */
 	opacity: 0;
 }
 .add.icon {
-	margin-top: 1rem;
+	margin-top: 2rem;
 	width: 1.5rem;
 	height: 1.5rem;
 }

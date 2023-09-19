@@ -1,0 +1,69 @@
+<div class="container">
+	<img
+		class="image front"
+		[src]="productColor.frontSmallUrl"
+		alt="front-image"
+		[ngClass]="{ hidden: !productColor.frontSmallUrl }"
+	/>
+
+	<div class="add-image-icon front" (click)="front.click()" [ngClass]="{ hidden: productColor.frontSmallUrl }">
+		<button class="add icon">
+			<svg _ngcontent-dxn-c13="" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path _ngcontent-dxn-c13="" d="M1 13H25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
+				<path _ngcontent-dxn-c13="" d="M13 1L13 25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
+			</svg>
+		</button>
+		<input type="file" accept="image/*" #front hidden (change)="uploadImage(front.files, 'frontSmallUrl')" />
+	</div>
+
+	<img
+		class="image left"
+		[src]="productColor.leftSmallUrl"
+		alt="left-image"
+		[ngClass]="{ hidden: !productColor.leftSmallUrl }"
+	/>
+
+	<div class="add-image-icon left" (click)="left.click()" [ngClass]="{ hidden: productColor.leftSmallUrl }">
+		<button class="add icon">
+			<svg _ngcontent-dxn-c13="" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path _ngcontent-dxn-c13="" d="M1 13H25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
+				<path _ngcontent-dxn-c13="" d="M13 1L13 25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
+			</svg>
+		</button>
+		<input type="file" accept="image/*" #left hidden (change)="uploadImage(left.files, 'leftSmallUrl')" />
+	</div>
+
+	<img
+		class="image bottom"
+		[src]="productColor.bottomSmallUrl"
+		alt="bottom-image"
+		[ngClass]="{ hidden: !productColor.bottomSmallUrl }"
+	/>
+
+	<div class="add-image-icon bottom" (click)="bottom.click()" [ngClass]="{ hidden: productColor.bottomSmallUrl }">
+		<button class="add icon">
+			<svg _ngcontent-dxn-c13="" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path _ngcontent-dxn-c13="" d="M1 13H25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
+				<path _ngcontent-dxn-c13="" d="M13 1L13 25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
+			</svg>
+		</button>
+		<input type="file" accept="image/*" #bottom hidden (change)="uploadImage(bottom.files, 'bottomSmallUrl')" />
+	</div>
+
+	<img
+		class="image right"
+		[src]="productColor.rightSmallUrl"
+		alt="right-image"
+		[ngClass]="{ hidden: !productColor.rightSmallUrl }"
+	/>
+
+	<div class="add-image-icon right" (click)="right.click()" [ngClass]="{ hidden: productColor.rightSmallUrl }">
+		<button class="add icon">
+			<svg _ngcontent-dxn-c13="" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path _ngcontent-dxn-c13="" d="M1 13H25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
+				<path _ngcontent-dxn-c13="" d="M13 1L13 25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
+			</svg>
+		</button>
+		<input type="file" accept="image/*" #right hidden (change)="uploadImage(right.files, 'rightSmallUrl')" />
+	</div>
+</div>
