@@ -9,6 +9,7 @@ import { ProfileComponent } from './profile/profile.component'
 import { AdminOrdersListComponent } from './admin-orders-list/admin-orders-list.component'
 import { ListContainerComponent } from './list-container/list-container.component'
 import { EditOrderComponent } from './edit-order/edit-order.component'
+import { authGuard } from './guards/auth.guard'
 
 const routes: Routes = [
 	{ path: '', component: MainPageComponent },

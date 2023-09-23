@@ -73,9 +73,6 @@ export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 			rightSmallUrl: '',
 			leftSmallUrl: '',
 		}
-		// console.log(this.colorsControl.value)
-		// this.colorsControl.value.push(color)
-		// console.log(this.colorsControl.value)
 
 		this.colorsControl.setValue([...this.colorsControl.value, color])
 

@@ -1,7 +1,7 @@
 <section class="login-form-container">
-	<form class="login-form">
+	<form class="login-form" [formGroup]="form" (ngSubmit)="onSubmit(form)">
 		<h1 class="login-form-title">Войти</h1>
-		<input class="login-form-input" type="password" placeholder="Пароль" />
+		<input class="login-form-input" type="password" placeholder="Пароль" formControlName="password" />
 		<a href="" class="restore-password">Забыли пароль?</a>
 		<button class="login-form-btn" type="submit">Войти</button>
 	</form>
