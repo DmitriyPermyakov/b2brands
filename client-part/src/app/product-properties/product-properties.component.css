@@ -91,6 +91,27 @@ input {
 	width: 1.5rem;
 }
 
+.hidden {
+	display: none;
+	animation: hidden 0.2s linear 0s 1 normal forwards;
+}
+
+.showed {
+	display: block;
+	animation: hidden 0.2s linear 0s 1 reverse forwards;
+}
+
+@keyframes hidden {
+	0% {
+		opacity: 100%;
+		transform: scale(1);
+	}
+	100% {
+		opacity: 0;
+		transform: scale(0);
+	}
+}
+
 @media (max-width: 600) {
 	.properties p {
 		padding-right: 0;

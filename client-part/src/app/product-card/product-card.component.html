@@ -13,67 +13,126 @@
 		</button>
 		<app-account-buttons></app-account-buttons>
 		<form class="product-card" [formGroup]="productCardForm">
+			<div class="name-of-product">
+				<input class="name" type="text" formControlName="name" [ngClass]="{ outlined: editable }" />
+				<p class="vendor-container">
+					<span class="vendor-label">Артикул: </span>
+					<input class="vendor" type="text" formControlName="code" [ngClass]="{ outlined: editable }" />
+				</p>
+			</div>
+			<div class="description-wrapper">
+				<textarea class="description" formControlName="description" [ngClass]="{ outlined: editable }"></textarea>
+				<div class="properties">
+					<app-product-properties
+						class="prop"
+						[props]="productPropsControl"
+						[editable]="editable"
+					></app-product-properties>
+				</div>
+			</div>
+
 			<div class="images">
 				<app-image-block [productColor]="productColor"></app-image-block>
 			</div>
 
-			<div class="name-of-product">
-				<input class="name" type="text" formControlName="name" />
-				<p class="vendor-container">
-					<span class="vendor-label">Артикул: </span>
-					<input class="vendor" type="text" formControlName="code" />
-				</p>
-			</div>
-			<div class="description-wrapper">
-				<textarea class="description" formControlName="description"></textarea>
-				<div class="properties">
-					<app-product-properties class="prop" [props]="productPropsControl"></app-product-properties>
-				</div>
-			</div>
-
 			<div class="price-quantity">
-				<p class="price">
-					<span class="new-price">{{ product.newPrice }}р/шт</span>
-					<span class="old-price">{{ product.oldPrice }}р/шт</span>
-				</p>
+				<div class="price-container">
+					<div class="price">
+						<span class="new-price label">Новая цена:</span>
+						<app-quantity [IsDisabled]="!editable" [postfix]="'р./шт.'"></app-quantity>
+					</div>
+					<div class="price">
+						<span class="old-price label">Старая цена:</span>
+						<app-quantity [IsDisabled]="!editable" [postfix]="'р./шт.'"></app-quantity>
+					</div>
+				</div>
 
-				<app-quantity></app-quantity>
+				<app-quantity
+					[ngStyle]="{ display: authService.IsAuthenticated ? 'none' : '' }"
+					[IsDisabled]="authService.IsAuthenticated"
+				></app-quantity>
 			</div>
 
 			<div class="colors-prints">
 				<app-colors-list
 					[colorsControl]="productColorsControl"
 					(onColorChanged)="onColorChanged($event)"
+					[editable]="editable"
 				></app-colors-list>
 
-				<app-prints-list [printsControl]="productPrintsControl"></app-prints-list>
+				<app-prints-list [printsControl]="productPrintsControl" [editable]="editable"></app-prints-list>
 			</div>
 			<div class="to-cart-wrapper">
 				<button class="to-cart" (click)="addToCart()">В корзину</button>
 			</div>
-			<button class="cart-button icon" [routerLink]="['/orders']">
-				<svg class="cart" width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<circle cx="17" cy="30" r="2" stroke="#A2A2A2" stroke-width="2" />
-					<circle cx="25" cy="30" r="2" stroke="#A2A2A2" stroke-width="2" />
-					<path
-						d="M1 6L6.8612 7.61903C7.55401 7.8104 8.09085 8.35881 8.26741 9.05553L11.6722 22.4913C11.8971 23.3786 12.6956 24 13.6109 24H27.5109C28.3595 24 29.1158 23.4645 29.3975 22.664L32.0624 15.0926C32.5203 13.7916 31.555 12.4286 30.1758 12.4286H13"
-						stroke="#A2A2A2"
-						stroke-width="2"
-						stroke-linecap="round"
-					/>
-				</svg>
-				<svg
-					*ngIf="cartIconDotActive"
-					class="dot"
-					width="3"
-					height="3"
-					viewBox="0 0 3 3"
-					fill="none"
-					xmlns="http://www.w3.org/2000/svg"
+			<div class="card-buttons">
+				<button class="button icon" [routerLink]="['/orders']" [ngClass]="{ hidden: authService.IsAuthenticated }">
+					<svg
+						class="cart"
+						width="34"
+						height="34"
+						viewBox="0 0 34 34"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<circle cx="17" cy="30" r="2" stroke="#A2A2A2" stroke-width="2" />
+						<circle cx="25" cy="30" r="2" stroke="#A2A2A2" stroke-width="2" />
+						<path
+							d="M1 6L6.8612 7.61903C7.55401 7.8104 8.09085 8.35881 8.26741 9.05553L11.6722 22.4913C11.8971 23.3786 12.6956 24 13.6109 24H27.5109C28.3595 24 29.1158 23.4645 29.3975 22.664L32.0624 15.0926C32.5203 13.7916 31.555 12.4286 30.1758 12.4286H13"
+							stroke="#A2A2A2"
+							stroke-width="2"
+							stroke-linecap="round"
+						/>
+					</svg>
+					<svg
+						*ngIf="cartIconDotActive"
+						class="dot"
+						width="3"
+						height="3"
+						viewBox="0 0 3 3"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<circle cx="1.5" cy="1.5" r="1.5" transform="matrix(1 0 0 -1 0 3)" fill="#FEFEFE" />
+					</svg>
+				</button>
+				<button
+					class="button edit icon"
+					(click)="edit()"
+					[ngClass]="{
+						showed: authService.IsAuthenticated && !editable,
+						hidden: authService.IsAuthenticated && editable
+					}"
 				>
-					<circle cx="1.5" cy="1.5" r="1.5" transform="matrix(1 0 0 -1 0 3)" fill="#FEFEFE" />
-				</svg>
-			</button>
+					<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path
+							d="M36.8624 10.8241L30.1687 6.78452C29.6958 6.49915 29.0812 6.65114 28.7958 7.12399L14.1704 31.3585C14.056 31.5479 14.0078 31.77 14.0332 31.9898L14.7661 38.3408C14.8412 38.9912 15.5106 39.3953 16.1211 39.1586L22.0818 36.8471C22.2881 36.7671 22.4621 36.621 22.5764 36.4315L37.2018 12.197C37.4872 11.7241 37.3352 11.1095 36.8624 10.8241Z"
+							stroke="#A2A2A2"
+							stroke-width="2"
+						/>
+						<circle
+							cx="16.6057"
+							cy="36.8243"
+							r="2.45455"
+							transform="rotate(31.1108 16.6057 36.8243)"
+							fill="#A2A2A2"
+						/>
+					</svg>
+				</button>
+				<button
+					class="button back icon"
+					(click)="cancelEdit()"
+					[ngClass]="{
+						showed: authService.IsAuthenticated && editable,
+						hidden: authService.IsAuthenticated && !editable
+					}"
+				>
+					<svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M2.48438 19.4846L19.4549 2.51406" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
+						<path d="M2.48535 2.51465L19.4559 19.4852" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
+					</svg>
+				</button>
+			</div>
 		</form>
 	</div>
 </section>

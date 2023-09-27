@@ -26,6 +26,7 @@ export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 	@ViewChild('colors') colorsRef!: ElementRef
 	@ViewChild('colorInput') colorInputRef!: ElementRef
 	@Input() colorsControl: FormControl
+	@Input() editable: boolean
 
 	@Output() onColorChanged: EventEmitter<number> = new EventEmitter()
 	private scroller: Scroller

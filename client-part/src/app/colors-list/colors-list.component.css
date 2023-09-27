@@ -105,10 +105,32 @@
 .hidden {
 	opacity: 0;
 }
+
 .add.icon {
 	margin-top: 2rem;
 	width: 1.5rem;
 	height: 1.5rem;
+}
+
+.icon.hidden {
+	display: none;
+	animation: hidden 0.2s linear 0s 1 normal forwards;
+}
+
+.icon.showed {
+	display: block;
+	animation: hidden 0.2s linear 0s 1 reverse forwards;
+}
+
+@keyframes hidden {
+	0% {
+		opacity: 100%;
+		transform: scale(1);
+	}
+	100% {
+		opacity: 0;
+		transform: scale(0);
+	}
 }
 
 .color-picker {

@@ -6,14 +6,27 @@
 		[ngClass]="{ hidden: !productColor.frontSmallUrl }"
 	/>
 
-	<div class="add-image-icon front" (click)="front.click()" [ngClass]="{ hidden: productColor.frontSmallUrl }">
+	<div
+		class="add-image-icon front"
+		(click)="chooseImage(front)"
+		(mouseover)="enableInput()"
+		[ngClass]="{ hidden: productColor.frontSmallUrl }"
+	>
 		<button class="add icon">
 			<svg _ngcontent-dxn-c13="" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path _ngcontent-dxn-c13="" d="M1 13H25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
 				<path _ngcontent-dxn-c13="" d="M13 1L13 25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
 			</svg>
 		</button>
-		<input type="file" accept="image/*" #front hidden (change)="uploadImage(front.files, 'frontSmallUrl')" />
+		<input
+			type="file"
+			accept="image/*"
+			[disabled]="inputDisabled"
+			#front
+			hidden
+			(change)="uploadImage(front.files, 'frontSmallUrl')"
+			(cancel)="cancel()"
+		/>
 	</div>
 
 	<img
@@ -30,7 +43,14 @@
 				<path _ngcontent-dxn-c13="" d="M13 1L13 25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
 			</svg>
 		</button>
-		<input type="file" accept="image/*" #left hidden (change)="uploadImage(left.files, 'leftSmallUrl')" />
+		<input
+			type="file"
+			accept="image/*"
+			tabindex="-1"
+			#left
+			hidden
+			(change)="uploadImage(left.files, 'leftSmallUrl')"
+		/>
 	</div>
 
 	<img
@@ -47,7 +67,14 @@
 				<path _ngcontent-dxn-c13="" d="M13 1L13 25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
 			</svg>
 		</button>
-		<input type="file" accept="image/*" #bottom hidden (change)="uploadImage(bottom.files, 'bottomSmallUrl')" />
+		<input
+			type="file"
+			accept="image/*"
+			tabindex="-1"
+			#bottom
+			hidden
+			(change)="uploadImage(bottom.files, 'bottomSmallUrl')"
+		/>
 	</div>
 
 	<img
@@ -64,6 +91,13 @@
 				<path _ngcontent-dxn-c13="" d="M13 1L13 25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
 			</svg>
 		</button>
-		<input type="file" accept="image/*" #right hidden (change)="uploadImage(right.files, 'rightSmallUrl')" />
+		<input
+			type="file"
+			accept="image/*"
+			tabindex="-1"
+			#right
+			hidden
+			(change)="uploadImage(right.files, 'rightSmallUrl')"
+		/>
 	</div>
 </div>

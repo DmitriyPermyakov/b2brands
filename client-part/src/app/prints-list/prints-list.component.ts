@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs'
 })
 export class PrintsListComponent implements AfterViewInit, OnDestroy {
 	@Input('printsControl') printsControl: FormControl
+	@Input() editable: boolean
 	@ViewChild('prints') printsRef: ElementRef
 	@ViewChild('printInput') input: ElementRef
 

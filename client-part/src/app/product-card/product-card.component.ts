@@ -10,6 +10,7 @@ import { addOrderItemAction } from '../store/orders/order-item.action'
 import { orderItemSelector } from '../store/orders/order-item.selector'
 import { OrderItem } from '../interfaces/orderItem.interface'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
+import { AuthService } from '../services/auth.service'
 
 @Component({
 	selector: 'app-product-card',
@@ -35,7 +36,8 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 		return this.productCardForm.controls['prints'] as FormControl
 	}
 
-	public isAuthenticated: true
+	public editable: boolean = false
+
 	public cartIconDotActive: boolean = false
 
 	public product!: IProduct
@@ -54,7 +56,12 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 	private changeImageOnClickSub!: Subscription
 	private amountOfOrdersSub: Subscription
 
-	constructor(private activatedRoute: ActivatedRoute, private store: Store, private fb: FormBuilder) {
+	constructor(
+		private activatedRoute: ActivatedRoute,
+		private store: Store,
+		private fb: FormBuilder,
+		public authService: AuthService
+	) {
 		this.initProductCardForm()
 	}
 
@@ -124,12 +131,32 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 		this.productAmount = count
 	}
 
+	public edit() {
+		this.editable = true
+		this.enableFormControls()
+	}
+
+	public cancelEdit() {
+		this.editable = false
+		this.disableFormControls()
+	}
+
+	private enableFormControls() {
+		Object.keys(this.productCardForm.controls).forEach((c) => this.productCardForm.get(c)?.enable())
+	}
+
+	private disableFormControls() {
+		Object.keys(this.productCardForm.controls).forEach((c) => this.productCardForm.get(c)?.disable())
+	}
+
 	private initProductCardForm() {
 		this.productCardForm = this.fb.group({
 			id: [{ value: '', disabled: false }],
-			name: [{ value: '', disabled: false }, Validators.required],
-			code: [{ value: '', disabled: false }, Validators.required],
-			description: [{ value: '', disabled: false }],
+			name: [{ value: '', disabled: !this.editable }, Validators.required],
+			code: [{ value: '', disabled: !this.editable }, Validators.required],
+			newPrice: [{ value: '', disabled: !this.editable }],
+			oldPrice: [{ value: '', disabled: !this.editable }],
+			description: [{ value: '', disabled: !this.editable }],
 			colors: [{ value: '', disabled: false }],
 			prints: [{ value: '', disabled: false }],
 			properties: [{ value: '', disables: false }],
@@ -141,6 +168,8 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 			id: this.product.id,
 			name: this.product.name,
 			code: this.product.code,
+			newPrice: this.product.newPrice,
+			oldPrice: this.product.oldPrice,
 			description: this.product.description,
 			colors: this.product.productColors,
 			prints: this.product.print,

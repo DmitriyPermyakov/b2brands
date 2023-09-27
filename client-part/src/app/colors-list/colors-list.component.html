@@ -16,7 +16,7 @@
 		</svg>
 	</button>
 	<input class="color-picker" type="color" value="#A2A2A2" #colorInput (change)="colorPickerChangedValue($event)" />
-	<button class="add icon" (click)="showColorInput()">
+	<button class="add icon" (click)="showColorInput()" [ngClass]="{ hidden: !editable, showed: editable }">
 		<svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path d="M1 13H25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
 			<path d="M13 1L13 25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />

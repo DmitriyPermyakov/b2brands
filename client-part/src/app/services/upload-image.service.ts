@@ -10,7 +10,7 @@ export class UploadImageService {
 	constructor(private http: HttpClient) {}
 
 	public uploadImage(files, name): Observable<any> {
-		if (files.length === 0) return null
+		if (files.length == 0) return new Observable((observer) => observer.next(null))
 
 		let file = <File>files.item(0)
 		let formData = new FormData()

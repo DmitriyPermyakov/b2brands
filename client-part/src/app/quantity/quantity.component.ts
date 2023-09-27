@@ -14,12 +14,33 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
 	],
 })
 export class QuantityComponent implements OnInit, ControlValueAccessor {
+	@Input()
+	public set IsDisabled(value: boolean) {
+		this._disabled = value
+	}
+	public get IsDisabled(): boolean {
+		return this._disabled
+	}
+	@Input() postfix: string = ''
 	public quantityString: string
-	public disabled: boolean = true
+
+	@Input()
+	public set value(val: number) {
+		if (val < 1) {
+			this._value = 1
+			this.quantityString = this._value + this.postfix
+			this.onChanged(this._value)
+		} else {
+			this._value = val
+			this.quantityString = this._value + this.postfix
+			this.onChanged(this._value)
+		}
+	}
 
 	public onChanged = (value: number) => {}
 	public onTouched = () => {}
 
+	private _disabled: boolean = true
 	private touched = false
 
 	private pattern = /^[0-9]+$/
@@ -28,19 +49,6 @@ export class QuantityComponent implements OnInit, ControlValueAccessor {
 
 	public get value(): number {
 		return this._value
-	}
-
-	@Input()
-	public set value(val: number) {
-		if (val < 1) {
-			this._value = 1
-			this.quantityString = this._value + 'шт.'
-			this.onChanged(this._value)
-		} else {
-			this._value = val
-			this.quantityString = this._value + 'шт.'
-			this.onChanged(this._value)
-		}
 	}
 
 	ngOnInit() {
@@ -59,8 +67,8 @@ export class QuantityComponent implements OnInit, ControlValueAccessor {
 	registerOnTouched(fn: any): void {
 		this.onTouched = fn
 	}
-	setDisabledState?(isDisabled: boolean): void {
-		this.disabled = isDisabled
+	setDisabledState(isDisabled: boolean): void {
+		this._disabled = isDisabled
 	}
 
 	increase() {
@@ -80,15 +88,15 @@ export class QuantityComponent implements OnInit, ControlValueAccessor {
 
 	onFocus(event: any): void {
 		this.markAsTouched()
-		event.target.value = event.target.value.slice(0, event.target.value.length - 3)
+		event.target.value = event.target.value.slice(0, event.target.value.length - this.postfix.length)
 	}
 	onBlur(event: any): void {
 		if (event.target.value == '') {
-			event.target.value = this.value + 'шт.'
+			event.target.value = this.value + this.postfix
 		} else {
-			event.target.value = event.target.value + 'шт.'
+			event.target.value = event.target.value + this.postfix
 		}
-		this.value = event.target.value.slice(0, event.target.value.length - 3)
+		this.value = event.target.value.slice(0, event.target.value.length - this.postfix.length)
 	}
 	onInput(event: any): void {
 		this.markAsTouched()

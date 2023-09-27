@@ -8,6 +8,7 @@ import { FormControl } from '@angular/forms'
 })
 export class ProductPropertiesComponent implements OnInit {
 	@Input() props: FormControl
+	@Input() editable: boolean
 	@ViewChild('name') name: ElementRef
 	@ViewChild('value') value: ElementRef
 
@@ -29,13 +30,15 @@ export class ProductPropertiesComponent implements OnInit {
 
 		if (this.value.nativeElement.value === '') return
 
-		console.log(
-			this.props.value.push({
+		this.props.setValue([
+			...this.props.value,
+			{
 				id: 'asfdasfsa',
 				name: this.name.nativeElement.value,
 				value: this.value.nativeElement.value,
-			})
-		)
+			},
+		])
+		this.toggleVisibilityInput()
 	}
 
 	toggleVisibilityInput() {
