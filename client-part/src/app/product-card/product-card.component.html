@@ -45,11 +45,17 @@
 						[IsDisabled]="!isEdit"
 						[postfix]="'р./шт.'"
 						[colored]="!isEdit && !authService.IsAuthenticated"
+						formControlName="newPrice"
 					></app-quantity>
 					<span class="old-price label" [ngClass]="{ hidden: !authService.IsAuthenticated }"
 						>Старая&nbsp;цена:</span
 					>
-					<app-quantity class="q-old-price" [IsDisabled]="!isEdit" [postfix]="'р./шт.'"></app-quantity>
+					<app-quantity
+						class="q-old-price"
+						[IsDisabled]="!isEdit"
+						[postfix]="'р./шт.'"
+						formControlName="oldPrice"
+					></app-quantity>
 				</div>
 
 				<app-quantity

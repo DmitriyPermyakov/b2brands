@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, forwardRef } from '@angular/core'
+import { AfterContentInit, AfterViewInit, Component, Input, OnInit, forwardRef } from '@angular/core'
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
 
 @Component({
@@ -13,29 +13,33 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
 		},
 	],
 })
-export class QuantityComponent implements OnInit, ControlValueAccessor {
+export class QuantityComponent implements OnInit, ControlValueAccessor, AfterContentInit {
+	@Input() postfix: string = ''
+	public quantityString: string = ''
+
+	@Input() public colored: boolean = false
+	@Input()
+	public set value(val: number) {
+		//parse to number
+		if (val < 1) {
+			this._value = 1
+
+			this.onChanged(this._value)
+		} else {
+			this._value = val
+			this.onChanged(this._value)
+		}
+	}
+
+	public get value(): number {
+		return this._value
+	}
 	@Input()
 	public set IsDisabled(value: boolean) {
 		this._disabled = value
 	}
 	public get IsDisabled(): boolean {
 		return this._disabled
-	}
-	@Input() postfix: string = ''
-	public quantityString: string
-
-	@Input() public colored: boolean = false
-	@Input()
-	public set value(val: number) {
-		if (val < 1) {
-			this._value = 1
-			this.quantityString = this._value + this.postfix
-			this.onChanged(this._value)
-		} else {
-			this._value = val
-			this.quantityString = this._value + this.postfix
-			this.onChanged(this._value)
-		}
 	}
 
 	public onChanged = (value: number) => {}
@@ -48,15 +52,15 @@ export class QuantityComponent implements OnInit, ControlValueAccessor {
 	private currentValue: number
 	private _value: number
 
-	public get value(): number {
-		return this._value
-	}
-
 	ngOnInit() {
 		if (!this.value) {
 			this.value = 1
 		}
 		this.currentValue = this.value
+	}
+
+	ngAfterContentInit(): void {
+		this.quantityString = this.value + this.postfix
 	}
 
 	writeValue(value: any): void {
@@ -77,12 +81,15 @@ export class QuantityComponent implements OnInit, ControlValueAccessor {
 		if (this.value >= 99999) return
 
 		this.value++
+		this.quantityString = this.value + this.postfix
+		console.log(this.quantityString)
 	}
 
 	decrease() {
 		this.markAsTouched()
 		if (this.value > 1) {
 			this.value--
+			this.quantityString = this.value + this.postfix
 		}
 		return
 	}
@@ -93,11 +100,10 @@ export class QuantityComponent implements OnInit, ControlValueAccessor {
 	}
 	onBlur(event: any): void {
 		if (event.target.value == '') {
-			event.target.value = this.value + this.postfix
-		} else {
-			event.target.value = event.target.value + this.postfix
+			this.value = 1
 		}
-		this.value = event.target.value.slice(0, event.target.value.length - this.postfix.length)
+
+		this.quantityString = this.value + this.postfix
 	}
 	onInput(event: any): void {
 		this.markAsTouched()

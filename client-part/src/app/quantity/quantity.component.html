@@ -9,7 +9,6 @@
 		type="text"
 		[ngClass]="{ outlined: !IsDisabled, 'new-price': colored }"
 		[disabled]="IsDisabled"
-		[value]="quantityString"
 		(input)="onInput($event)"
 		(focus)="onFocus($event)"
 		(blur)="onBlur($event)"
