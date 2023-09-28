@@ -24,6 +24,7 @@ export class QuantityComponent implements OnInit, ControlValueAccessor {
 	@Input() postfix: string = ''
 	public quantityString: string
 
+	@Input() public colored: boolean = false
 	@Input()
 	public set value(val: number) {
 		if (val < 1) {

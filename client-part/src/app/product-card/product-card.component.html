@@ -35,16 +35,21 @@
 				<app-image-block [productColor]="productColor"></app-image-block>
 			</div>
 
-			<div class="price-quantity">
-				<div class="price-container">
-					<div class="price">
-						<span class="new-price label">Новая цена:</span>
-						<app-quantity [IsDisabled]="!editable" [postfix]="'р./шт.'"></app-quantity>
-					</div>
-					<div class="price">
-						<span class="old-price label">Старая цена:</span>
-						<app-quantity [IsDisabled]="!editable" [postfix]="'р./шт.'"></app-quantity>
-					</div>
+			<div class="price-quantity" [ngClass]="{ 'not-auth': !authService.IsAuthenticated }">
+				<div class="price-container" [ngClass]="{ editable: editable, 'not-auth': !authService.IsAuthenticated }">
+					<span class="new-price label" [ngClass]="{ hidden: !authService.IsAuthenticated }"
+						>Новая&nbsp;цена:</span
+					>
+					<app-quantity
+						class="q-new-price"
+						[IsDisabled]="!editable"
+						[postfix]="'р./шт.'"
+						[colored]="!editable && !authService.IsAuthenticated"
+					></app-quantity>
+					<span class="old-price label" [ngClass]="{ hidden: !authService.IsAuthenticated }"
+						>Старая&nbsp;цена:</span
+					>
+					<app-quantity class="q-old-price" [IsDisabled]="!editable" [postfix]="'р./шт.'"></app-quantity>
 				</div>
 
 				<app-quantity

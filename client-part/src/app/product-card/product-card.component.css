@@ -163,12 +163,27 @@ input {
 	justify-content: center;
 }
 
-.price-container {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
+.price-quantity.not-auth {
+	grid-template-columns: 50% auto;
 	justify-content: space-around;
+}
+
+.price-container {
+	display: grid;
+	grid-template-rows: 1fr;
+	grid-template-columns: 30% 20% 30% 20%;
+	align-items: center;
+	justify-content: center;
+	transition: 0.2s;
+}
+
+.price-container.editable {
+	grid-template-columns: 20% 30% 20% 30%;
 	width: 100%;
+}
+
+.price-container.not-auth {
+	grid-template-columns: 0% 30% 0% 30%;
 }
 
 .price {
@@ -180,13 +195,21 @@ input {
 }
 
 .label {
+	justify-self: self-end;
 	margin-right: 0.5em;
 	margin-bottom: 0.1em;
 	color: var(--secondary-text);
 }
 
 .new-price {
+	grid-row: 1 / 2;
+	grid-column: 1 / 2;
 	color: var(--new-price);
+}
+
+.old-price {
+	grid-row: 1 / 2;
+	grid-column: 3 / 4;
 }
 
 .colors-prints {

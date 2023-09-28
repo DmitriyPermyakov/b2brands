@@ -7,7 +7,7 @@
 	<input
 		class="quantity-number"
 		type="text"
-		[ngClass]="{ outlined: !IsDisabled }"
+		[ngClass]="{ outlined: !IsDisabled, 'new-price': colored }"
 		[disabled]="IsDisabled"
 		[value]="quantityString"
 		(input)="onInput($event)"

@@ -1,5 +1,14 @@
 @import url('../../styles.css');
 
+:host(.q-new-price) {
+	grid-row: 1 / 2;
+	grid-column: 2 / 3;
+}
+
+:host(.q-old-price) {
+	grid-row: 1 / 2;
+	grid-column: 4 / 5;
+}
 .quantity {
 	display: grid;
 	grid-template-rows: 1fr;
@@ -69,6 +78,10 @@
 
 	font-size: inherit;
 	transition: 2s;
+}
+
+.quantity-number.new-price {
+	color: var(--new-price);
 }
 
 .quantity-number.outlined {
