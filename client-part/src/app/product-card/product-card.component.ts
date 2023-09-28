@@ -36,7 +36,7 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 		return this.productCardForm.controls['prints'] as FormControl
 	}
 
-	public editable: boolean = false
+	public isEdit: boolean = false
 
 	public cartIconDotActive: boolean = false
 
@@ -87,6 +87,7 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 			rightSmallUrl: '',
 			leftSmallUrl: '',
 		}
+		console.log(this.isEdit)
 	}
 
 	ngAfterContentInit(): void {
@@ -132,12 +133,12 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 	}
 
 	public edit() {
-		this.editable = true
+		this.isEdit = true
 		this.enableFormControls()
 	}
 
 	public cancelEdit() {
-		this.editable = false
+		this.isEdit = false
 		this.disableFormControls()
 	}
 
@@ -152,11 +153,11 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 	private initProductCardForm() {
 		this.productCardForm = this.fb.group({
 			id: [{ value: '', disabled: false }],
-			name: [{ value: '', disabled: !this.editable }, Validators.required],
-			code: [{ value: '', disabled: !this.editable }, Validators.required],
-			newPrice: [{ value: '', disabled: !this.editable }],
-			oldPrice: [{ value: '', disabled: !this.editable }],
-			description: [{ value: '', disabled: !this.editable }],
+			name: [{ value: '', disabled: !this.isEdit }, Validators.required],
+			code: [{ value: '', disabled: !this.isEdit }, Validators.required],
+			newPrice: [{ value: '', disabled: !this.isEdit }],
+			oldPrice: [{ value: '', disabled: !this.isEdit }],
+			description: [{ value: '', disabled: !this.isEdit }],
 			colors: [{ value: '', disabled: false }],
 			prints: [{ value: '', disabled: false }],
 			properties: [{ value: '', disables: false }],

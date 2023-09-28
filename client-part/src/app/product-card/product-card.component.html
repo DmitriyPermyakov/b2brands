@@ -14,19 +14,19 @@
 		<app-account-buttons></app-account-buttons>
 		<form class="product-card" [formGroup]="productCardForm">
 			<div class="name-of-product">
-				<input class="name" type="text" formControlName="name" [ngClass]="{ outlined: editable }" />
+				<input class="name" type="text" formControlName="name" [ngClass]="{ outlined: isEdit }" />
 				<p class="vendor-container">
 					<span class="vendor-label">Артикул: </span>
-					<input class="vendor" type="text" formControlName="code" [ngClass]="{ outlined: editable }" />
+					<input class="vendor" type="text" formControlName="code" [ngClass]="{ outlined: isEdit }" />
 				</p>
 			</div>
 			<div class="description-wrapper">
-				<textarea class="description" formControlName="description" [ngClass]="{ outlined: editable }"></textarea>
+				<textarea class="description" formControlName="description" [ngClass]="{ outlined: isEdit }"></textarea>
 				<div class="properties">
 					<app-product-properties
 						class="prop"
 						[props]="productPropsControl"
-						[editable]="editable"
+						[editable]="isEdit"
 					></app-product-properties>
 				</div>
 			</div>
@@ -36,20 +36,20 @@
 			</div>
 
 			<div class="price-quantity" [ngClass]="{ 'not-auth': !authService.IsAuthenticated }">
-				<div class="price-container" [ngClass]="{ editable: editable, 'not-auth': !authService.IsAuthenticated }">
+				<div class="price-container" [ngClass]="{ editable: isEdit, 'not-auth': !authService.IsAuthenticated }">
 					<span class="new-price label" [ngClass]="{ hidden: !authService.IsAuthenticated }"
 						>Новая&nbsp;цена:</span
 					>
 					<app-quantity
 						class="q-new-price"
-						[IsDisabled]="!editable"
+						[IsDisabled]="!isEdit"
 						[postfix]="'р./шт.'"
-						[colored]="!editable && !authService.IsAuthenticated"
+						[colored]="!isEdit && !authService.IsAuthenticated"
 					></app-quantity>
 					<span class="old-price label" [ngClass]="{ hidden: !authService.IsAuthenticated }"
 						>Старая&nbsp;цена:</span
 					>
-					<app-quantity class="q-old-price" [IsDisabled]="!editable" [postfix]="'р./шт.'"></app-quantity>
+					<app-quantity class="q-old-price" [IsDisabled]="!isEdit" [postfix]="'р./шт.'"></app-quantity>
 				</div>
 
 				<app-quantity
@@ -62,10 +62,10 @@
 				<app-colors-list
 					[colorsControl]="productColorsControl"
 					(onColorChanged)="onColorChanged($event)"
-					[editable]="editable"
+					[editable]="isEdit"
 				></app-colors-list>
 
-				<app-prints-list [printsControl]="productPrintsControl" [editable]="editable"></app-prints-list>
+				<app-prints-list [printsControl]="productPrintsControl" [editable]="isEdit"></app-prints-list>
 			</div>
 			<div class="to-cart-wrapper">
 				<button class="to-cart" (click)="addToCart()">В корзину</button>
@@ -105,13 +105,13 @@
 					class="button edit icon"
 					(click)="edit()"
 					[ngClass]="{
-						showed: authService.IsAuthenticated && !editable,
-						hidden: authService.IsAuthenticated && editable
+						showed: authService.IsAuthenticated && !isEdit,
+						hidden: !authService.IsAuthenticated || isEdit
 					}"
 				>
 					<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path
-							d="M36.8624 10.8241L30.1687 6.78452C29.6958 6.49915 29.0812 6.65114 28.7958 7.12399L14.1704 31.3585C14.056 31.5479 14.0078 31.77 14.0332 31.9898L14.7661 38.3408C14.8412 38.9912 15.5106 39.3953 16.1211 39.1586L22.0818 36.8471C22.2881 36.7671 22.4621 36.621 22.5764 36.4315L37.2018 12.197C37.4872 11.7241 37.3352 11.1095 36.8624 10.8241Z"
+							d="M36.8624 10.8241L30.1687 6.78446C29.6958 6.49909 29.0812 6.65108 28.7958 7.12393L14.1704 31.3584C14.056 31.5479 14.0078 31.7699 14.0332 31.9898L14.7661 38.3408C14.8412 38.9912 15.5106 39.3952 16.1211 39.1585L22.0818 36.8471C22.2881 36.7671 22.4621 36.6209 22.5764 36.4314L37.2018 12.1969C37.4872 11.7241 37.3352 11.1094 36.8624 10.8241Z"
 							stroke="#A2A2A2"
 							stroke-width="2"
 						/>
@@ -128,8 +128,8 @@
 					class="button back icon"
 					(click)="cancelEdit()"
 					[ngClass]="{
-						showed: authService.IsAuthenticated && editable,
-						hidden: authService.IsAuthenticated && !editable
+						showed: authService.IsAuthenticated && isEdit,
+						hidden: !authService.IsAuthenticated || !isEdit
 					}"
 				>
 					<svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">

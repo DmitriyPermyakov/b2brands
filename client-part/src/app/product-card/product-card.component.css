@@ -277,8 +277,8 @@ input {
 }
 
 .edit {
-	top: -6px;
-	left: -1px;
+	/* top: -6px;
+	left: -1px; */
 	width: 2.19rem;
 	height: 2.19rem;
 }
@@ -286,6 +286,7 @@ input {
 .back {
 	width: 2.19rem;
 	height: 2.19rem;
+	top: 3px;
 }
 
 .cart {
