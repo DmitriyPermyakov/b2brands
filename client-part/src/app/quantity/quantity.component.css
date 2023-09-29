@@ -66,18 +66,15 @@
 	padding: 0.5em;
 
 	height: 2.4em;
-	/* min-width: 3em; */
-	/* max-width: 3.5em; */
-	width: 9ch;
 
 	text-align: center;
-
+	max-width: 12ch;
 	border: transparent;
 	background-color: transparent;
 	border-radius: 5px;
 
 	font-size: inherit;
-	transition: 2s;
+	transition: 0.2s;
 }
 
 .quantity-number.new-price {

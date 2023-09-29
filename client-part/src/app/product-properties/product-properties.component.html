@@ -5,12 +5,28 @@
 	>
 	<p class="prop-value">{{ p.value }}</p>
 </div>
-<div class="inputs-container" [ngClass]="{ visible: isVisibleInput }">
+<div
+	class="inputs-container"
+	(mouseenter)="enableButton()"
+	(mouseleave)="disableButton()"
+	[ngClass]="{ visible: isVisibleInput }"
+>
 	<div class="inputs">
-		<input type="text" #name (keydown.enter)="onChangeName($event)" (change)="onChangeName($event)" />
-		<input type="text" #value (keydown.enter)="onChangeValue($event)" />
+		<input
+			type="text"
+			#name
+			(keydown.enter)="onChangeName($event)"
+			(change)="onChangeName($event)"
+			[disabled]="!isVisibleInput"
+		/>
+		<input type="text" #value (keydown.enter)="onChangeValue($event)" [disabled]="!isVisibleInput" />
 	</div>
-	<button class="add icon" (click)="toggleVisibilityInput()" [ngClass]="{ hidden: !editable, showed: editable }">
+	<button
+		class="add icon"
+		(click)="toggleVisibilityInput()"
+		[disabled]="!isButtonEnable"
+		[ngClass]="{ hidden: !editable, showed: editable }"
+	>
 		<svg _ngcontent-dxn-c13="" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path _ngcontent-dxn-c13="" d="M1 13H25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
 			<path _ngcontent-dxn-c13="" d="M13 1L13 25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>

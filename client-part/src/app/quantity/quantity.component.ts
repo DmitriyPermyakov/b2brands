@@ -1,4 +1,4 @@
-import { AfterContentInit, AfterViewInit, Component, Input, OnInit, forwardRef } from '@angular/core'
+import { AfterContentInit, AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, forwardRef } from '@angular/core'
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
 
 @Component({
@@ -42,6 +42,8 @@ export class QuantityComponent implements OnInit, ControlValueAccessor, AfterCon
 		return this._disabled
 	}
 
+	public inputLenght: number
+
 	public onChanged = (value: number) => {}
 	public onTouched = () => {}
 
@@ -52,6 +54,8 @@ export class QuantityComponent implements OnInit, ControlValueAccessor, AfterCon
 	private currentValue: number
 	private _value: number
 
+	constructor(private detector: ChangeDetectorRef) {}
+
 	ngOnInit() {
 		if (!this.value) {
 			this.value = 1
@@ -61,6 +65,7 @@ export class QuantityComponent implements OnInit, ControlValueAccessor, AfterCon
 
 	ngAfterContentInit(): void {
 		this.quantityString = this.value + this.postfix
+		this.inputLenght = this.quantityString.length
 	}
 
 	writeValue(value: any): void {
@@ -82,7 +87,7 @@ export class QuantityComponent implements OnInit, ControlValueAccessor, AfterCon
 
 		this.value++
 		this.quantityString = this.value + this.postfix
-		console.log(this.quantityString)
+		this.inputLenght = this.quantityString.length
 	}
 
 	decrease() {
@@ -90,20 +95,27 @@ export class QuantityComponent implements OnInit, ControlValueAccessor, AfterCon
 		if (this.value > 1) {
 			this.value--
 			this.quantityString = this.value + this.postfix
+			this.inputLenght = this.quantityString.length
 		}
 		return
 	}
 
 	onFocus(event: any): void {
 		this.markAsTouched()
-		event.target.value = event.target.value.slice(0, event.target.value.length - this.postfix.length)
+		if (event.target.value.toString().includes(this.postfix)) {
+			this.value = event.target.value.slice(0, event.target.value.length - this.postfix.length)
+		}
+		event.target.value = this.value
+		this.inputLenght = event.target.value.length
 	}
+
 	onBlur(event: any): void {
 		if (event.target.value == '') {
 			this.value = 1
 		}
 
-		this.quantityString = this.value + this.postfix
+		event.target.value = this.value + this.postfix
+		this.inputLenght = event.target.value.length
 	}
 	onInput(event: any): void {
 		this.markAsTouched()
@@ -115,6 +127,7 @@ export class QuantityComponent implements OnInit, ControlValueAccessor, AfterCon
 
 		this.currentValue = parseInt(event.target.value)
 		this.value = parseInt(event.target.value)
+		this.inputLenght = this.value.toString().length
 	}
 
 	private markAsTouched() {

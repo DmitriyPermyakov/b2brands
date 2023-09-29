@@ -8,6 +8,7 @@
 		class="quantity-number"
 		type="text"
 		[ngClass]="{ outlined: !IsDisabled, 'new-price': colored }"
+		[ngStyle]="{ width: inputLenght + 3 + 'ch' }"
 		[disabled]="IsDisabled"
 		(input)="onInput($event)"
 		(focus)="onFocus($event)"
@@ -21,3 +22,4 @@
 		</svg>
 	</button>
 </div>
+<!-- #TODO: сделать сохраниние начального занчения -->

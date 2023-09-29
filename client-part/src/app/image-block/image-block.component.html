@@ -36,7 +36,12 @@
 		[ngClass]="{ hidden: !productColor.leftSmallUrl }"
 	/>
 
-	<div class="add-image-icon left" (click)="left.click()" [ngClass]="{ hidden: productColor.leftSmallUrl }">
+	<div
+		class="add-image-icon left"
+		(mouseover)="enableInput()"
+		(click)="left.click()"
+		[ngClass]="{ hidden: productColor.leftSmallUrl }"
+	>
 		<button class="add icon">
 			<svg _ngcontent-dxn-c13="" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path _ngcontent-dxn-c13="" d="M1 13H25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
@@ -49,6 +54,7 @@
 			tabindex="-1"
 			#left
 			hidden
+			[disabled]="inputDisabled"
 			(change)="uploadImage(left.files, 'leftSmallUrl')"
 		/>
 	</div>
@@ -60,7 +66,12 @@
 		[ngClass]="{ hidden: !productColor.bottomSmallUrl }"
 	/>
 
-	<div class="add-image-icon bottom" (click)="bottom.click()" [ngClass]="{ hidden: productColor.bottomSmallUrl }">
+	<div
+		class="add-image-icon bottom"
+		(mouseover)="enableInput()"
+		(click)="bottom.click()"
+		[ngClass]="{ hidden: productColor.bottomSmallUrl }"
+	>
 		<button class="add icon">
 			<svg _ngcontent-dxn-c13="" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path _ngcontent-dxn-c13="" d="M1 13H25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
@@ -73,6 +84,7 @@
 			tabindex="-1"
 			#bottom
 			hidden
+			[disabled]="inputDisabled"
 			(change)="uploadImage(bottom.files, 'bottomSmallUrl')"
 		/>
 	</div>
@@ -84,7 +96,12 @@
 		[ngClass]="{ hidden: !productColor.rightSmallUrl }"
 	/>
 
-	<div class="add-image-icon right" (click)="right.click()" [ngClass]="{ hidden: productColor.rightSmallUrl }">
+	<div
+		class="add-image-icon right"
+		(mouseover)="enableInput()"
+		(click)="right.click()"
+		[ngClass]="{ hidden: productColor.rightSmallUrl }"
+	>
 		<button class="add icon">
 			<svg _ngcontent-dxn-c13="" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path _ngcontent-dxn-c13="" d="M1 13H25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
@@ -97,6 +114,7 @@
 			tabindex="-1"
 			#right
 			hidden
+			[disabled]="inputDisabled"
 			(change)="uploadImage(right.files, 'rightSmallUrl')"
 		/>
 	</div>

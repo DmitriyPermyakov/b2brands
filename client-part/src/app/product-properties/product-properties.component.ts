@@ -13,6 +13,7 @@ export class ProductPropertiesComponent implements OnInit {
 	@ViewChild('value') value: ElementRef
 
 	public isVisibleInput: boolean = false
+	public isButtonEnable: boolean = false
 
 	ngOnInit(): void {}
 
@@ -41,11 +42,20 @@ export class ProductPropertiesComponent implements OnInit {
 		this.toggleVisibilityInput()
 	}
 
+	enableButton() {
+		this.isButtonEnable = true
+	}
+
+	disableButton() {
+		this.isButtonEnable = false
+	}
+
 	toggleVisibilityInput() {
 		if (this.isVisibleInput === true) {
 			this.name.nativeElement.value = ''
 			this.value.nativeElement.value = ''
 			this.isVisibleInput = false
+			this.isButtonEnable = false
 		} else {
 			this.isVisibleInput = true
 		}
