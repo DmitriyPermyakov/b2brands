@@ -15,7 +15,9 @@ export class ProductPropertiesComponent implements OnInit {
 	public isVisibleInput: boolean = false
 	public isButtonEnable: boolean = false
 
-	ngOnInit(): void {}
+	ngOnInit(): void {
+		console.log('props value', this.props)
+	}
 
 	onChangeName(event: Event) {
 		event.preventDefault()
@@ -39,6 +41,7 @@ export class ProductPropertiesComponent implements OnInit {
 				value: this.value.nativeElement.value,
 			},
 		])
+		console.log(this.props.value)
 		this.toggleVisibilityInput()
 	}
 

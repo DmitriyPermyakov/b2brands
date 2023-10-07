@@ -23,12 +23,7 @@ export class PrintsListComponent implements AfterViewInit, OnDestroy {
 
 	ngAfterViewInit(): void {
 		this.setAttributes()
-		this.scroller = new Scroller(this.printsControl.value.length, this.printsRef, 'type-of-print')
-
-		this.scroller.initStartClasses(this.printsControl.value.length)
-		this.scrollSub = this.scroller.scroll$.subscribe((e: WheelEvent) => {
-			this.scroller.onScroll(e)
-		})
+		if (this.printsControl.value.length > 0) this.setScroller()
 	}
 	ngOnDestroy(): void {
 		if (this.scrollSub) this.scrollSub.unsubscribe()
@@ -39,11 +34,13 @@ export class PrintsListComponent implements AfterViewInit, OnDestroy {
 		if (this.input.nativeElement.value !== '') {
 			this.printsControl.setValue([...this.printsControl.value, this.input.nativeElement.value])
 			// this.printsControl.value.push(this.input.nativeElement.value)
+			this.ref.detectChanges()
 			this.printsRef.nativeElement.children[this.printsRef.nativeElement.children.length - 1].setAttribute(
 				'data-value',
 				this.input.nativeElement.value
 			)
-			this.ref.detectChanges()
+			if (this.printsControl.value.length < 2) this.setScroller()
+
 			this.scroller.addItem(this.printsControl.value.length)
 			this.input.nativeElement.value = ''
 			this.isInputVisible = false
@@ -63,5 +60,14 @@ export class PrintsListComponent implements AfterViewInit, OnDestroy {
 		for (let i = 0; i < this.printsControl.value.length; i++) {
 			this.printsRef.nativeElement.children[i].setAttribute('data-value', this.printsControl.value[i])
 		}
+	}
+
+	private setScroller() {
+		this.scroller = new Scroller(this.printsControl.value.length, this.printsRef, 'type-of-print')
+
+		this.scroller.initStartClasses(this.printsControl.value.length)
+		this.scrollSub = this.scroller.scroll$.subscribe((e: WheelEvent) => {
+			this.scroller.onScroll(e)
+		})
 	}
 }

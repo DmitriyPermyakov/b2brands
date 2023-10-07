@@ -11,6 +11,7 @@ import { orderItemSelector } from '../store/orders/order-item.selector'
 import { OrderItem } from '../interfaces/orderItem.interface'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { AuthService } from '../services/auth.service'
+import { IProductProperty } from '../interfaces/productProperty.interface'
 
 @Component({
 	selector: 'app-product-card',
@@ -37,6 +38,7 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 	}
 
 	public isEdit: boolean = false
+	public isAdding: boolean = false
 
 	public cartIconDotActive: boolean = false
 
@@ -61,12 +63,19 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 		private store: Store,
 		private fb: FormBuilder,
 		public authService: AuthService
-	) {
-		this.initProductCardForm()
-	}
+	) {}
 
 	ngOnInit(): void {
+		this.initProductCardForm()
+
 		let id = this.activatedRoute.snapshot.paramMap.get('id')
+		if (id === 'new') {
+			this.isAdding = true
+			this.isEdit = true
+			this.enableFormControls()
+			return
+		}
+
 		this.store.pipe(select(productSelector)).subscribe((p) => {
 			let product = p.find((el) => el.id == id)
 
@@ -79,19 +88,10 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 		this.setProductCardFormValues()
 		this.ordersItem$ = this.store.pipe(select(orderItemSelector))
 		this.checkAmoutOfOrderItems()
-		this.productColor = {
-			id: 'new element',
-			value: '',
-			frontSmallUrl: '',
-			bottomSmallUrl: '',
-			rightSmallUrl: '',
-			leftSmallUrl: '',
-		}
-		console.log(this.isEdit)
 	}
 
 	ngAfterContentInit(): void {
-		this.printCount = this.product.print.length
+		// this.printCount = this.product.print.length
 	}
 
 	ngAfterViewInit() {}
@@ -151,6 +151,31 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 	}
 
 	private initProductCardForm() {
+		// let prodProps: IProductProperty = {
+		// 	id: 0,
+		// 	name: '',
+		// 	value: '',
+		// }
+		this.productColor = {
+			id: 'new element',
+			value: '',
+			frontSmallUrl: '',
+			bottomSmallUrl: '',
+			rightSmallUrl: '',
+			leftSmallUrl: '',
+		}
+		// let product: IProduct = {
+		// 	id: '',
+		// 	name: '',
+		// 	code: '',
+		// 	description: '',
+		// 	newPrice: 0,
+		// 	oldPrice: 0,
+		// 	print: [],
+		// 	productProps: [prodProps],
+		// 	productColors: [this.productColor],
+		// }
+
 		this.productCardForm = this.fb.group({
 			id: [{ value: '', disabled: false }],
 			name: [{ value: '', disabled: !this.isEdit }, Validators.required],
@@ -159,9 +184,22 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 			oldPrice: [{ value: '', disabled: !this.isEdit }],
 			description: [{ value: '', disabled: !this.isEdit }],
 			colors: [{ value: '', disabled: false }],
-			prints: [{ value: '', disabled: false }],
-			properties: [{ value: '', disables: false }],
+			// prints: [{ value: '', disabled: false }],
+			prints: '',
+			// properties: [{ value: 'fsdf', disables: false }],
+			properties: '',
 		})
+		// this.productCardForm.patchValue({
+		// 	id: product.id,
+		// 	name: product.name,
+		// 	code: product.code,
+		// 	newPrice: product.newPrice,
+		// 	oldPrice: product.oldPrice,
+		// 	description: product.description,
+		// 	colors: product.productColors,
+		// 	prints: product.print,
+		// 	properties: product.productProps,
+		// })
 	}
 
 	private setProductCardFormValues() {

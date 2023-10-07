@@ -38,25 +38,17 @@ export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	ngAfterViewInit(): void {
 		this.setAttributes()
-		this.scroller = new Scroller(this.colorsControl.value.length, this.colorsRef, 'color')
-
-		this.scrollSub = this.scroller.scroll$.subscribe((e: WheelEvent) => {
-			this.scroller.onScroll(e)
-			this.passSelectedColorIndex()
-		})
-
-		this.selectedItemChangedSub = this.scroller.selectedItemChanged.subscribe(() => {
-			this.passSelectedColorIndex()
-		})
-		this.scroller.initStartClasses(this.colorsControl.value.length)
+		if (this.colorsControl.value.length > 0) this.setScroller()
 	}
 
 	public previousColor() {
+		if (this.colorsControl.value.length < 2) return
 		this.scroller.onScrollUp()
 		this.passSelectedColorIndex()
 	}
 
 	public nextColor() {
+		if (this.colorsControl.value.lenght < 2) return
 		this.scroller.onScrollDown()
 		this.passSelectedColorIndex()
 	}
@@ -82,12 +74,26 @@ export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 			'data-value',
 			color.value
 		)
+		if (this.colorsControl.value.length < 2) this.setScroller()
 		this.scroller.addItem(this.colorsControl.value.length)
 	}
 
 	ngOnDestroy(): void {
 		if (this.scrollSub) this.scrollSub.unsubscribe()
 		if (this.selectedItemChangedSub) this.selectedItemChangedSub.unsubscribe()
+	}
+
+	private setScroller() {
+		this.scroller = new Scroller(this.colorsControl.value.length, this.colorsRef, 'color')
+		this.scroller.initStartClasses(this.colorsControl.value.length)
+		this.scrollSub = this.scroller.scroll$.subscribe((e: WheelEvent) => {
+			this.scroller.onScroll(e)
+			this.passSelectedColorIndex()
+		})
+
+		this.selectedItemChangedSub = this.scroller.selectedItemChanged.subscribe(() => {
+			this.passSelectedColorIndex()
+		})
 	}
 
 	private passSelectedColorIndex(): void {

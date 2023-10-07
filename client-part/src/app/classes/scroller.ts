@@ -140,12 +140,15 @@ export class Scroller {
 				this.getElement(0).classList.add(ClassesEnum.selected)
 				this.updateClassesDictionary()
 				this._selected = this._classIndexMap.get('selected')
+				console.log(this._classIndexMap)
+				console.log(this._indexClassMap)
 				break
 			case 2:
-				this.getElement(1).classList.add(ClassesEnum.firstPrev)
-				this._parentElement.nativeElement.insertBefore(this.getElement(1), this.getElement(0))
-				this.updateClassesDictionary()
-				this._selected = this._classIndexMap.get('selected')
+				this.placeElement(ClassesEnum.firstPrev, ClassesEnum.selected)
+				// this.getElement(1).classList.add(ClassesEnum.firstPrev)
+				// this._parentElement.nativeElement.insertBefore(this.getElement(1), this.getElement(0))
+				// this.updateClassesDictionary()
+				// this._selected = this._classIndexMap.get('selected')
 				this.scrollToAdded()
 				break
 			case 3:

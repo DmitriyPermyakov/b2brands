@@ -14,14 +14,31 @@
 		<app-account-buttons></app-account-buttons>
 		<form class="product-card" [formGroup]="productCardForm">
 			<div class="name-of-product">
-				<input class="name" type="text" formControlName="name" [ngClass]="{ outlined: isEdit }" />
+				<input
+					class="name"
+					type="text"
+					formControlName="name"
+					[ngClass]="{ outlined: isEdit }"
+					placeholder="Название"
+				/>
 				<p class="vendor-container">
 					<span class="vendor-label">Артикул: </span>
-					<input class="vendor" type="text" formControlName="code" [ngClass]="{ outlined: isEdit }" />
+					<input
+						class="vendor"
+						type="text"
+						formControlName="code"
+						[ngClass]="{ outlined: isEdit }"
+						placeholder="Артикул"
+					/>
 				</p>
 			</div>
 			<div class="description-wrapper">
-				<textarea class="description" formControlName="description" [ngClass]="{ outlined: isEdit }"></textarea>
+				<textarea
+					class="description"
+					formControlName="description"
+					[ngClass]="{ outlined: isEdit }"
+					placeholder="Описание"
+				></textarea>
 				<div class="properties">
 					<app-product-properties
 						class="prop"
