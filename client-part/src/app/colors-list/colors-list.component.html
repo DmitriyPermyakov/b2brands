@@ -7,6 +7,14 @@
 	</button>
 	<div class="color-items" #colors>
 		<div class="color" *ngFor="let c of colorsControl.value" [ngStyle]="{ 'background-color': c.value }"></div>
+		<ng-container *ngIf="editable">
+			<button class="button icon remove">
+				<svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M2.48438 19.4846L19.4549 2.51406" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
+					<path d="M2.48535 2.51465L19.4559 19.4852" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
+				</svg>
+			</button>
+		</ng-container>
 	</div>
 
 	<button class="next-color color-btn icon" #nextBtn (click)="nextColor()">

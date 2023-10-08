@@ -8,19 +8,39 @@
 	justify-items: center;
 }
 
-.image {
-	display: inline;
-	/* display: none; */
-	width: 9.375rem;
+.image-container {
+	display: block;
+	position: relative;
+}
 
-	object-fit: contain;
-	aspect-ratio: 1/1;
-	filter: drop-shadow(1px 1px 10px var(--dark-shadow));
+.image-container > .remove {
+	display: none;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.image-container.front > .remove {
+	top: 40px;
+	right: 20px;
+}
+
+.image-container:hover > .remove {
+	display: block;
 }
 
 .front {
 	grid-column: span 3;
 	grid-row: 1 / 2;
+}
+
+.image {
+	display: inline;
+	width: 9.375rem;
+
+	object-fit: contain;
+	aspect-ratio: 1/1;
+	filter: drop-shadow(1px 1px 10px var(--dark-shadow));
 }
 
 .image.front {
