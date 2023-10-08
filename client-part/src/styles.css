@@ -65,10 +65,10 @@ button {
 	outline: none;
 	background: transparent;
 }
-
+/* 
 button:active {
 	outline: none;
-}
+} */
 
 .icon {
 	display: block;
@@ -82,7 +82,9 @@ button:active {
 	width: 100%;
 }
 
-.icon:hover * {
+.icon:hover *,
+.icon:focus *,
+.icon:active * {
 	stroke: var(--outline);
 }
 

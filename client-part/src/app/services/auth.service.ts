@@ -42,7 +42,7 @@ export class AuthService {
 
 	private isTokenExpired(token: string): boolean {
 		if (!token) {
-			return true
+			return false
 		}
 		const exp = JSON.parse(atob(token.split('.')[1])).exp * 1000
 		return new Date() > new Date(exp)

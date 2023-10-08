@@ -101,12 +101,12 @@ export class QuantityComponent implements OnInit, ControlValueAccessor, AfterCon
 	}
 
 	onFocus(event: any): void {
+		this.inputLenght = event.target.value.length
 		this.markAsTouched()
 		if (event.target.value.toString().includes(this.postfix)) {
 			this.value = event.target.value.slice(0, event.target.value.length - this.postfix.length)
 		}
 		event.target.value = this.value
-		this.inputLenght = event.target.value.length
 	}
 
 	onBlur(event: any): void {
@@ -115,7 +115,7 @@ export class QuantityComponent implements OnInit, ControlValueAccessor, AfterCon
 		}
 
 		event.target.value = this.value + this.postfix
-		this.inputLenght = event.target.value.length
+		// this.inputLenght = event.target.value.length
 	}
 	onInput(event: any): void {
 		this.markAsTouched()
@@ -127,7 +127,7 @@ export class QuantityComponent implements OnInit, ControlValueAccessor, AfterCon
 
 		this.currentValue = parseInt(event.target.value)
 		this.value = parseInt(event.target.value)
-		this.inputLenght = this.value.toString().length
+		// this.inputLenght = this.value.toString().length
 	}
 
 	private markAsTouched() {

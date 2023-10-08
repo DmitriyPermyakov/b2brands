@@ -4,6 +4,7 @@ import { IProductColor } from '../interfaces/productColor.interface'
 import { UploadImageService } from '../services/upload-image.service'
 import { HttpEventType } from '@angular/common/http'
 import { Observable, catchError, of } from 'rxjs'
+import { AuthService } from '../services/auth.service'
 
 @Component({
 	selector: 'app-image-block',
@@ -12,17 +13,22 @@ import { Observable, catchError, of } from 'rxjs'
 })
 export class ImageBlockComponent {
 	@Input() productColor: IProductColor
+	@Input() productsColorCount: number
 
 	public uploading: boolean = false
 	public inputDisabled: boolean = true
 
-	constructor(private uploadImageService: UploadImageService) {}
+	constructor(private uploadImageService: UploadImageService, public authService: AuthService) {}
 	public chooseImage(input) {
 		input.click()
 	}
 
 	public enableInput() {
+		if (this.productsColorCount < 1) return
 		this.inputDisabled = false
+	}
+	public disableInput() {
+		this.inputDisabled = true
 	}
 
 	public cancel() {

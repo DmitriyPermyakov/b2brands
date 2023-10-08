@@ -39,6 +39,7 @@ export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 	ngAfterViewInit(): void {
 		this.setAttributes()
 		if (this.colorsControl.value.length > 0) this.setScroller()
+		this.passSelectedColorIndex()
 	}
 
 	public previousColor() {
@@ -48,7 +49,7 @@ export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	public nextColor() {
-		if (this.colorsControl.value.lenght < 2) return
+		if (this.colorsControl.value.length < 2) return
 		this.scroller.onScrollDown()
 		this.passSelectedColorIndex()
 	}

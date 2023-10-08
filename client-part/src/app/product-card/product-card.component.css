@@ -110,9 +110,8 @@ input {
 
 	padding-top: 1.5em;
 	margin-right: 0.6em;
-
+	width: 100%;
 	max-height: 13em;
-	max-width: 39ch;
 	min-height: 20ch;
 
 	line-height: 1.6;
@@ -137,8 +136,7 @@ input {
 .properties {
 	grid-row: 2 / 3;
 	display: block;
-	width: 95%;
-	overflow: hidden;
+	width: 100%;
 }
 
 .images {

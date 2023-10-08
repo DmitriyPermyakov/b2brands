@@ -31,7 +31,10 @@ export class ProductPropertiesComponent implements OnInit {
 			return
 		}
 
-		if (this.value.nativeElement.value === '') return
+		if (this.value.nativeElement.value === '') {
+			event.preventDefault()
+			return
+		}
 
 		this.props.setValue([
 			...this.props.value,

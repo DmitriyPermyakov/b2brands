@@ -5,117 +5,149 @@
 		alt="front-image"
 		[ngClass]="{ hidden: !productColor.frontSmallUrl }"
 	/>
-
-	<div
-		class="add-image-icon front"
-		(click)="chooseImage(front)"
-		(mouseover)="enableInput()"
-		[ngClass]="{ hidden: productColor.frontSmallUrl }"
-	>
-		<button class="add icon">
-			<svg _ngcontent-dxn-c13="" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path _ngcontent-dxn-c13="" d="M1 13H25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
-				<path _ngcontent-dxn-c13="" d="M13 1L13 25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
-			</svg>
-		</button>
-		<input
-			type="file"
-			accept="image/*"
-			[disabled]="inputDisabled"
-			#front
-			hidden
-			(change)="uploadImage(front.files, 'frontSmallUrl')"
-			(cancel)="cancel()"
-		/>
-	</div>
-
+	<ng-container *ngIf="authService.IsAuthenticated">
+		<div
+			class="add-image-icon front"
+			(click)="chooseImage(front)"
+			(mouseover)="enableInput()"
+			(mouseleave)="disableInput()"
+			[ngClass]="{ hidden: productColor.frontSmallUrl }"
+		>
+			<button class="add icon">
+				<svg _ngcontent-dxn-c13="" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path _ngcontent-dxn-c13="" d="M1 13H25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
+					<path
+						_ngcontent-dxn-c13=""
+						d="M13 1L13 25"
+						stroke="#A2A2A2"
+						stroke-width="2"
+						stroke-linecap="round"
+					></path>
+				</svg>
+			</button>
+			<input
+				type="file"
+				accept="image/*"
+				[disabled]="inputDisabled"
+				#front
+				hidden
+				(change)="uploadImage(front.files, 'frontSmallUrl')"
+				(cancel)="cancel()"
+			/>
+		</div>
+	</ng-container>
 	<img
 		class="image left"
 		[src]="productColor.leftSmallUrl"
 		alt="left-image"
 		[ngClass]="{ hidden: !productColor.leftSmallUrl }"
 	/>
-
-	<div
-		class="add-image-icon left"
-		(mouseover)="enableInput()"
-		(click)="left.click()"
-		[ngClass]="{ hidden: productColor.leftSmallUrl }"
-	>
-		<button class="add icon">
-			<svg _ngcontent-dxn-c13="" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path _ngcontent-dxn-c13="" d="M1 13H25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
-				<path _ngcontent-dxn-c13="" d="M13 1L13 25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
-			</svg>
-		</button>
-		<input
-			type="file"
-			accept="image/*"
-			tabindex="-1"
-			#left
-			hidden
-			[disabled]="inputDisabled"
-			(change)="uploadImage(left.files, 'leftSmallUrl')"
-		/>
-	</div>
-
+	<ng-container *ngIf="authService.IsAuthenticated">
+		<div
+			class="add-image-icon left"
+			(mouseover)="enableInput()"
+			(mouseleave)="disableInput()"
+			(click)="left.click()"
+			[ngClass]="{ hidden: productColor.leftSmallUrl }"
+		>
+			<button class="add icon">
+				<svg _ngcontent-dxn-c13="" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path _ngcontent-dxn-c13="" d="M1 13H25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
+					<path
+						_ngcontent-dxn-c13=""
+						d="M13 1L13 25"
+						stroke="#A2A2A2"
+						stroke-width="2"
+						stroke-linecap="round"
+					></path>
+				</svg>
+			</button>
+			<input
+				type="file"
+				accept="image/*"
+				tabindex="-1"
+				#left
+				hidden
+				[disabled]="inputDisabled"
+				(change)="uploadImage(left.files, 'leftSmallUrl')"
+				(cancel)="cancel()"
+			/>
+		</div>
+	</ng-container>
 	<img
 		class="image bottom"
 		[src]="productColor.bottomSmallUrl"
 		alt="bottom-image"
 		[ngClass]="{ hidden: !productColor.bottomSmallUrl }"
 	/>
-
-	<div
-		class="add-image-icon bottom"
-		(mouseover)="enableInput()"
-		(click)="bottom.click()"
-		[ngClass]="{ hidden: productColor.bottomSmallUrl }"
-	>
-		<button class="add icon">
-			<svg _ngcontent-dxn-c13="" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path _ngcontent-dxn-c13="" d="M1 13H25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
-				<path _ngcontent-dxn-c13="" d="M13 1L13 25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
-			</svg>
-		</button>
-		<input
-			type="file"
-			accept="image/*"
-			tabindex="-1"
-			#bottom
-			hidden
-			[disabled]="inputDisabled"
-			(change)="uploadImage(bottom.files, 'bottomSmallUrl')"
-		/>
-	</div>
-
+	<ng-container *ngIf="authService.IsAuthenticated">
+		<div
+			class="add-image-icon bottom"
+			(mouseover)="enableInput()"
+			(mouseleave)="disableInput()"
+			(click)="bottom.click()"
+			[ngClass]="{ hidden: productColor.bottomSmallUrl }"
+		>
+			<button class="add icon">
+				<svg _ngcontent-dxn-c13="" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path _ngcontent-dxn-c13="" d="M1 13H25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
+					<path
+						_ngcontent-dxn-c13=""
+						d="M13 1L13 25"
+						stroke="#A2A2A2"
+						stroke-width="2"
+						stroke-linecap="round"
+					></path>
+				</svg>
+			</button>
+			<input
+				type="file"
+				accept="image/*"
+				tabindex="-1"
+				#bottom
+				hidden
+				[disabled]="inputDisabled"
+				(change)="uploadImage(bottom.files, 'bottomSmallUrl')"
+				(cancel)="cancel()"
+			/>
+		</div>
+	</ng-container>
 	<img
 		class="image right"
 		[src]="productColor.rightSmallUrl"
 		alt="right-image"
 		[ngClass]="{ hidden: !productColor.rightSmallUrl }"
 	/>
-
-	<div
-		class="add-image-icon right"
-		(mouseover)="enableInput()"
-		(click)="right.click()"
-		[ngClass]="{ hidden: productColor.rightSmallUrl }"
-	>
-		<button class="add icon">
-			<svg _ngcontent-dxn-c13="" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path _ngcontent-dxn-c13="" d="M1 13H25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
-				<path _ngcontent-dxn-c13="" d="M13 1L13 25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
-			</svg>
-		</button>
-		<input
-			type="file"
-			accept="image/*"
-			tabindex="-1"
-			#right
-			hidden
-			[disabled]="inputDisabled"
-			(change)="uploadImage(right.files, 'rightSmallUrl')"
-		/>
-	</div>
+	<ng-container *ngIf="authService.IsAuthenticated">
+		<div
+			class="add-image-icon right"
+			(mouseover)="enableInput()"
+			(mouseleave)="disableInput()"
+			(click)="right.click()"
+			[ngClass]="{ hidden: productColor.rightSmallUrl }"
+		>
+			<button class="add icon">
+				<svg _ngcontent-dxn-c13="" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path _ngcontent-dxn-c13="" d="M1 13H25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
+					<path
+						_ngcontent-dxn-c13=""
+						d="M13 1L13 25"
+						stroke="#A2A2A2"
+						stroke-width="2"
+						stroke-linecap="round"
+					></path>
+				</svg>
+			</button>
+			<input
+				type="file"
+				accept="image/*"
+				tabindex="-1"
+				#right
+				hidden
+				[disabled]="inputDisabled"
+				(change)="uploadImage(right.files, 'rightSmallUrl')"
+				(cancel)="cancel()"
+			/>
+		</div>
+	</ng-container>
 </div>

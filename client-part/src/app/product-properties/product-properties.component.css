@@ -1,15 +1,23 @@
-.property-container {
-}
 .property {
-	display: flex;
-	flex-wrap: nowrap;
-	justify-content: space-between;
-	align-items: center;
-
+	display: grid;
+	grid-template-rows: 1fr;
+	grid-template-columns: auto auto auto;
 	width: 100%;
-	margin-right: 3.5em;
 	margin-bottom: 0.5em;
 
+	color: var(--secondary-text);
+	position: relative;
+}
+
+.remove {
+	display: none;
+	grid-column: 3 / 4;
+	position: absolute;
+	top: -11px;
+	right: -45px;
+}
+
+.empty-property {
 	color: var(--secondary-text);
 }
 
@@ -17,8 +25,11 @@
 	color: var(--primary-text);
 }
 
+.property:hover > .remove {
+	display: inline;
+}
+
 p {
-	flex: 1 1 auto;
 	padding: 0.05em;
 	font-size: 0.9em;
 	color: inherit;
@@ -26,17 +37,17 @@ p {
 }
 
 .prop-name {
+	grid-column: 1 / 2;
 	padding-right: 0.5em;
-	text-align: start;
 }
 
 .prop-value {
+	grid-column: 3 / 4;
 	padding-left: 0.5em;
-	text-align: end;
 }
 
 .property .dots {
-	flex: 0 1 auto;
+	grid-column: 2 / 3;
 	color: inherit;
 	overflow: hidden;
 }

@@ -21,19 +21,10 @@
 	grid-template-columns: 20% auto 20%;
 }
 
-.handler {
-	display: block;
-	height: 1.6em;
-	width: 1.6em;
-	font-size: inherit;
-
-	opacity: 0;
+.icon {
+	width: 1.6rem;
+	height: 1.6rem;
 	transform: scale(0);
-}
-
-.handler:hover svg path {
-	stroke: var(--outline);
-	filter: drop-shadow(0 0 1px var(--outline));
 }
 
 .minus {
@@ -51,11 +42,11 @@
 	height: 100%;
 }
 
-.handler.showed {
+.icon.showed {
 	animation: quantityHandlersShow 0.1s linear 0.2s 1 normal forwards;
 }
 
-.handler.hidden {
+.icon.hidden {
 	animation: quantityHandlersShow 0.1s linear 0.2s 1 normal both;
 }
 
