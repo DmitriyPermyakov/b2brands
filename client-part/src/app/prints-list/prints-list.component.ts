@@ -29,6 +29,11 @@ export class PrintsListComponent implements AfterViewInit, OnDestroy {
 		if (this.scrollSub) this.scrollSub.unsubscribe()
 	}
 
+	public removeValue(index: number): void {
+		this.printsControl.value.splice(index, 1)
+		this.scroller.removeItem(index, this.printsControl.value.length)
+	}
+
 	public addPrint(event: Event) {
 		event.preventDefault()
 		if (this.input.nativeElement.value !== '') {

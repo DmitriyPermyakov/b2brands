@@ -114,6 +114,12 @@
 	opacity: 0;
 }
 
+.add {
+	position: absolute;
+	bottom: -40px;
+	transform: translateX(50%);
+}
+
 .add.icon {
 	margin-top: 2rem;
 	width: 1.5rem;

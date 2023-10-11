@@ -14,6 +14,7 @@ import { AuthService } from '../services/auth.service'
 export class ImageBlockComponent {
 	@Input() productColor: IProductColor
 	@Input() productsColorCount: number
+	@Input() editable: boolean
 
 	public uploading: boolean = false
 	public inputDisabled: boolean = true
@@ -43,9 +44,7 @@ export class ImageBlockComponent {
 			.uploadImage(files, name)
 			.pipe(catchError((error) => of(new Error(error))))
 			.subscribe((event) => {
-				console.log(event)
 				this.productColor[name] = event
-				console.log(this.productColor)
 				// if (event.type === HttpEventType.Response) {
 				// 	this.productColor[name] = event.body.url
 				// 	console.log(event.body.url)

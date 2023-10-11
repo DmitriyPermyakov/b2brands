@@ -152,11 +152,6 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 	}
 
 	private initProductCardForm() {
-		// let prodProps: IProductProperty = {
-		// 	id: 0,
-		// 	name: '',
-		// 	value: '',
-		// }
 		this.productColor = {
 			id: 'new element',
 			value: '',
@@ -165,17 +160,6 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 			rightSmallUrl: '',
 			leftSmallUrl: '',
 		}
-		// let product: IProduct = {
-		// 	id: '',
-		// 	name: '',
-		// 	code: '',
-		// 	description: '',
-		// 	newPrice: 0,
-		// 	oldPrice: 0,
-		// 	print: [],
-		// 	productProps: [prodProps],
-		// 	productColors: [this.productColor],
-		// }
 
 		this.productCardForm = this.fb.group({
 			id: [{ value: '', disabled: false }],
@@ -185,22 +169,9 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 			oldPrice: [{ value: '', disabled: !this.isEdit }],
 			description: [{ value: '', disabled: !this.isEdit }],
 			colors: [{ value: '', disabled: false }],
-			// prints: [{ value: '', disabled: false }],
 			prints: '',
-			// properties: [{ value: 'fsdf', disables: false }],
 			properties: '',
 		})
-		// this.productCardForm.patchValue({
-		// 	id: product.id,
-		// 	name: product.name,
-		// 	code: product.code,
-		// 	newPrice: product.newPrice,
-		// 	oldPrice: product.oldPrice,
-		// 	description: product.description,
-		// 	colors: product.productColors,
-		// 	prints: product.print,
-		// 	properties: product.productProps,
-		// })
 	}
 
 	private setProductCardFormValues() {

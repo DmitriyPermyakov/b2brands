@@ -15,9 +15,7 @@ export class ProductPropertiesComponent implements OnInit {
 	public isVisibleInput: boolean = false
 	public isButtonEnable: boolean = false
 
-	ngOnInit(): void {
-		console.log('props value', this.props)
-	}
+	ngOnInit(): void {}
 
 	onChangeName(event: Event) {
 		event.preventDefault()
@@ -65,5 +63,9 @@ export class ProductPropertiesComponent implements OnInit {
 		} else {
 			this.isVisibleInput = true
 		}
+	}
+
+	removeValue(index: number): void {
+		this.props.value.splice(index, 1)
 	}
 }

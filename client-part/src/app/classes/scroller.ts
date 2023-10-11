@@ -140,15 +140,9 @@ export class Scroller {
 				this.getElement(0).classList.add(ClassesEnum.selected)
 				this.updateClassesDictionary()
 				this._selected = this._classIndexMap.get('selected')
-				console.log(this._classIndexMap)
-				console.log(this._indexClassMap)
 				break
 			case 2:
 				this.placeElement(ClassesEnum.firstPrev, ClassesEnum.selected)
-				// this.getElement(1).classList.add(ClassesEnum.firstPrev)
-				// this._parentElement.nativeElement.insertBefore(this.getElement(1), this.getElement(0))
-				// this.updateClassesDictionary()
-				// this._selected = this._classIndexMap.get('selected')
 				this.scrollToAdded()
 				break
 			case 3:
@@ -170,19 +164,72 @@ export class Scroller {
 		}
 	}
 
-	public scrollToAdded() {
-		let i = this._classIndexMap.get('selected')
-		let interval = setInterval(() => {
-			this.onScrollDown()
-			i++
-			if (i > this._countOfElements - 1) i = 0
-			if (this.getElement(i).getAttribute('data-value') === this._addedElementValueAttribut) {
-				clearInterval(interval)
-				this.selectedItemChanged.next()
-				return
-			}
-		}, 100)
+	public removeItem(index: number, countOfElements: number): void {
+		this._countOfElements = countOfElements
+		if (countOfElements === 4) {
+			this.getElement(this._classIndexMap.get(ClassesEnum.firstPrev)).classList.remove(ClassesEnum.firstPrev)
+			this.getElement(this._classIndexMap.get(ClassesEnum.firstPrev)).classList.add(ClassesEnum.selected)
+			this.getElement(this._classIndexMap.get(ClassesEnum.secondPrev)).classList.remove(ClassesEnum.secondPrev)
+			this.getElement(this._classIndexMap.get(ClassesEnum.secondPrev)).classList.add(ClassesEnum.firstPrev)
+
+			this._indexClassMap.clear()
+			this._classIndexMap.clear()
+			this.setClassesDictionary()
+		}
 	}
+
+	public scrollToAdded() {
+		// let i = this._classIndexMap.get('selected')
+		// let interval = setInterval(() => {
+		// 	this.onScrollDown()
+		// 	i++
+		// 	if (i > this._countOfElements - 1) i = 0
+		// 	if (this.getElement(i).getAttribute('data-value') === this._addedElementValueAttribut) {
+		// 		clearInterval(interval)
+		// 		this.selectedItemChanged.next()
+		// 		return
+		// 	}
+		// }, 100)
+	}
+
+	public updateClassesDictionary() {
+		for (let index = 0; index <= this._countOfElements - 1; index++) {
+			let className = this.getElement(index).className.replace(this._scrollingClass, '').trim()
+			this._indexClassMap.set(index, className)
+			this._classIndexMap.set(className, index)
+		}
+	}
+
+	//#region setting classes
+	private setClassedForTwoElements() {
+		this.getElement(0).classList.add(ClassesEnum.firstPrev)
+		this.getElement(1).classList.add(ClassesEnum.selected)
+	}
+
+	private setClassesForThreeElements() {
+		this.setClassedForTwoElements()
+		this.getElement(2).classList.add(ClassesEnum.firstNext)
+	}
+
+	private setClassesForFourElements() {
+		this.setClassesForThreeElements()
+		this.getElement(3).classList.add(ClassesEnum.secondNext)
+	}
+
+	private setClassesForFiveElements() {
+		for (let i = 0; i < 5; i++) this.getElement(i)?.classList.add(this._classesForwardOrder[i])
+	}
+
+	private setClassesForMoreThanFiveElements() {
+		this.setClassesForFiveElements()
+
+		for (let i = 5; i < this._countOfElements; i++) {
+			this.getElement(i)?.classList.add(ClassesEnum.hidden)
+			this._indexClassMap.set(i, ClassesEnum.hidden)
+		}
+	}
+
+	//#endregion end setting classes
 
 	private placeElement(newElemClassName: string, oldElemClassName: string) {
 		this.getElement(this._countOfElements - 1).classList.add(newElemClassName)
@@ -212,6 +259,7 @@ export class Scroller {
 			this._classIndexMap.set(this._indexClassMap.get(index), index)
 		}
 	}
+
 	private moveClassesDown() {
 		let temp = this._indexClassMap.get(this._countOfElements - 1)
 		for (let index = this._countOfElements - 1; index >= 0; index--) {
@@ -244,42 +292,6 @@ export class Scroller {
 				this._indexClassMap.set(index, this._classesForwardOrder[index])
 				this._classIndexMap.set(this._classesForwardOrder[index], index)
 			}
-		}
-	}
-
-	private updateClassesDictionary() {
-		for (let index = 0; index <= this._countOfElements - 1; index++) {
-			let className = this.getElement(index).className.replace(this._scrollingClass, '').trim()
-			this._indexClassMap.set(index, className)
-			this._classIndexMap.set(className, index)
-		}
-	}
-
-	private setClassedForTwoElements() {
-		this.getElement(0).classList.add(ClassesEnum.firstPrev)
-		this.getElement(1).classList.add(ClassesEnum.selected)
-	}
-
-	private setClassesForThreeElements() {
-		this.setClassedForTwoElements()
-		this.getElement(2).classList.add(ClassesEnum.firstNext)
-	}
-
-	private setClassesForFourElements() {
-		this.setClassesForThreeElements()
-		this.getElement(3).classList.add(ClassesEnum.secondNext)
-	}
-
-	private setClassesForFiveElements() {
-		for (let i = 0; i < 5; i++) this.getElement(i)?.classList.add(this._classesForwardOrder[i])
-	}
-
-	private setClassesForMoreThanFiveElements() {
-		this.setClassesForFiveElements()
-
-		for (let i = 5; i < this._countOfElements; i++) {
-			this.getElement(i)?.classList.add(ClassesEnum.hidden)
-			this._indexClassMap.set(i, ClassesEnum.hidden)
 		}
 	}
 }

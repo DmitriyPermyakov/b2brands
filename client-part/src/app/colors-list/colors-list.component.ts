@@ -38,8 +38,10 @@ export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	ngAfterViewInit(): void {
 		this.setAttributes()
-		if (this.colorsControl.value.length > 0) this.setScroller()
-		this.passSelectedColorIndex()
+		if (this.colorsControl.value.length > 0) {
+			this.setScroller()
+			this.passSelectedColorIndex()
+		}
 	}
 
 	public previousColor() {
@@ -71,7 +73,7 @@ export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 		this.colorsControl.setValue([...this.colorsControl.value, color])
 
 		this.ref.detectChanges()
-		this.colorsRef.nativeElement.children[this.colorsRef.nativeElement.children.length - 1].setAttribute(
+		this.colorsRef.nativeElement.children[this.colorsRef.nativeElement.children.length - 2].setAttribute(
 			'data-value',
 			color.value
 		)
@@ -109,7 +111,6 @@ export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 			?.getAttribute('data-value')
 
 		let index = this.colorsControl.value.findIndex((el) => el.value === colorValue)
-
 		return index
 	}
 

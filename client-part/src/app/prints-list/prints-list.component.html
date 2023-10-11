@@ -5,7 +5,7 @@
 			<p class="type-of-print" *ngFor="let p of printsControl.value; index as i">
 				{{ p }}
 				<ng-container *ngIf="editable">
-					<button class="button icon remove">
+					<button class="button icon remove" (click)="removeValue(i)">
 						<svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path
 								d="M2.48438 19.4846L19.4549 2.51406"
