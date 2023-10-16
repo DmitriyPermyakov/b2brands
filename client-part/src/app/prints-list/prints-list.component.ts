@@ -30,8 +30,13 @@ export class PrintsListComponent implements AfterViewInit, OnDestroy {
 	}
 
 	public removeValue(index: number): void {
-		this.printsControl.value.splice(index, 1)
+		let array = Array.from(this.printsControl.value)
+		array.splice(index, 1)
+		this.printsControl.setValue(array)
+		console.log(this.printsControl.value)
+		this.ref.detectChanges()
 		this.scroller.removeItem(index, this.printsControl.value.length)
+		if (this.printsControl.value.length < 1) this.scrollSub.unsubscribe()
 	}
 
 	public addPrint(event: Event) {
@@ -70,7 +75,7 @@ export class PrintsListComponent implements AfterViewInit, OnDestroy {
 	private setScroller() {
 		this.scroller = new Scroller(this.printsControl.value.length, this.printsRef, 'type-of-print')
 
-		this.scroller.initStartClasses(this.printsControl.value.length)
+		this.scroller.initScroller(this.printsControl.value.length)
 		this.scrollSub = this.scroller.scroll$.subscribe((e: WheelEvent) => {
 			this.scroller.onScroll(e)
 		})

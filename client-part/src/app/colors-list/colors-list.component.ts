@@ -88,7 +88,7 @@ export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	private setScroller() {
 		this.scroller = new Scroller(this.colorsControl.value.length, this.colorsRef, 'color')
-		this.scroller.initStartClasses(this.colorsControl.value.length)
+		this.scroller.initScroller(this.colorsControl.value.length)
 		this.scrollSub = this.scroller.scroll$.subscribe((e: WheelEvent) => {
 			this.scroller.onScroll(e)
 			this.passSelectedColorIndex()

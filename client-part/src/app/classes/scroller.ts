@@ -47,14 +47,6 @@ export class Scroller {
 	private _indexClassMap: Map<number, string> = new Map()
 	private _classIndexMap: Map<string, number> = new Map()
 	private _classes = [
-		ClassesEnum.firstPrev,
-		ClassesEnum.selected,
-		ClassesEnum.firstNext,
-		ClassesEnum.secondNext,
-		ClassesEnum.secondPrev,
-	]
-
-	private _classesForwardOrder = [
 		ClassesEnum.secondPrev,
 		ClassesEnum.firstPrev,
 		ClassesEnum.selected,
@@ -73,9 +65,15 @@ export class Scroller {
 		)
 	}
 
-	public initStartClasses(countOfElements: number) {
+	public initScroller(countOfElements: number) {
 		this.CountOfElements = countOfElements
 		this.setClassesDictionary()
+		this.setClasses()
+	}
+
+	//#region setting classes
+
+	private setClasses() {
 		switch (this._countOfElements) {
 			case 0:
 				break
@@ -105,9 +103,37 @@ export class Scroller {
 				break
 		}
 	}
+	private setClassedForTwoElements() {
+		this.getElement(0).classList.add(ClassesEnum.firstPrev)
+		this.getElement(1).classList.add(ClassesEnum.selected)
+	}
+
+	private setClassesForThreeElements() {
+		this.setClassedForTwoElements()
+		this.getElement(2).classList.add(ClassesEnum.firstNext)
+	}
+
+	private setClassesForFourElements() {
+		this.setClassesForThreeElements()
+		this.getElement(3).classList.add(ClassesEnum.secondNext)
+	}
+
+	private setClassesForFiveElements() {
+		for (let i = 0; i < 5; i++) this.getElement(i)?.classList.add(this._classes[i])
+	}
+
+	private setClassesForMoreThanFiveElements() {
+		this.setClassesForFiveElements()
+
+		for (let i = 5; i < this._countOfElements; i++) {
+			this.getElement(i)?.classList.add(ClassesEnum.hidden)
+		}
+	}
+
+	//#endregion end setting classes
 
 	public onScroll(event: WheelEvent) {
-		if (this._countOfElements === 0) return
+		if (this._countOfElements < 2) return
 		if (event.deltaY < 0) {
 			this.onScrollUp()
 		}
@@ -166,16 +192,64 @@ export class Scroller {
 
 	public removeItem(index: number, countOfElements: number): void {
 		this._countOfElements = countOfElements
-		if (countOfElements === 4) {
-			this.getElement(this._classIndexMap.get(ClassesEnum.firstPrev)).classList.remove(ClassesEnum.firstPrev)
-			this.getElement(this._classIndexMap.get(ClassesEnum.firstPrev)).classList.add(ClassesEnum.selected)
-			this.getElement(this._classIndexMap.get(ClassesEnum.secondPrev)).classList.remove(ClassesEnum.secondPrev)
-			this.getElement(this._classIndexMap.get(ClassesEnum.secondPrev)).classList.add(ClassesEnum.firstPrev)
+		//нужно оставить update class dictionary, т.к. нужно откуда-то брать индекс удаляемого элемента
+		// не нужен только индекс класса selected
+		this.clearDictionary()
+		this.updateClassesDictionary()
+		switch (this._countOfElements) {
+			case 0:
+				break
+			case 1:
+				this.getElement(this._classIndexMap.get(ClassesEnum.firstPrev)).classList.remove(ClassesEnum.firstPrev)
+				this.getElement(this._classIndexMap.get(ClassesEnum.firstPrev)).classList.add(ClassesEnum.selected)
+				break
+			case 2:
+				this.getElement(this._classIndexMap.get(ClassesEnum.firstNext)).classList.remove(ClassesEnum.firstNext)
+				this.getElement(this._classIndexMap.get(ClassesEnum.firstNext)).classList.add(ClassesEnum.selected)
+				break
+			case 3:
+				this.getElement(this._classIndexMap.get(ClassesEnum.secondNext)).classList.remove(ClassesEnum.secondNext)
+				this.getElement(this._classIndexMap.get(ClassesEnum.secondNext)).classList.add(ClassesEnum.firstNext)
+				this.getElement(this._classIndexMap.get(ClassesEnum.firstNext)).classList.remove(ClassesEnum.firstNext)
+				this.getElement(this._classIndexMap.get(ClassesEnum.firstNext)).classList.add(ClassesEnum.selected)
+				break
+			case 4:
+				this.getElement(this._classIndexMap.get(ClassesEnum.secondPrev)).classList.remove(ClassesEnum.secondPrev)
+				this.getElement(this._classIndexMap.get(ClassesEnum.secondPrev)).classList.add(ClassesEnum.firstPrev)
+				this.getElement(this._classIndexMap.get(ClassesEnum.firstPrev)).classList.remove(ClassesEnum.firstPrev)
+				this.getElement(this._classIndexMap.get(ClassesEnum.firstPrev)).classList.add(ClassesEnum.selected)
+				break
+			case 5:
+				this.getElement(this._classIndexMap.get(ClassesEnum.hidden)).classList.remove(ClassesEnum.hidden)
+				this.getElement(this._classIndexMap.get(ClassesEnum.hidden)).classList.add(ClassesEnum.secondNext)
+				this.getElement(this._classIndexMap.get(ClassesEnum.secondNext)).classList.remove(ClassesEnum.secondNext)
+				this.getElement(this._classIndexMap.get(ClassesEnum.secondNext)).classList.add(ClassesEnum.firstNext)
+				this.getElement(this._classIndexMap.get(ClassesEnum.firstNext)).classList.remove(ClassesEnum.firstNext)
+				this.getElement(this._classIndexMap.get(ClassesEnum.firstNext)).classList.add(ClassesEnum.selected)
+				break
+			default:
+				let secondNextIndex = this._classIndexMap.get(ClassesEnum.secondNext)
 
-			this._indexClassMap.clear()
-			this._classIndexMap.clear()
-			this.setClassesDictionary()
+				if (secondNextIndex === this._countOfElements - 1) {
+					this.getElement(0).classList.remove(ClassesEnum.hidden)
+					this.getElement(0).classList.add(ClassesEnum.secondNext)
+					this.getElement(secondNextIndex).classList.remove(ClassesEnum.secondNext)
+					this.getElement(secondNextIndex).classList.add(ClassesEnum.firstNext)
+					this.getElement(this._classIndexMap.get(ClassesEnum.firstNext)).classList.remove(ClassesEnum.firstNext)
+					this.getElement(this._classIndexMap.get(ClassesEnum.firstNext)).classList.add(ClassesEnum.selected)
+				} else {
+					this.getElement(secondNextIndex + 1).classList.remove(ClassesEnum.hidden)
+					this.getElement(secondNextIndex + 1).classList.add(ClassesEnum.secondNext)
+					this.getElement(secondNextIndex).classList.remove(ClassesEnum.secondNext)
+					this.getElement(secondNextIndex).classList.add(ClassesEnum.firstNext)
+					this.getElement(this._classIndexMap.get(ClassesEnum.firstNext)).classList.remove(ClassesEnum.firstNext)
+					this.getElement(this._classIndexMap.get(ClassesEnum.firstNext)).classList.add(ClassesEnum.selected)
+				}
+				break
 		}
+
+		this.clearDictionary()
+		this.updateClassesDictionary()
 	}
 
 	public scrollToAdded() {
@@ -192,55 +266,32 @@ export class Scroller {
 		// }, 100)
 	}
 
+	private clearDictionary() {
+		this._indexClassMap.clear()
+		this._classIndexMap.clear()
+	}
+
+	private placeElement(newElemClassName: string, oldElemClassName: string) {
+		this.getElement(this._countOfElements - 1).classList.add(newElemClassName)
+		this._addedElementValueAttribut = this.getElement(this._countOfElements - 1).getAttribute('data-value')
+		let oldItemIndex = this._classIndexMap.get(oldElemClassName)
+		//если элемент является первым в списке, то новый элемент, который должен быть добавлен перед ним, просто добавляется в конец
+		if (oldItemIndex !== 0) {
+			console.log('old item index !== 0')
+			let element = this.getElement(oldItemIndex)
+			this._parentElement.nativeElement.insertBefore(this.getElement(this._countOfElements - 1), element)
+		}
+		this.updateClassesDictionary()
+
+		this._selected = this._classIndexMap.get('selected')
+	}
+
 	public updateClassesDictionary() {
 		for (let index = 0; index <= this._countOfElements - 1; index++) {
 			let className = this.getElement(index).className.replace(this._scrollingClass, '').trim()
 			this._indexClassMap.set(index, className)
 			this._classIndexMap.set(className, index)
 		}
-	}
-
-	//#region setting classes
-	private setClassedForTwoElements() {
-		this.getElement(0).classList.add(ClassesEnum.firstPrev)
-		this.getElement(1).classList.add(ClassesEnum.selected)
-	}
-
-	private setClassesForThreeElements() {
-		this.setClassedForTwoElements()
-		this.getElement(2).classList.add(ClassesEnum.firstNext)
-	}
-
-	private setClassesForFourElements() {
-		this.setClassesForThreeElements()
-		this.getElement(3).classList.add(ClassesEnum.secondNext)
-	}
-
-	private setClassesForFiveElements() {
-		for (let i = 0; i < 5; i++) this.getElement(i)?.classList.add(this._classesForwardOrder[i])
-	}
-
-	private setClassesForMoreThanFiveElements() {
-		this.setClassesForFiveElements()
-
-		for (let i = 5; i < this._countOfElements; i++) {
-			this.getElement(i)?.classList.add(ClassesEnum.hidden)
-			this._indexClassMap.set(i, ClassesEnum.hidden)
-		}
-	}
-
-	//#endregion end setting classes
-
-	private placeElement(newElemClassName: string, oldElemClassName: string) {
-		this.getElement(this._countOfElements - 1).classList.add(newElemClassName)
-		this._addedElementValueAttribut = this.getElement(this._countOfElements - 1).getAttribute('data-value')
-		let oldItemIndex = this._classIndexMap.get(oldElemClassName)
-		if (oldItemIndex !== 0) {
-			let element = this.getElement(oldItemIndex)
-			this._parentElement.nativeElement.insertBefore(this.getElement(this._countOfElements - 1), element)
-		}
-		this.updateClassesDictionary()
-		this._selected = this._classIndexMap.get('selected')
 	}
 
 	private moveClassesUp() {
@@ -281,19 +332,69 @@ export class Scroller {
 		return this._parentElement.nativeElement.children[index]
 	}
 
+	//#region setting dictionary
+
 	private setClassesDictionary() {
-		if (this._countOfElements <= 4) {
-			for (let index = 0; index < 4; index++) {
-				this._indexClassMap.set(index, this._classes[index])
-				this._classIndexMap.set(this._classes[index], index)
-			}
-		} else {
-			for (let index = 0; index < 5; index++) {
-				this._indexClassMap.set(index, this._classesForwardOrder[index])
-				this._classIndexMap.set(this._classesForwardOrder[index], index)
-			}
+		switch (this._countOfElements) {
+			case 0:
+				break
+			case 1:
+				this._indexClassMap.set(0, ClassesEnum.selected)
+				this._classIndexMap.set(ClassesEnum.selected, 0)
+				break
+			case 2:
+				this.setDictionaryForTwoElements()
+				break
+			case 3:
+				this.setDictionaryForThreeElements()
+				break
+			case 4:
+				this.setDictionaryForFourElements()
+				break
+			case 5:
+				this.setDictionaryForFiveElements()
+				break
+			default:
+				this.setDictionaryForMoreThanFiveElements()
+				break
 		}
 	}
+
+	private setDictionaryForTwoElements() {
+		this._indexClassMap.set(0, ClassesEnum.firstPrev)
+		this._classIndexMap.set(ClassesEnum.firstPrev, 0)
+		this._indexClassMap.set(1, ClassesEnum.selected)
+		this._classIndexMap.set(ClassesEnum.selected, 1)
+	}
+
+	private setDictionaryForThreeElements() {
+		this.setDictionaryForTwoElements()
+		this._indexClassMap.set(2, ClassesEnum.firstNext)
+		this._classIndexMap.set(ClassesEnum.firstNext, 2)
+	}
+
+	private setDictionaryForFourElements() {
+		this.setDictionaryForThreeElements()
+		this._indexClassMap.set(3, ClassesEnum.secondNext)
+		this._classIndexMap.set(ClassesEnum.secondNext, 3)
+	}
+
+	private setDictionaryForFiveElements() {
+		for (let i = 0; i < this._countOfElements - 1; i++) {
+			this._indexClassMap.set(i, this._classes[i])
+			this._classIndexMap.set(this._classes[i], i)
+		}
+	}
+
+	private setDictionaryForMoreThanFiveElements() {
+		this.setDictionaryForFiveElements()
+		for (let i = 5; i < this._countOfElements; i++) {
+			this._indexClassMap.set(i, ClassesEnum.hidden)
+			this._classIndexMap.set(ClassesEnum.hidden, i)
+		}
+	}
+
+	//#endregion
 }
 
 export const enum ClassesEnum {
