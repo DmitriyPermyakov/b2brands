@@ -253,17 +253,17 @@ export class Scroller {
 	}
 
 	public scrollToAdded() {
-		// let i = this._classIndexMap.get('selected')
-		// let interval = setInterval(() => {
-		// 	this.onScrollDown()
-		// 	i++
-		// 	if (i > this._countOfElements - 1) i = 0
-		// 	if (this.getElement(i).getAttribute('data-value') === this._addedElementValueAttribut) {
-		// 		clearInterval(interval)
-		// 		this.selectedItemChanged.next()
-		// 		return
-		// 	}
-		// }, 100)
+		let i = this._classIndexMap.get('selected')
+		let interval = setInterval(() => {
+			this.onScrollDown()
+			i++
+			if (i > this._countOfElements - 1) i = 0
+			if (this.getElement(i).getAttribute('data-value') === this._addedElementValueAttribut) {
+				clearInterval(interval)
+				this.selectedItemChanged.next()
+				return
+			}
+		}, 100)
 	}
 
 	private clearDictionary() {

@@ -94,7 +94,15 @@
 				<app-prints-list [printsControl]="productPrintsControl" [editable]="isEdit"></app-prints-list>
 			</div>
 			<div class="to-cart-wrapper">
-				<button class="to-cart" (click)="addToCart()">В корзину</button>
+				<button class="btn to-cart" *ngIf="!authService.IsAuthenticated" (click)="addToCart()">В корзину</button>
+				<ng-container *ngIf="authService.IsAuthenticated && isAdding">
+					<button class="btn">Добавить</button>
+					<button class="btn">Отмена</button>
+				</ng-container>
+				<ng-container *ngIf="isEdit && !isAdding">
+					<button class="btn">Сохранить</button>
+					<button class="btn">Отмена</button>
+				</ng-container>
 			</div>
 			<div class="card-buttons">
 				<button class="button icon" [routerLink]="['/orders']" [ngClass]="{ hidden: authService.IsAuthenticated }">
@@ -127,7 +135,7 @@
 						<circle cx="1.5" cy="1.5" r="1.5" transform="matrix(1 0 0 -1 0 3)" fill="#FEFEFE" />
 					</svg>
 				</button>
-				<ng-container *ngIf="authService.IsAuthenticated">
+				<ng-container *ngIf="authService.IsAuthenticated && !isAdding">
 					<button
 						class="button edit icon"
 						(click)="edit()"

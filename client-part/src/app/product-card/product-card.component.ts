@@ -11,7 +11,6 @@ import { orderItemSelector } from '../store/orders/order-item.selector'
 import { OrderItem } from '../interfaces/orderItem.interface'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { AuthService } from '../services/auth.service'
-import { IProductProperty } from '../interfaces/productProperty.interface'
 
 @Component({
 	selector: 'app-product-card',
