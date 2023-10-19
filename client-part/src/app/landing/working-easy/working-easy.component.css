@@ -4,6 +4,8 @@
 	margin: 0;
 	padding: 4em 9em 9em;
 	height: 100vh;
+	height: 100svh;
+
 	width: 100%;
 	background-color: var(--background);
 	font-size: inherit;
@@ -135,11 +137,11 @@ h2 {
 
 @media (max-width: 600px) {
 	.working-easy {
-		padding: 22em 9em 14em;
+		padding: 14em 9em 14em;
 	}
 
 	h2 {
-		margin-top: 1em;
+		margin-top: 0;
 		margin-bottom: 0.5em;
 		font-size: 6em;
 	}
@@ -250,11 +252,11 @@ h2 {
 
 @media (min-width: 600px) and (max-width: 900px) {
 	.working-easy {
-		padding: 0em 9em 14em;
+		padding: 14em 9em 14em;
 	}
 
 	h2 {
-		margin-top: 1em;
+		margin-top: 0;
 		font-size: 6em;
 	}
 

@@ -5,6 +5,7 @@
 
 	padding: 2em 9em;
 	height: 100vh;
+	height: 100svh;
 	width: 100%;
 	background-color: var(--background);
 	position: relative;
@@ -180,7 +181,8 @@ a {
 
 @media (max-width: 600px) {
 	.partners {
-		padding: 21em 9em 0;
+		/* padding: 21em 9em 0; */
+		padding: 0 9em 0;
 	}
 
 	.container {

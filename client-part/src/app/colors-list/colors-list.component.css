@@ -154,3 +154,49 @@
 	pointer-events: none;
 	z-index: -11;
 }
+
+@media (max-width: 600px) {
+	:host() {
+		grid-row: 1 / 2;
+		grid-column: 1 / 2;
+		width: 100%;
+	}
+	.colors-with-btns {
+		display: grid;
+		grid-template-columns: 0% 100% 0%;
+		grid-template-rows: 1fr;
+		position: static;
+	}
+
+	.color-items {
+		grid-row: 1 / 2;
+		grid-column: 2 / 3;
+		display: block;
+		padding: 3em 0;
+		margin: 3em 0;
+		white-space: nowrap;
+		width: 100%;
+		height: unset;
+
+		overflow-x: scroll;
+		scroll-snap-type: x mandatory;
+		scroll-behavior: smooth;
+
+		perspective: none;
+	}
+
+	.color {
+		display: inline-block;
+		margin: 1em 1em;
+		width: 9em;
+		height: 9em;
+
+		scroll-snap-align: center;
+		scroll-snap-stop: always;
+		position: relative;
+	}
+
+	.color-btn {
+		display: none;
+	}
+}

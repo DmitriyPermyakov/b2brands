@@ -33,14 +33,18 @@ export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 	private scrollSub: Subscription
 	private selectedItemChangedSub: Subscription
 
+	private isMobile: boolean = true
+
 	constructor(private ref: ChangeDetectorRef) {}
 	ngOnInit(): void {}
 
 	ngAfterViewInit(): void {
 		this.setAttributes()
-		if (this.colorsControl.value.length > 0) {
-			this.setScroller()
-			this.passSelectedColorIndex()
+		if (!this.isMobile) {
+			if (this.colorsControl.value.length > 0) {
+				this.setScroller()
+				this.passSelectedColorIndex()
+			}
 		}
 	}
 

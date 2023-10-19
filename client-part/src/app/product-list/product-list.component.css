@@ -1,6 +1,7 @@
 .client-product-list {
 	display: block;
 	height: 100vh;
+	height: 100svh;
 	width: 100%;
 	background-color: var(--background);
 

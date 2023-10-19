@@ -1,4 +1,4 @@
-:root {
+/* :root {
 	--intro-section-bg-light: #646464;
 	--intro-section-bg-dark: #292929;
 	--main-text: #e9e9e9;
@@ -7,7 +7,7 @@
 	--text-intro-button: #4c4c4c;
 
 	--background: #292929;
-	/* --card: #343434; */
+	--card: #343434;
 	--card: #343434;
 	--outline: #ecff10;
 	--map: #b7b7b7;
@@ -18,9 +18,9 @@
 	--btn-disabled: #646464;
 
 	color-scheme: dark;
-}
+} */
 
-/* :root {
+:root {
 	--intro-section-bg-light: #fcfcfc;
 	--intro-section-bg-dark: #ffffff;
 	--main-text: #3b3b3b;
@@ -36,7 +36,7 @@
 	--dark-shadow: #aeaeae;
 	--new-price: #f75858;
 	color-scheme: light;
-} */
+}
 
 *,
 h1,
@@ -80,6 +80,7 @@ button:active {
 .icon svg {
 	display: block;
 	width: 100%;
+	height: 100%;
 }
 
 .icon:hover *,
