@@ -98,11 +98,26 @@
 }
 
 @media (max-width: 600px) {
+	:host(.q-new-price) {
+		grid-row: 2 / 3;
+		grid-column: 1 / 2;
+	}
+
+	:host(.q-old-price) {
+		grid-row: 2 / 3;
+		grid-column: 2 / 3;
+	}
 	.quantity {
-		justify-content: flex-end;
+		justify-content: center;
+		width: 100%;
 		/* margin-top: 1em;
         margin-right: 2em; */
 
 		font-size: 5em;
+	}
+
+	.icon {
+		width: 5rem;
+		height: 5rem;
 	}
 }

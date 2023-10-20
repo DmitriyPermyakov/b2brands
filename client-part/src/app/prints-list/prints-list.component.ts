@@ -18,12 +18,14 @@ export class PrintsListComponent implements AfterViewInit, OnDestroy {
 
 	private scroller: Scroller
 	private scrollSub: Subscription
-
+	public isMobile: boolean = false
 	constructor(private ref: ChangeDetectorRef) {}
 
 	ngAfterViewInit(): void {
-		this.setAttributes()
-		if (this.printsControl.value.length > 0) this.setScroller()
+		if (!this.isMobile) {
+			this.setAttributes()
+			if (this.printsControl.value.length > 0) this.setScroller()
+		}
 	}
 	ngOnDestroy(): void {
 		if (this.scrollSub) this.scrollSub.unsubscribe()
@@ -33,7 +35,6 @@ export class PrintsListComponent implements AfterViewInit, OnDestroy {
 		let array = Array.from(this.printsControl.value)
 		array.splice(index, 1)
 		this.printsControl.setValue(array)
-		console.log(this.printsControl.value)
 		this.ref.detectChanges()
 		this.scroller.removeItem(index, this.printsControl.value.length)
 		if (this.printsControl.value.length < 1) this.scrollSub.unsubscribe()
