@@ -64,6 +64,19 @@ export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 		this.colorInputRef.nativeElement.showPicker()
 	}
 
+	public selectColor(event: Event) {
+		if (!this.isMobile) return
+		if ((event.target as HTMLElement).classList.contains('selected')) this.passSelectedColorIndex()
+		else {
+			let children: HTMLAllCollection = this.colorsRef.nativeElement.children
+			Array.from(children)
+				.find((el) => el.classList.contains('selected'))
+				?.classList.remove('selected')
+			;(event.target as HTMLElement).classList.add('selected')
+			this.passSelectedColorIndex()
+		}
+	}
+
 	public colorPickerChangedValue(event) {
 		let color: IProductColor = {
 			id: 'new element',

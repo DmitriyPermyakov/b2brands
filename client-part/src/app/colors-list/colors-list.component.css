@@ -68,12 +68,15 @@
 	box-shadow: 0px 0px 5px var(--main-text);
 }
 
-.color-items:hover > .color.selected ~ .remove {
+.remove {
+	display: none;
+}
+.color.selected:hover > .remove {
 	display: inline;
 	position: absolute;
 	/* top: 0;
 	left: 0; */
-	transform: translate3d(-1.7rem, 0, 6rem);
+	transform: translate3d(2.5rem, 0, 6rem);
 }
 
 .color.first {
@@ -164,7 +167,7 @@
 	.colors-with-btns {
 		display: grid;
 		grid-template-columns: 0% 100% 0%;
-		grid-template-rows: 1fr;
+		grid-template-rows: 1fr auto;
 		position: relative;
 	}
 
@@ -214,8 +217,13 @@
 	}
 
 	.add.icon {
+		grid-row: 2 / 3;
+		grid-column: span 3;
+
+		margin-top: 0;
 		width: 7rem;
 		height: 7rem;
-		top: 72px;
+
+		position: static;
 	}
 }
