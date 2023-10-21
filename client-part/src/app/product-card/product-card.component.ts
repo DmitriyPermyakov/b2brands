@@ -21,6 +21,8 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 	@ViewChild('prints') printsRef!: ElementRef
 	@ViewChild('prevBtn') prevColorBtnRef!: ElementRef
 	@ViewChild('nextBtn') nextColorBtnRef!: ElementRef
+	@ViewChild('descriptionBtn') descriptionBtn: ElementRef
+	@ViewChild('description') descriptionPanel: ElementRef
 
 	public productCardForm: FormGroup
 
@@ -47,6 +49,9 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 	public prints!: string[]
 
 	private selectedPrintIndex: number = 0
+
+	private activeMobilePanel: HTMLElement
+	private activeMobileButton: HTMLElement
 
 	private printCount: number = 0
 	private productAmount: number = 1
@@ -94,7 +99,11 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 		console.log('product color control length ', this.productColorsControl.value.length)
 	}
 
-	ngAfterViewInit() {}
+	ngAfterViewInit() {
+		this.activeMobileButton = this.descriptionBtn.nativeElement
+		this.activeMobilePanel = this.descriptionPanel.nativeElement
+		console.log(this.activeMobilePanel)
+	}
 
 	ngOnDestroy(): void {
 		if (this.changeImageOnScrollSub) this.changeImageOnScrollSub.unsubscribe()
@@ -140,6 +149,17 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 	public cancelEdit() {
 		this.isEdit = false
 		this.disableFormControls()
+	}
+
+	public changeMobileActivePanel(event: Event, element: HTMLElement) {
+		this.activeMobileButton?.classList.remove('active')
+		this.activeMobilePanel?.classList.remove('active-panel')
+
+		this.activeMobileButton = event.target as HTMLElement
+		this.activeMobileButton.classList.add('active')
+
+		this.activeMobilePanel = element
+		this.activeMobilePanel.classList.add('active-panel')
 	}
 
 	private enableFormControls() {

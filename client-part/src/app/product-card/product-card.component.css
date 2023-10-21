@@ -522,6 +522,7 @@ input {
 
 	.description-btn.active {
 		color: var(--main-text);
+		font-weight: bold;
 	}
 
 	.description-btn + .description-btn {
@@ -529,8 +530,8 @@ input {
 	}
 
 	.description-container {
-		display: grid;
-		/* display: none; */
+		/* display: grid; */
+		display: none;
 		grid-template-columns: 1fr;
 		grid-template-rows: 1fr 2fr 1fr;
 		margin-top: 7em;
@@ -620,6 +621,10 @@ input {
 		width: 100%;
 	}
 
+	.price-container.not-auth {
+		grid-template-columns: 50% 50%;
+	}
+
 	.price-container.editable {
 		grid-template-rows: auto 60%;
 		grid-template-columns: 50% 50%;
@@ -627,7 +632,7 @@ input {
 	}
 
 	.price-quantity.not-auth {
-		grid-template-columns: 40% auto;
+		grid-template-columns: 45% 55%;
 		justify-content: start;
 	}
 
@@ -652,10 +657,12 @@ input {
 		/* display: block; */
 		display: none;
 		margin-top: 7em;
+		height: 100%;
 	}
 
 	.properties {
-		font-size: 5em;
+		overflow-y: scroll;
+		height: 90%;
 	}
 
 	.color-print-container {
@@ -666,6 +673,10 @@ input {
 		row-gap: 6em;
 		margin-top: 3em;
 		height: 100%;
+	}
+
+	.active-panel {
+		display: grid;
 	}
 
 	hr {

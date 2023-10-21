@@ -18,7 +18,7 @@ export class PrintsListComponent implements AfterViewInit, OnDestroy {
 
 	private scroller: Scroller
 	private scrollSub: Subscription
-	public isMobile: boolean = false
+	public isMobile: boolean = true
 	constructor(private ref: ChangeDetectorRef) {}
 
 	ngAfterViewInit(): void {

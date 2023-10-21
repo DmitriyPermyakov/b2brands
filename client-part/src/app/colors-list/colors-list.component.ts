@@ -33,7 +33,7 @@ export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 	private scrollSub: Subscription
 	private selectedItemChangedSub: Subscription
 
-	private isMobile: boolean = false
+	private isMobile: boolean = true
 
 	constructor(private ref: ChangeDetectorRef) {}
 	ngOnInit(): void {}

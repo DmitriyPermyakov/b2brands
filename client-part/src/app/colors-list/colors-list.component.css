@@ -165,7 +165,7 @@
 		display: grid;
 		grid-template-columns: 0% 100% 0%;
 		grid-template-rows: 1fr;
-		position: static;
+		position: relative;
 	}
 
 	.color-items {
@@ -211,5 +211,11 @@
 
 	.color-btn {
 		display: none;
+	}
+
+	.add.icon {
+		width: 7rem;
+		height: 7rem;
+		top: 72px;
 	}
 }

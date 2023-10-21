@@ -237,11 +237,19 @@
 		</div>
 		<div class="description-wrapper">
 			<div class="description-btns-container">
-				<button class="description-btn active">Описание</button>
-				<button class="description-btn">Характеристики</button>
-				<button class="description-btn">Цвет и нанесения</button>
+				<button
+					class="description-btn active"
+					#descriptionBtn
+					(click)="changeMobileActivePanel($event, description)"
+				>
+					Описание
+				</button>
+				<button class="description-btn" (click)="changeMobileActivePanel($event, properties)">
+					Характеристики
+				</button>
+				<button class="description-btn" (click)="changeMobileActivePanel($event, colors)">Цвет и нанесения</button>
 			</div>
-			<div class="description-container">
+			<div class="description-container active-panel" #description>
 				<div class="name-edit">
 					<div class="name-of-product">
 						<input
@@ -343,13 +351,13 @@
 						></app-quantity>
 					</div>
 
-					<ng-container *ngIf="authService.IsAuthenticated">
+					<ng-container *ngIf="!authService.IsAuthenticated">
 						<app-quantity [IsDisabled]="authService.IsAuthenticated"></app-quantity>
 					</ng-container>
 				</div>
 			</div>
 
-			<div class="properties-container">
+			<div class="properties-container" #properties>
 				<div class="properties">
 					<app-product-properties
 						class="prop"
@@ -359,7 +367,7 @@
 				</div>
 			</div>
 
-			<div class="color-print-container">
+			<div class="color-print-container" #colors>
 				<app-colors-list
 					[colorsControl]="productColorsControl"
 					(onColorChanged)="onColorChanged($event)"
@@ -371,7 +379,7 @@
 		</div>
 	</form>
 	<div class="to-cart-wrapper">
-		<button class="btn to-cart" *ngIf="!authService.IsAuthenticated" (click)="addToCart()">В корзину</button>
+		<button class="btn to-cart" *ngIf="!authService.IsAuthenticated" (click)="addToCart()">В&nbsp;корзину</button>
 		<ng-container *ngIf="authService.IsAuthenticated && isAdding">
 			<button class="btn">Добавить</button>
 			<button class="btn">Отмена</button>

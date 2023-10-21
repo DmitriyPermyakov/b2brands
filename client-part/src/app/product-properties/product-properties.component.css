@@ -125,16 +125,43 @@ input {
 	}
 }
 
-@media (max-width: 600) {
-	.properties p {
-		padding-right: 0;
-
-		font-size: 1em;
-		line-height: 1;
-		color: var(--secondary-text);
+@media (max-width: 600px) {
+	.property {
+		font-size: 5em;
+	}
+	.property.edit {
+		width: 90%;
 	}
 
-	.properties p + p {
-		margin-top: 1em;
+	.visible {
+		grid-template-rows: 50% 50%;
+		align-items: center;
+	}
+
+	.inputs {
+		margin: 1em 0;
+		font-size: 5em;
+	}
+
+	input {
+		padding: 0.3em 0.2em;
+		border-radius: 5px;
+	}
+
+	.text {
+		margin-top: 0;
+	}
+
+	.add {
+		margin: 0 auto;
+		width: 7rem;
+		height: 7rem;
+	}
+
+	.remove {
+		width: 4.2rem;
+		height: 4.2rem;
+		top: 2px;
+		right: -21px;
 	}
 }
