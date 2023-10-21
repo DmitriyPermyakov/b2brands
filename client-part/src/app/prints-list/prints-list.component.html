@@ -45,8 +45,51 @@
 	</div>
 </ng-container>
 
-<ng-container *ngIf="isMobile">
+<ng-container *ngIf="isMobile && !editable">
 	<select class="print-select" name="prints" id="prints">
 		<option class="print-select-item" value="{{ p }}" *ngFor="let p of printsControl.value">{{ p }}</option>
 	</select>
+</ng-container>
+
+<ng-container *ngIf="isMobile && editable">
+	<div class="prints-editable">
+		<div class="prints-container" #prints>
+			<div class="prints-mobile" *ngFor="let p of printsControl.value; index as i">
+				<p class="print-item">
+					{{ p
+					}}<button class="button icon remove" (click)="removeValue(i)">
+						<svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path
+								d="M2.48438 19.4846L19.4549 2.51406"
+								stroke="#A2A2A2"
+								stroke-width="2"
+								stroke-linecap="round"
+							/>
+							<path
+								d="M2.48535 2.51465L19.4559 19.4852"
+								stroke="#A2A2A2"
+								stroke-width="2"
+								stroke-linecap="round"
+							/>
+						</svg>
+					</button>
+				</p>
+			</div>
+		</div>
+		<div class="input-container" [ngClass]="{ visible: isInputVisible }">
+			<input type="text" #printInput (keydown.enter)="addPrint($event)" />
+			<button class="add icon" (click)="toggleInputVisibility()" [ngClass]="{ hidden: !editable, showed: editable }">
+				<svg _ngcontent-dxn-c13="" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path _ngcontent-dxn-c13="" d="M1 13H25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round"></path>
+					<path
+						_ngcontent-dxn-c13=""
+						d="M13 1L13 25"
+						stroke="#A2A2A2"
+						stroke-width="2"
+						stroke-linecap="round"
+					></path>
+				</svg>
+			</button>
+		</div>
+	</div>
 </ng-container>

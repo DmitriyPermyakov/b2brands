@@ -36,23 +36,27 @@ export class PrintsListComponent implements AfterViewInit, OnDestroy {
 		array.splice(index, 1)
 		this.printsControl.setValue(array)
 		this.ref.detectChanges()
-		this.scroller.removeItem(index, this.printsControl.value.length)
-		if (this.printsControl.value.length < 1) this.scrollSub.unsubscribe()
+
+		if (!this.isMobile) {
+			this.scroller.removeItem(index, this.printsControl.value.length)
+			if (this.printsControl.value.length < 1) this.scrollSub.unsubscribe()
+		}
 	}
 
 	public addPrint(event: Event) {
 		event.preventDefault()
 		if (this.input.nativeElement.value !== '') {
 			this.printsControl.setValue([...this.printsControl.value, this.input.nativeElement.value])
-			// this.printsControl.value.push(this.input.nativeElement.value)
 			this.ref.detectChanges()
 			this.printsRef.nativeElement.children[this.printsRef.nativeElement.children.length - 1].setAttribute(
 				'data-value',
 				this.input.nativeElement.value
 			)
-			if (this.printsControl.value.length < 2) this.setScroller()
+			if (!this.isMobile) {
+				if (this.printsControl.value.length < 2) this.setScroller()
+				this.scroller.addItem(this.printsControl.value.length)
+			}
 
-			this.scroller.addItem(this.printsControl.value.length)
 			this.input.nativeElement.value = ''
 			this.isInputVisible = false
 		} else this.isInputVisible = false

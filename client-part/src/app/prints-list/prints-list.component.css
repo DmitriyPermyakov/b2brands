@@ -159,7 +159,15 @@
 @media (max-width: 600px) {
 	:host() {
 		grid-row: 3 / 4;
+		display: block;
+		height: 100%;
 	}
+
+	.icon {
+		width: 7rem;
+		height: 7rem;
+	}
+
 	.print-select {
 		padding: 0.5em 1em;
 		width: 100%;
@@ -167,5 +175,50 @@
 		font-size: 6em;
 		border-radius: 5px;
 		background-color: var(--background);
+	}
+
+	.prints-editable {
+		display: block;
+		height: 80%;
+		overflow-y: scroll;
+	}
+
+	.prints-container {
+		display: block;
+		padding: 0.5em 0;
+	}
+
+	.prints-mobile {
+		display: block;
+		font-size: 5em;
+		position: relative;
+	}
+
+	.prints-mobile + .prints-mobile {
+		margin-top: 0.5em;
+	}
+
+	.print-item:hover {
+		font-weight: bold;
+	}
+
+	.remove {
+		top: -3px;
+		right: 14px;
+	}
+
+	.print-item:hover > .remove {
+		display: block;
+	}
+
+	.input-container {
+		grid-template-rows: 0% 50%;
+		margin-top: 3em;
+	}
+
+	.input-container input {
+		margin-bottom: 0.5em;
+		font-size: 5rem;
+		border-radius: 5px;
 	}
 }
