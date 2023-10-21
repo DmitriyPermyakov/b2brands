@@ -212,6 +212,16 @@
 		transform: scale(1.3);
 	}
 
+	.color.selected:hover:has(.remove) {
+		margin-right: 12em;
+	}
+
+	.color.selected:hover > .remove {
+		width: 6rem;
+		height: 6rem;
+		transform: translate3d(10rem, 1rem, 6rem);
+	}
+
 	.color-btn {
 		display: none;
 	}
