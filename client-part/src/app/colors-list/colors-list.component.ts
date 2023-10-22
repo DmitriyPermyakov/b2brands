@@ -47,8 +47,7 @@ export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 			}
 		} else {
 			if (this.colorsControl.value.length > 0) {
-				this.colorsRef.nativeElement.children[0].classList.add('selected')
-				this.onColorChanged.emit(0)
+				this.setSelected(0)
 			}
 		}
 	}
@@ -73,10 +72,7 @@ export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 		if (!this.isMobile) return
 		if ((event.target as HTMLElement).classList.contains('selected')) this.passSelectedColorIndex()
 		else {
-			let children: HTMLAllCollection = this.colorsRef.nativeElement.children
-			Array.from(children)
-				.find((el) => el.classList.contains('selected'))
-				?.classList.remove('selected')
+			this.getSelectedElement()?.classList.remove('selected')
 			;(event.target as HTMLElement).classList.add('selected')
 			this.passSelectedColorIndex()
 		}
@@ -99,8 +95,14 @@ export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 			'data-value',
 			color.value
 		)
-		if (this.colorsControl.value.length < 2) this.setScroller()
-		this.scroller.addItem(this.colorsControl.value.length)
+		if (!this.isMobile) {
+			if (this.colorsControl.value.length < 2) this.setScroller()
+			this.scroller.addItem(this.colorsControl.value.length)
+		} else {
+			this.getSelectedElement()?.classList.remove('selected')
+			this.setSelected(this.colorsControl.value.length - 1)
+			this.onColorChanged.emit(this.colorsControl.value.length - 1)
+		}
 	}
 
 	ngOnDestroy(): void {
@@ -126,14 +128,23 @@ export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 		this.onColorChanged.emit(index)
 	}
 
+	private setSelected(index: number) {
+		this.colorsRef.nativeElement.children[index].classList.add('selected')
+		this.onColorChanged.emit(index)
+	}
+
 	private getSelectedColorIndex(): number {
-		let children: HTMLAllCollection = this.colorsRef.nativeElement.children
-		let colorValue: string | undefined | null = Array.from(children)
-			.find((el) => el.classList.contains('selected'))
-			?.getAttribute('data-value')
+		let colorValue: string | undefined | null = this.getSelectedElement()?.getAttribute('data-value')
 
 		let index = this.colorsControl.value.findIndex((el) => el.value === colorValue)
 		return index
+	}
+
+	private getSelectedElement(): Element {
+		let children: HTMLAllCollection = this.colorsRef.nativeElement.children
+		let selected = Array.from(children).find((el) => el.classList.contains('selected'))
+
+		return selected
 	}
 
 	private setAttributes(): void {

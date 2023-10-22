@@ -100,6 +100,8 @@
 		flex-direction: row;
 		justify-items: center;
 		align-items: center;
+
+		/* padding: 0 28em; */
 		width: 100%;
 		height: 100%;
 
@@ -127,5 +129,54 @@
 	.image.left,
 	.image.right {
 		width: inherit;
+	}
+
+	.add-image-icon.front,
+	.add-image-icon.left,
+	.add-image-icon.right,
+	.add-image-icon.bottom {
+		width: 80%;
+		height: auto;
+	}
+
+	.add-image-icon.front {
+		margin-bottom: 0;
+		margin-left: 28em;
+	}
+
+	.add-image-icon {
+		flex: 1 0 50%;
+		display: flex;
+
+		/* width: 100%;
+		height: 86%; */
+		aspect-ratio: 1 / 1;
+
+		overflow-y: hidden;
+		scroll-snap-align: center;
+		scroll-snap-stop: always;
+		margin-right: 29em;
+	}
+
+	.hidden {
+		display: none;
+	}
+
+	.add {
+		width: 7rem;
+		height: 7rem;
+	}
+
+	.image-container > .remove {
+		display: inline-block;
+		width: 7rem;
+		height: 7rem;
+		top: 24px;
+		right: 24px;
+	}
+
+	.image-container.front > .remove {
+		top: 20px;
+		right: 20px;
 	}
 }
