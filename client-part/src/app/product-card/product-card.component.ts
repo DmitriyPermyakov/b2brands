@@ -134,6 +134,7 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 	public onColorChanged(value: number) {
 		setTimeout(() => {
 			this.productColor = this.productColorsControl.value[value] as IProductColor
+			console.log('product color', this.productColor)
 		}, 0)
 	}
 

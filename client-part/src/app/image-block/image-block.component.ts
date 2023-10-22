@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input } from '@angular/core'
+import { AfterViewInit, Component, ElementRef, Input } from '@angular/core'
 import { FormControl } from '@angular/forms'
 import { IProductColor } from '../interfaces/productColor.interface'
 import { UploadImageService } from '../services/upload-image.service'
@@ -11,7 +11,7 @@ import { AuthService } from '../services/auth.service'
 	templateUrl: './image-block.component.html',
 	styleUrls: ['./image-block.component.css'],
 })
-export class ImageBlockComponent {
+export class ImageBlockComponent implements AfterViewInit {
 	@Input() productColor: IProductColor
 	@Input() productsColorCount: number
 	@Input() editable: boolean
@@ -20,6 +20,9 @@ export class ImageBlockComponent {
 	public inputDisabled: boolean = true
 
 	constructor(private uploadImageService: UploadImageService, public authService: AuthService) {}
+	ngAfterViewInit(): void {
+		console.log('productColor', this.productColor)
+	}
 	public chooseImage(input) {
 		input.click()
 	}

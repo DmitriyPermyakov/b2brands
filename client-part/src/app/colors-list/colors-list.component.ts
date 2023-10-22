@@ -45,6 +45,11 @@ export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 				this.setScroller()
 				this.passSelectedColorIndex()
 			}
+		} else {
+			if (this.colorsControl.value.length > 0) {
+				this.colorsRef.nativeElement.children[0].classList.add('selected')
+				this.onColorChanged.emit(0)
+			}
 		}
 	}
 

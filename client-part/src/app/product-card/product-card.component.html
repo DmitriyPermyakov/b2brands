@@ -224,18 +224,11 @@
 			
 		</div> -->
 		<div class="images">
-			<div class="image-with-shadow">
-				<img class="image front" src="../../assets/caps/front.png" alt="front-image" />
-			</div>
-			<div class="image-with-shadow">
-				<img class="image left" src="../../assets/caps/left.png" alt="left-image" />
-			</div>
-			<div class="image-with-shadow">
-				<img class="image bottom" src="../../assets/caps/back.png" alt="bottom-image" />
-			</div>
-			<div class="image-with-shadow">
-				<img class="image right" src="../../assets/caps/right.png" alt="right-image" />
-			</div>
+			<app-image-block
+				[productColor]="productColor"
+				[productsColorCount]="productColorsControl.value.length"
+				[editable]="isEdit"
+			></app-image-block>
 		</div>
 		<div class="description-wrapper">
 			<div class="description-btns-container">
