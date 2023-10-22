@@ -30,6 +30,7 @@
 					></path>
 				</svg>
 			</button>
+			<span class="icon-label">Спереди</span>
 			<input
 				type="file"
 				accept="image/*"
@@ -43,7 +44,7 @@
 	</ng-container>
 	<div class="image-container left" [ngClass]="{ hidden: !productColor.leftSmallUrl }">
 		<img class="image left" [src]="productColor.leftSmallUrl" alt="left-image" />
-		<ng-container>
+		<ng-container *ngIf="editable">
 			<button class="button icon remove">
 				<svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M2.48438 19.4846L19.4549 2.51406" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
@@ -72,6 +73,7 @@
 					></path>
 				</svg>
 			</button>
+			<span class="icon-label">Слева</span>
 			<input
 				type="file"
 				accept="image/*"
@@ -86,7 +88,7 @@
 	</ng-container>
 	<div class="image-container bottom" [ngClass]="{ hidden: !productColor.bottomSmallUrl }">
 		<img class="image bottom" [src]="productColor.bottomSmallUrl" alt="bottom-image" />
-		<ng-container>
+		<ng-container *ngIf="editable">
 			<button class="button icon remove">
 				<svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M2.48438 19.4846L19.4549 2.51406" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
@@ -115,6 +117,7 @@
 					></path>
 				</svg>
 			</button>
+			<span class="icon-label">Сзади</span>
 			<input
 				type="file"
 				accept="image/*"
@@ -129,7 +132,7 @@
 	</ng-container>
 	<div class="image-container right" [ngClass]="{ hidden: !productColor.rightSmallUrl }">
 		<img class="image right" [src]="productColor.rightSmallUrl" alt="right-image" />
-		<ng-container>
+		<ng-container *ngIf="editable">
 			<button class="button icon remove">
 				<svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M2.48438 19.4846L19.4549 2.51406" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
@@ -158,6 +161,7 @@
 					></path>
 				</svg>
 			</button>
+			<span class="icon-label">Справа</span>
 			<input
 				type="file"
 				accept="image/*"

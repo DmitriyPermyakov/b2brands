@@ -147,15 +147,17 @@
 	.add-image-icon {
 		flex: 1 0 50%;
 		display: flex;
+		margin-right: 29em;
 
-		/* width: 100%;
-		height: 86%; */
 		aspect-ratio: 1 / 1;
 
 		overflow-y: hidden;
 		scroll-snap-align: center;
 		scroll-snap-stop: always;
-		margin-right: 29em;
+
+		border-radius: 5px;
+
+		position: relative;
 	}
 
 	.hidden {
@@ -178,5 +180,12 @@
 	.image-container.front > .remove {
 		top: 20px;
 		right: 20px;
+	}
+
+	.icon-label {
+		position: absolute;
+		top: 10px;
+		left: 15px;
+		font-size: 5rem;
 	}
 }
