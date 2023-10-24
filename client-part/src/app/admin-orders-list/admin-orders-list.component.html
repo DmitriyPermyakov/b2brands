@@ -1,21 +1,47 @@
 <section class="order-list-container">
 	<app-account-buttons></app-account-buttons>
+	<button class="add-mobile">Добавить</button>
 	<div class="order-sort-btn">
-		<div class="sort-btns">
-			<button class="active-orders grouped" routerLinkActive="active" [routerLink]="['/admin', 'active-orders']">
-				Активные заказы
-			</button>
-			<button
-				class="completed-orders grouped"
-				routerLinkActive="active"
-				[routerLink]="['/admin', 'completed-orders']"
-			>
-				Завершенные заказы
-			</button>
-			<button class="products grouped" routerLinkActive="active" [routerLink]="['/admin', 'products']">
-				Товары
-			</button>
-		</div>
+		<span class="mobile-icon">
+			<svg width="74" height="74" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path
+					d="M49.9999 31.5C45.4999 33.5 41.9999 34.3928 36.4999 34C29.6789 33.5128 17.4999 20.5 11.9999 23.5C10.0178 24.5812 10.4999 28 13.4999 29.5C16.7248 31.1125 19.9999 31 22.9999 31.5"
+					stroke="white"
+					stroke-width="3"
+					stroke-linecap="round"
+				/>
+				<path
+					d="M22.9998 31.5C24.4998 32 25.4998 32.5 25.4998 34.5C25.4998 36.5 21.2842 38.8022 21.9998 40.5C22.536 41.7723 24.1997 42 24.4997 43.5C24.9997 46 22.4997 54.5 24.9998 56.5C27.4441 58.4555 32.3416 56.2689 33.4997 57.5C34.9109 59 31.9997 66 31.9997 66"
+					stroke="white"
+					stroke-width="3"
+					stroke-linecap="round"
+				/>
+				<path
+					d="M13.5 23C17 22.5 23.6676 22.7493 26 21C28 19.5 28.1146 10.7523 36 8.99999C45 6.99999 58.5 11.5 62 21C65.5 30.5 55.6767 46.1165 54.5 52C53.5 57 56.5 62 60 66"
+					stroke="white"
+					stroke-width="3"
+					stroke-linecap="round"
+				/>
+			</svg>
+		</span>
+		<ng-container *ngIf="isMenuVisible">
+			<div class="sort-btns">
+				<button class="active-orders grouped" routerLinkActive="active" [routerLink]="['/admin', 'active-orders']">
+					Активные заказы
+				</button>
+				<button
+					class="completed-orders grouped"
+					routerLinkActive="active"
+					[routerLink]="['/admin', 'completed-orders']"
+				>
+					Завершенные заказы
+				</button>
+				<button class="products grouped" routerLinkActive="active" [routerLink]="['/admin', 'products']">
+					Товары
+				</button>
+			</div>
+		</ng-container>
+		<app-mobile-menu-btn (onMenuClick)="toggleMenuVisibility()"></app-mobile-menu-btn>
 		<button class="add">Добавить</button>
 	</div>
 
