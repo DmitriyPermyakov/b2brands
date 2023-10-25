@@ -11,6 +11,10 @@
 .profile {
 }
 
+.profile-label {
+	display: none;
+}
+
 .profile:hover .body,
 .profile:hover .head {
 	fill: var(--outline);
@@ -24,4 +28,38 @@
 
 .logout:hover {
 	color: var(--main-text);
+}
+
+@media (max-width: 600px) {
+	.container {
+		flex-direction: column;
+		font-size: 5em;
+		position: static;
+	}
+
+	.icon {
+		display: inline;
+		width: 100%;
+		height: 100%;
+		color: var(--secondary-text);
+	}
+
+	.profile > svg {
+		display: none;
+	}
+
+	.profile {
+		padding: 1em;
+		font-family: inherit;
+		font-size: inherit;
+	}
+
+	.profile-label {
+		display: inline;
+	}
+
+	.logout {
+		margin: 0;
+		padding: 1em;
+	}
 }

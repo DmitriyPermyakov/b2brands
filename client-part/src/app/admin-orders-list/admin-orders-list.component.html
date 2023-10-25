@@ -1,6 +1,13 @@
 <section class="order-list-container">
-	<app-account-buttons></app-account-buttons>
-	<button class="add-mobile">Добавить</button>
+	<ng-container *ngIf="!isMobile">
+		<app-account-buttons></app-account-buttons>
+	</ng-container>
+	<button class="add-mobile icon">
+		<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M1 13H25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
+			<path d="M13 1L13 25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
+		</svg>
+	</button>
 	<div class="order-sort-btn">
 		<span class="mobile-icon">
 			<svg width="74" height="74" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -26,19 +33,33 @@
 		</span>
 		<ng-container *ngIf="isMenuVisible">
 			<div class="sort-btns">
-				<button class="active-orders grouped" routerLinkActive="active" [routerLink]="['/admin', 'active-orders']">
+				<button
+					class="active-orders grouped"
+					(click)="toggleMenuVisibility()"
+					routerLinkActive="active"
+					[routerLink]="['/admin', 'active-orders']"
+				>
 					Активные заказы
 				</button>
 				<button
 					class="completed-orders grouped"
+					(click)="toggleMenuVisibility()"
 					routerLinkActive="active"
 					[routerLink]="['/admin', 'completed-orders']"
 				>
 					Завершенные заказы
 				</button>
-				<button class="products grouped" routerLinkActive="active" [routerLink]="['/admin', 'products']">
+				<button
+					class="products grouped"
+					(click)="toggleMenuVisibility()"
+					routerLinkActive="active"
+					[routerLink]="['/admin', 'products']"
+				>
 					Товары
 				</button>
+				<ng-container *ngIf="isMobile">
+					<app-account-buttons></app-account-buttons>
+				</ng-container>
 			</div>
 		</ng-container>
 		<app-mobile-menu-btn (onMenuClick)="toggleMenuVisibility()"></app-mobile-menu-btn>

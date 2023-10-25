@@ -1,4 +1,5 @@
 import { Component } from '@angular/core'
+import { IsMobileService } from '../services/is-mobile.service'
 
 @Component({
 	selector: 'app-admin-orders-list',
@@ -7,8 +8,14 @@ import { Component } from '@angular/core'
 })
 export class AdminOrdersListComponent {
 	public isMenuVisible: boolean = false
+	public isMobile: boolean
+
+	constructor(private isMobileService: IsMobileService) {
+		this.isMobile = this.isMobileService.isMobile
+		this.isMenuVisible = !this.isMobile
+	}
 
 	public toggleMenuVisibility() {
-		this.isMenuVisible = !this.isMenuVisible
+		if (this.isMobile) this.isMenuVisible = !this.isMenuVisible
 	}
 }
