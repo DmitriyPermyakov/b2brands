@@ -127,15 +127,15 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 			color: this.productColor,
 			printType: this._selectedPrint,
 			price: this.product.newPrice,
-			amount: this.productAmount,
+			amount: this.productCardForm.get('amount').value,
 			status: 'В заказе',
 			comment:
 				'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero itaque, ullam tenetur consequatur perspiciatis reiciendis in officia maiores? Adipisci facilis animi architecto voluptatum sapiente, dicta molestias delectus possimus nulla voluptas!',
 		}
 		console.log('order', orderItem)
 
-		// this.store.dispatch(addOrderItemAction({ orderItem }))
-		// this.checkAmoutOfOrderItems()
+		this.store.dispatch(addOrderItemAction({ orderItem }))
+		this.checkAmoutOfOrderItems()
 	}
 
 	public onColorChanged(event: IProductColor) {
@@ -201,6 +201,7 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 			oldPrice: [{ value: '', disabled: !this.isEdit }],
 			description: [{ value: '', disabled: !this.isEdit }],
 			colors: [{ value: '', disabled: false }],
+			amount: [{ value: '', disabled: false }],
 			prints: '',
 			properties: '',
 		})
@@ -215,6 +216,7 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 			oldPrice: this.product.oldPrice,
 			description: this.product.description,
 			colors: this.product.productColors,
+			amount: 5,
 			prints: this.product.print,
 			properties: this.product.productProps,
 		})

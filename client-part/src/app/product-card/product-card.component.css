@@ -297,7 +297,7 @@ input {
 	height: 100%;
 }
 
-.dot {
+.icon > .dot {
 	width: 20%;
 	height: 20%;
 	position: absolute;
@@ -309,7 +309,7 @@ input {
 }
 
 .dot circle {
-	fill: var(--outline);
+	fill: #ff0000;
 }
 
 .hidden {
@@ -397,8 +397,16 @@ input {
 		z-index: 1;
 	}
 
-	.dot circle {
-		fill: #ff1010;
+	.cart-button {
+		width: 40px;
+		height: 40px;
+		position: relative;
+	}
+
+	.button {
+		display: block;
+		width: 100%;
+		height: 100%;
 	}
 
 	.arrow-back-icon {
@@ -407,18 +415,11 @@ input {
 
 		position: relative;
 	}
+
 	.arrow-back-icon svg {
 		display: inline-block;
 		width: 100%;
 		height: 100%;
-	}
-
-	.cart-button {
-		width: 40px;
-		height: 40px;
-		position: relative;
-		top: 0;
-		left: 0;
 	}
 
 	.product-card {
@@ -524,10 +525,6 @@ input {
 		grid-column: 2 / 3;
 		grid-row: 1 / 2;
 		display: block;
-	}
-
-	.button {
-		position: static;
 	}
 
 	.edit {
