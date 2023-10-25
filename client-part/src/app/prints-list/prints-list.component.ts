@@ -1,7 +1,18 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core'
+import {
+	AfterViewInit,
+	ChangeDetectorRef,
+	Component,
+	ElementRef,
+	EventEmitter,
+	Input,
+	OnDestroy,
+	Output,
+	ViewChild,
+} from '@angular/core'
 import { FormControl } from '@angular/forms'
 import { Scroller } from '../classes/scroller'
 import { Subscription } from 'rxjs'
+import { IsMobileService } from '../services/is-mobile.service'
 
 @Component({
 	selector: 'app-prints-list',
@@ -15,18 +26,24 @@ export class PrintsListComponent implements AfterViewInit, OnDestroy {
 	@ViewChild('printInput') input: ElementRef
 
 	public isInputVisible: boolean = false
+	@Output() onPrintChanged: EventEmitter<string> = new EventEmitter<string>()
 
 	private scroller: Scroller
 	private scrollSub: Subscription
 	public isMobile: boolean = true
-	constructor(private ref: ChangeDetectorRef) {}
+	constructor(private ref: ChangeDetectorRef, private mobileService: IsMobileService) {
+		this.isMobile = this.mobileService.isMobile
+	}
 
 	ngAfterViewInit(): void {
 		if (!this.isMobile) {
 			this.setAttributes()
 			if (this.printsControl.value.length > 0) this.setScroller()
+		} else {
+			this.emitPrintValue(0)
 		}
 	}
+
 	ngOnDestroy(): void {
 		if (this.scrollSub) this.scrollSub.unsubscribe()
 	}
@@ -62,6 +79,10 @@ export class PrintsListComponent implements AfterViewInit, OnDestroy {
 		} else this.isInputVisible = false
 	}
 
+	public changePrint(event) {
+		this.onPrintChanged.emit(event.target.value)
+	}
+
 	public toggleInputVisibility() {
 		if (this.isInputVisible === true) {
 			this.input.nativeElement.value = ''
@@ -81,8 +102,16 @@ export class PrintsListComponent implements AfterViewInit, OnDestroy {
 		this.scroller = new Scroller(this.printsControl.value.length, this.printsRef, 'type-of-print')
 
 		this.scroller.initScroller(this.printsControl.value.length)
+		this.emitPrintValue(this.scroller.Selected)
+
 		this.scrollSub = this.scroller.scroll$.subscribe((e: WheelEvent) => {
-			this.scroller.onScroll(e)
+			let index = this.scroller.onScroll(e)
+			this.emitPrintValue(index)
 		})
+	}
+
+	private emitPrintValue(index): void {
+		let selectedPrint: string = this.printsControl.value[index]
+		this.onPrintChanged.emit(selectedPrint)
 	}
 }

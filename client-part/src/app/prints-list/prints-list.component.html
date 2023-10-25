@@ -46,7 +46,7 @@
 </ng-container>
 
 <ng-container *ngIf="isMobile && !editable">
-	<select class="print-select" name="prints" id="prints">
+	<select class="print-select" name="prints" id="prints" (change)="changePrint($event)">
 		<option class="print-select-item" value="{{ p }}" *ngFor="let p of printsControl.value">{{ p }}</option>
 	</select>
 </ng-container>

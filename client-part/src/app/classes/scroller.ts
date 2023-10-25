@@ -29,6 +29,10 @@ export class Scroller {
 		this._selected = Math.trunc(countOfElements / 2)
 	}
 
+	public get Selected() {
+		return this._selected
+	}
+
 	private set ScrollingClass(value: string) {
 		if (value === '' || value === null || value === undefined) {
 			console.error('scrolling class not setted')
@@ -132,15 +136,20 @@ export class Scroller {
 
 	//#endregion end setting classes
 
-	public onScroll(event: WheelEvent) {
-		if (this._countOfElements < 2) return
+	public onScroll(event: WheelEvent): number {
+		if (this._countOfElements < 1) return -1
+		if (this._countOfElements < 2) return 0
 		if (event.deltaY < 0) {
 			this.onScrollUp()
+			return this._selected
 		}
 
 		if (event.deltaY > 0) {
 			this.onScrollDown()
+			return this._selected
 		}
+
+		return -1
 	}
 
 	public onScrollUp() {

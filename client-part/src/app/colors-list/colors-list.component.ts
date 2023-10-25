@@ -16,6 +16,7 @@ import { FormControl } from '@angular/forms'
 import { Scroller } from '../classes/scroller'
 import { Subscription } from 'rxjs'
 import { IProductColor } from '../interfaces/productColor.interface'
+import { IsMobileService } from '../services/is-mobile.service'
 
 @Component({
 	selector: 'app-colors-list',
@@ -35,7 +36,9 @@ export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	private isMobile: boolean = true
 
-	constructor(private ref: ChangeDetectorRef) {}
+	constructor(private ref: ChangeDetectorRef, private mobileService: IsMobileService) {
+		this.isMobile = this.mobileService.isMobile
+	}
 	ngOnInit(): void {}
 
 	ngAfterViewInit(): void {

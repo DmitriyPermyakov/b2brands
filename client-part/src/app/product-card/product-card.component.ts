@@ -11,6 +11,7 @@ import { orderItemSelector } from '../store/orders/order-item.selector'
 import { OrderItem } from '../interfaces/orderItem.interface'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { AuthService } from '../services/auth.service'
+import { IsMobileService } from '../services/is-mobile.service'
 
 @Component({
 	selector: 'app-product-card',
@@ -40,6 +41,7 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 
 	public isEdit: boolean = false
 	public isAdding: boolean = false
+	public isMobile: boolean = false
 
 	public cartIconDotActive: boolean = false
 
@@ -48,8 +50,7 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 
 	public prints!: string[]
 
-	private selectedPrintIndex: number = 0
-
+	private _selectedPrint: string
 	private activeMobilePanel: HTMLElement
 	private activeMobileButton: HTMLElement
 
@@ -66,8 +67,11 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 		private activatedRoute: ActivatedRoute,
 		private store: Store,
 		private fb: FormBuilder,
+		private mobileService: IsMobileService,
 		public authService: AuthService
-	) {}
+	) {
+		this.isMobile = this.mobileService.isMobile
+	}
 
 	ngOnInit(): void {
 		this.initProductCardForm()
@@ -100,9 +104,12 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 	}
 
 	ngAfterViewInit() {
-		this.activeMobileButton = this.descriptionBtn.nativeElement
-		this.activeMobilePanel = this.descriptionPanel.nativeElement
-		console.log(this.activeMobilePanel)
+		if (this.isMobile) {
+			this.activeMobileButton = this.descriptionBtn.nativeElement
+			this.activeMobilePanel = this.descriptionPanel.nativeElement
+		}
+
+		console.log('print ref', this.printsRef)
 	}
 
 	ngOnDestroy(): void {
@@ -113,22 +120,22 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 	}
 
 	public addToCart() {
-		let print = this.getSelectedTypeOfPrint()
 		let orderItem: OrderItem = {
 			id: Math.random().toString(16),
 			name: this.product.name,
 			vendorCode: this.product.code,
-			color: this.productColor,
-			printType: print,
+			color: this.productCardForm.get('colors').value,
+			printType: this._selectedPrint,
 			price: this.product.newPrice,
 			amount: this.productAmount,
 			status: 'В заказе',
 			comment:
 				'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero itaque, ullam tenetur consequatur perspiciatis reiciendis in officia maiores? Adipisci facilis animi architecto voluptatum sapiente, dicta molestias delectus possimus nulla voluptas!',
 		}
+		console.log('order', orderItem)
 
-		this.store.dispatch(addOrderItemAction({ orderItem }))
-		this.checkAmoutOfOrderItems()
+		// this.store.dispatch(addOrderItemAction({ orderItem }))
+		// this.checkAmoutOfOrderItems()
 	}
 
 	public onColorChanged(value: number) {
@@ -161,6 +168,11 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 
 		this.activeMobilePanel = element
 		this.activeMobilePanel.classList.add('active-panel')
+	}
+
+	public setSelectedPrint(event) {
+		this._selectedPrint = event
+		console.log('selected print', event)
 	}
 
 	private enableFormControls() {
@@ -219,17 +231,5 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 
 	private checkAmoutOfOrderItems() {
 		this.amountOfOrdersSub = this.ordersItem$.subscribe((o) => (this.cartIconDotActive = o.length > 0))
-	}
-
-	private getSelectedTypeOfPrint(): string {
-		let children: HTMLCollection = this.printsRef.nativeElement.children
-		let print: string | undefined | null = Array.from(children).find((el) =>
-			el.classList.contains('selected')
-		)?.innerHTML
-
-		if (!print) {
-			print = ''
-		}
-		return print
 	}
 }
