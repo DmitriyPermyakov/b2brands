@@ -52,3 +52,20 @@
 .total-amount {
 	grid-column: 7 / 8;
 }
+
+@media (max-width: 600px) {
+	.titles {
+		display: none;
+	}
+
+	.container {
+		height: 100svh;
+		/* padding-top: 20em; */
+		padding-bottom: 0;
+	}
+
+	.active-orders-label {
+		padding: 1em 1em 0;
+		font-size: 5em;
+	}
+}
