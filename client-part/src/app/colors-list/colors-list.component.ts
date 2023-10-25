@@ -29,7 +29,7 @@ export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 	@Input() colorsControl: FormControl
 	@Input() editable: boolean
 
-	@Output() onColorChanged: EventEmitter<number> = new EventEmitter()
+	@Output() onColorChanged: EventEmitter<IProductColor> = new EventEmitter()
 	private scroller: Scroller
 	private scrollSub: Subscription
 	private selectedItemChangedSub: Subscription
@@ -46,11 +46,13 @@ export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 		if (!this.isMobile) {
 			if (this.colorsControl.value.length > 0) {
 				this.setScroller()
-				this.passSelectedColorIndex()
+				// this.passSelectedColorIndex()
+				this.emitSelectedColor(this.scroller.Selected)
 			}
 		} else {
 			if (this.colorsControl.value.length > 0) {
 				this.setSelected(0)
+				this.emitSelectedColor(0)
 			}
 		}
 	}
@@ -58,26 +60,28 @@ export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 	public previousColor() {
 		if (this.colorsControl.value.length < 2) return
 		this.scroller.onScrollUp()
-		this.passSelectedColorIndex()
+		// this.passSelectedColorIndex()
+		this.emitSelectedColor(this.scroller.Selected)
 	}
 
 	public nextColor() {
 		if (this.colorsControl.value.length < 2) return
 		this.scroller.onScrollDown()
-		this.passSelectedColorIndex()
+		// this.passSelectedColorIndex()
+		this.emitSelectedColor(this.scroller.Selected)
 	}
 
 	public showColorInput() {
 		this.colorInputRef.nativeElement.showPicker()
 	}
 
-	public selectColor(event: Event) {
+	public selectColor(event: Event, i: number) {
 		if (!this.isMobile) return
-		if ((event.target as HTMLElement).classList.contains('selected')) this.passSelectedColorIndex()
+		if ((event.target as HTMLElement).classList.contains('selected')) this.emitSelectedColor(i)
 		else {
 			this.getSelectedElement()?.classList.remove('selected')
 			;(event.target as HTMLElement).classList.add('selected')
-			this.passSelectedColorIndex()
+			this.emitSelectedColor(i)
 		}
 	}
 
@@ -101,10 +105,12 @@ export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 		if (!this.isMobile) {
 			if (this.colorsControl.value.length < 2) this.setScroller()
 			this.scroller.addItem(this.colorsControl.value.length)
+			this.emitSelectedColor(this.scroller.Selected)
 		} else {
 			this.getSelectedElement()?.classList.remove('selected')
 			this.setSelected(this.colorsControl.value.length - 1)
-			this.onColorChanged.emit(this.colorsControl.value.length - 1)
+			// this.onColorChanged.emit(this.colorsControl.value.length - 1)
+			this.emitSelectedColor(this.colorsControl.value.length - 1)
 		}
 	}
 
@@ -116,32 +122,41 @@ export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 	private setScroller() {
 		this.scroller = new Scroller(this.colorsControl.value.length, this.colorsRef, 'color')
 		this.scroller.initScroller(this.colorsControl.value.length)
+
+		this.emitSelectedColor(this.scroller.Selected)
+
 		this.scrollSub = this.scroller.scroll$.subscribe((e: WheelEvent) => {
-			this.scroller.onScroll(e)
-			this.passSelectedColorIndex()
+			let index = this.scroller.onScroll(e)
+			// this.passSelectedColorIndex()
+			this.emitSelectedColor(index)
 		})
 
 		this.selectedItemChangedSub = this.scroller.selectedItemChanged.subscribe(() => {
-			this.passSelectedColorIndex()
+			// this.passSelectedColorIndex()
+			this.emitSelectedColor(this.scroller.Selected)
 		})
 	}
 
-	private passSelectedColorIndex(): void {
-		let index = this.getSelectedColorIndex()
-		this.onColorChanged.emit(index)
+	private emitSelectedColor(index: number): void {
+		let selectedColor = this.colorsControl.value[index]
+		this.onColorChanged.emit(selectedColor)
 	}
+
+	// private passSelectedColorIndex(): void {
+	// 	let index = this.getSelectedColorIndex()
+	// 	this.onColorChanged.emit(index)
+	// }
 
 	private setSelected(index: number) {
 		this.colorsRef.nativeElement.children[index].classList.add('selected')
-		this.onColorChanged.emit(index)
 	}
 
-	private getSelectedColorIndex(): number {
-		let colorValue: string | undefined | null = this.getSelectedElement()?.getAttribute('data-value')
+	// private getSelectedColorIndex(): number {
+	// 	let colorValue: string | undefined | null = this.getSelectedElement()?.getAttribute('data-value')
 
-		let index = this.colorsControl.value.findIndex((el) => el.value === colorValue)
-		return index
-	}
+	// 	let index = this.colorsControl.value.findIndex((el) => el.value === colorValue)
+	// 	return index
+	// }
 
 	private getSelectedElement(): Element {
 		let children: HTMLAllCollection = this.colorsRef.nativeElement.children

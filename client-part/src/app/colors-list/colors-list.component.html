@@ -9,8 +9,8 @@
 		<div class="color-items" #colors>
 			<div
 				class="color"
-				*ngFor="let c of colorsControl.value"
-				(click)="selectColor($event)"
+				*ngFor="let c of colorsControl.value; index as i"
+				(click)="selectColor($event, i)"
 				[ngStyle]="{ 'background-color': c.value }"
 			>
 				<ng-container *ngIf="editable">

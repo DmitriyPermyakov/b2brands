@@ -1,7 +1,7 @@
 import { AfterContentInit, AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { Store, select } from '@ngrx/store'
-import { Subscription, Observable } from 'rxjs'
+import { Subscription, Observable, every } from 'rxjs'
 
 import { IProduct } from '../interfaces/product.interface'
 import { IProductColor } from '../interfaces/productColor.interface'
@@ -124,7 +124,7 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 			id: Math.random().toString(16),
 			name: this.product.name,
 			vendorCode: this.product.code,
-			color: this.productCardForm.get('colors').value,
+			color: this.productColor,
 			printType: this._selectedPrint,
 			price: this.product.newPrice,
 			amount: this.productAmount,
@@ -138,11 +138,12 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 		// this.checkAmoutOfOrderItems()
 	}
 
-	public onColorChanged(value: number) {
-		setTimeout(() => {
-			this.productColor = this.productColorsControl.value[value] as IProductColor
-			console.log('product color', this.productColor)
-		}, 0)
+	public onColorChanged(event: IProductColor) {
+		// setTimeout(() => {
+		// 	this.productColor = this.productColorsControl.value[value] as IProductColor
+		// 	console.log('product color', this.productColor)
+		// }, 0)
+		this.productColor = event
 	}
 
 	public quantityChanged(count: number) {
@@ -172,7 +173,6 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 
 	public setSelectedPrint(event) {
 		this._selectedPrint = event
-		console.log('selected print', event)
 	}
 
 	private enableFormControls() {
