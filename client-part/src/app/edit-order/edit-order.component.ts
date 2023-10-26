@@ -4,6 +4,7 @@ import { IProduct } from '../interfaces/product.interface'
 import { OrderItem } from '../interfaces/orderItem.interface'
 import { FormArray, FormBuilder, FormControl, FormGroup, isFormArray } from '@angular/forms'
 import { Subscription } from 'rxjs'
+import { IsMobileService } from '../services/is-mobile.service'
 
 @Component({
 	selector: 'app-edit-order',
@@ -17,6 +18,7 @@ export class EditOrderComponent implements OnInit {
 	public form: FormGroup
 	public count: number = 0
 	public totalPrice: number = 0
+	public isMobile: boolean = false
 
 	public get orderItems(): FormArray {
 		return this.form.controls['orderItems'] as FormArray
@@ -24,7 +26,13 @@ export class EditOrderComponent implements OnInit {
 
 	private formArrayChangeSubscription: Subscription
 
-	constructor(private fb: FormBuilder, private changeDetectorRef: ChangeDetectorRef) {}
+	constructor(
+		private fb: FormBuilder,
+		private changeDetectorRef: ChangeDetectorRef,
+		private mobileService: IsMobileService
+	) {
+		this.isMobile = this.mobileService.isMobile
+	}
 
 	ngOnInit(): void {
 		this.order = JSON.parse(localStorage.getItem('client-order')) as ClientOrder

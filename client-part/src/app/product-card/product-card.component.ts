@@ -1,5 +1,5 @@
 import { AfterContentInit, AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { Store, select } from '@ngrx/store'
 import { Subscription, Observable, every } from 'rxjs'
 
@@ -75,8 +75,9 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 
 	ngOnInit(): void {
 		this.initProductCardForm()
+		// let id = this.activatedRoute.snapshot.paramMap.get('id')
+		let id = this.activatedRoute.snapshot.params['id']
 
-		let id = this.activatedRoute.snapshot.paramMap.get('id')
 		if (id === 'new') {
 			this.isAdding = true
 			this.isEdit = true
@@ -91,7 +92,7 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 			else this.product = null
 		})
 
-		this.checkLocalStorageOnCurrentProduct()
+		// this.checkLocalStorageOnCurrentProduct()
 
 		this.setProductCardFormValues()
 		this.ordersItem$ = this.store.pipe(select(orderItemSelector))
@@ -225,7 +226,7 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 	private checkLocalStorageOnCurrentProduct() {
 		if (this.product === null) {
 			this.product = JSON.parse(localStorage.getItem('currentProduct'))
-			console.log(this.product)
+			console.log('product from local storage', this.product)
 		} else {
 			localStorage.setItem('currentProduct', JSON.stringify(this.product))
 		}
