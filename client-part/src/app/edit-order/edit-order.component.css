@@ -328,6 +328,7 @@ button:disabled {
 @media (max-width: 600px) {
 	.container {
 		padding: 20em 0 0;
+		height: unset;
 	}
 	.navigation-btns {
 		width: 100vw;
@@ -353,7 +354,7 @@ button:disabled {
 
 	.general-info {
 		grid-template-columns: 1fr;
-		grid-template-rows: auto auto auto auto auto;
+		grid-template-rows: 25% 10% 15% 30% 20%;
 		justify-items: start;
 		/* row-gap: 1em; */
 		margin: 1em;
@@ -370,10 +371,17 @@ button:disabled {
 
 	.contacts {
 		grid-row: 1 / 2;
+		align-self: self-start;
 
 		display: grid;
 		grid-template-rows: 1fr 1fr 1fr;
 		grid-template-columns: 1fr;
+
+		/* height: 100%; */
+	}
+
+	.contacts input {
+		padding: 0;
 	}
 
 	.name {
@@ -391,6 +399,7 @@ button:disabled {
 
 	.status {
 		grid-row: 2 / 3;
+		padding: 0.2em 0;
 	}
 
 	.dates {
@@ -425,7 +434,7 @@ button:disabled {
 
 	.dates > input {
 		margin: 0;
-		padding: 0.2em;
+		padding: 0;
 	}
 
 	.comment {
@@ -471,6 +480,7 @@ button:disabled {
 	.save-cancel-btns {
 		grid-row: 2 / 3;
 		grid-column: 1 / span 2;
+		justify-self: center;
 	}
 
 	.edit-icon,
@@ -493,6 +503,18 @@ button:disabled {
 	}
 
 	.general-info.edit {
-		padding: 1em 2em;
+		grid-template-rows: 25% 10% 15% 25% 25%;
+		padding: 2em 1em;
+	}
+
+	.position-item-info {
+		margin: 1em;
+		font-size: 5em;
+		height: unset;
+	}
+
+	.item-container {
+		padding-bottom: 1.8em;
+		overflow: unset;
 	}
 }

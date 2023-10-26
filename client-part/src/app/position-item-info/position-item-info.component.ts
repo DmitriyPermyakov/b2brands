@@ -4,6 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms'
 import { IProduct } from '../interfaces/product.interface'
 import { ProductsService } from '../services/products.service'
 import { Subscription } from 'rxjs'
+import { IsMobileService } from '../services/is-mobile.service'
 
 @Component({
 	selector: 'app-position-item-info',
@@ -18,11 +19,18 @@ export class PositionItemInfoComponent implements OnInit {
 
 	public product: IProduct
 	public editable: boolean = false
+	public isMobile: boolean = false
 	public initialForm: FormGroup
 	public price: number
 	private amountChangeSubscription: Subscription
 
-	constructor(private productsService: ProductsService, private changeDetectorRef: ChangeDetectorRef) {}
+	constructor(
+		private mobileService: IsMobileService,
+		private productsService: ProductsService,
+		private changeDetectorRef: ChangeDetectorRef
+	) {
+		this.isMobile = this.mobileService.isMobile
+	}
 	ngOnInit(): void {
 		this.disableFormControls()
 		this.initialForm = this.initResetForm(this.item)
