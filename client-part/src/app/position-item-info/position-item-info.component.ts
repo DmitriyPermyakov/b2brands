@@ -1,4 +1,13 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import {
+	ChangeDetectorRef,
+	Component,
+	EventEmitter,
+	Input,
+	OnChanges,
+	OnInit,
+	Output,
+	SimpleChanges,
+} from '@angular/core'
 import { FormControl, FormGroup } from '@angular/forms'
 
 import { IProduct } from '../interfaces/product.interface'
@@ -11,8 +20,9 @@ import { IsMobileService } from '../services/is-mobile.service'
 	templateUrl: './position-item-info.component.html',
 	styleUrls: ['./position-item-info.component.css'],
 })
-export class PositionItemInfoComponent implements OnInit {
+export class PositionItemInfoComponent implements OnInit, OnChanges {
 	@Input() item
+	@Input() enableControls: boolean
 	@Input() itemLength: number
 	@Input() index: number
 	@Output() onRemoveItem: EventEmitter<number> = new EventEmitter()
@@ -40,10 +50,19 @@ export class PositionItemInfoComponent implements OnInit {
 		})
 	}
 
+	ngOnChanges(changes: SimpleChanges): void {
+		if (this.isMobile && changes['enableControls'].currentValue === true) {
+			this.edit()
+		} else if (this.isMobile && changes['enableControls'].currentValue !== true) {
+			this.disableFormControls()
+		}
+	}
+
 	onSubmit(value) {
 		this.disableFormControls()
 	}
 
+	//это из-за edit
 	edit(): void {
 		this.productsService.getByVendor(this.item.get('vendor').value).subscribe((p) => {
 			this.product = p

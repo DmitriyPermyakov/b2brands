@@ -155,6 +155,7 @@
 					[item]="item"
 					[index]="i"
 					[itemLength]="orderItems.controls.length"
+					[enableControls]="editable"
 					(onRemoveItem)="removeItem($event)"
 				></app-position-item-info>
 				<button class="add-item-btn icon" *ngIf="editable" (click)="showProductModal()">

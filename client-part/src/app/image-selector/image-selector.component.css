@@ -63,3 +63,12 @@
 	outline: 1px solid var(--secondary-text);
 	border-radius: 3px;
 }
+
+@media (max-width: 600px) {
+	.item-image {
+		width: 90%;
+		height: 50%;
+		margin-left: 1px;
+		margin-top: 2em;
+	}
+}

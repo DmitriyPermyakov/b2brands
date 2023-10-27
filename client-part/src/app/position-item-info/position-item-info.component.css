@@ -321,6 +321,10 @@ textarea::-webkit-scrollbar {
 		position: relative;
 	}
 
+	.item.edit {
+		row-gap: 1em;
+	}
+
 	.item::after {
 		width: 20em;
 		transform: unset;
@@ -346,6 +350,11 @@ textarea::-webkit-scrollbar {
 		column-gap: 0.2em;
 
 		align-items: baseline;
+	}
+
+	.item-info select {
+		max-width: 67%;
+		text-overflow: ellipsis;
 	}
 
 	.resizable-part {
