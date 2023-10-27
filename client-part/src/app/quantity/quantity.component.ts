@@ -79,6 +79,7 @@ export class QuantityComponent implements OnInit, ControlValueAccessor, AfterCon
 	}
 	setDisabledState(isDisabled: boolean): void {
 		this._disabled = isDisabled
+		this.quantityString = this.value + this.postfix
 	}
 
 	increase() {

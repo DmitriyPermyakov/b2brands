@@ -118,5 +118,6 @@ export class PositionItemInfoComponent implements OnInit, OnChanges {
 	private disableFormControls() {
 		this.editable = false
 		Object.keys(this.item.controls).forEach((c) => this.item.get(c).disable())
+		this.changeDetectorRef.detectChanges()
 	}
 }
