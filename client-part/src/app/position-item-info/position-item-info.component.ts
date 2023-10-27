@@ -51,10 +51,14 @@ export class PositionItemInfoComponent implements OnInit, OnChanges {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (this.isMobile && changes['enableControls'].currentValue === true) {
-			this.edit()
-		} else if (this.isMobile && changes['enableControls'].currentValue !== true) {
-			this.disableFormControls()
+		if (this.item) {
+			if (this.isMobile && changes['enableControls'].currentValue) {
+				this.edit()
+			} else if (this.isMobile && !changes['enableControls'].currentValue) {
+				if (this.initialForm) {
+					this.cancel()
+				}
+			}
 		}
 	}
 
@@ -62,7 +66,6 @@ export class PositionItemInfoComponent implements OnInit, OnChanges {
 		this.disableFormControls()
 	}
 
-	//это из-за edit
 	edit(): void {
 		this.productsService.getByVendor(this.item.get('vendor').value).subscribe((p) => {
 			this.product = p
@@ -118,6 +121,5 @@ export class PositionItemInfoComponent implements OnInit, OnChanges {
 	private disableFormControls() {
 		this.editable = false
 		Object.keys(this.item.controls).forEach((c) => this.item.get(c).disable())
-		this.changeDetectorRef.detectChanges()
 	}
 }
