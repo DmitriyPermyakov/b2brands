@@ -193,8 +193,7 @@
 		grid-column: 3 / 4;
 		grid-row: 2 / 3;
 		margin-right: 7em;
-
-		font-size: 0.6em;
+		vertical-align: baseline;
 	}
 
 	.order-number {
@@ -254,7 +253,7 @@
 	.order-price {
 		grid-column: 2 / 3;
 		grid-row: 2 / 3;
-		align-self: end;
+		align-self: center;
 
 		margin: 0 0 0 0.6em;
 		font-size: 3.5em;

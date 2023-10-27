@@ -2,7 +2,7 @@
 	<p class="order-number">1/2</p>
 	<img class="order-image" [src]="productItem.color.rightSmallUrl" alt="" />
 	<div class="count-of-items">
-		<app-quantity [value]="productItem.amount"></app-quantity>
+		<app-quantity [value]="productItem.amount" [postfix]="'шт.'"></app-quantity>
 	</div>
 	<div class="order-description">
 		<label class="name-label" for="name">Название:</label>
@@ -43,28 +43,28 @@
 	<p class="order-number">1/2</p>
 	<img class="order-image" src="../../assets/caps/left.png" alt="" />
 	<div class="count-of-items">
-		<app-quantity></app-quantity>
+		<app-quantity [value]="productItem.amount" [postfix]="'шт.'"></app-quantity>
 	</div>
 	<div class="order-description">
 		<label class="name-label" for="name">Название:</label>
-		<span class="product-name" id="name">Бейсболка промо</span>
+		<span class="product-name" id="name">{{ productItem.name }}</span>
 
 		<label class="vendor-code-label" for="vendor-code-label">Артикул:</label>
-		<span class="product-vendor-code" id="vendor-code">Б100-320К</span>
+		<span class="product-vendor-code" id="vendor-code">{{ productItem.vendorCode }}</span>
 
 		<label class="print-label" for="print-label">Нанесение:</label>
-		<span class="product-print" id="print">Вышивка</span>
+		<span class="product-print" id="print">{{ productItem.printType }}</span>
 
 		<label class="status-label" for="status">Статус:</label>
-		<span class="status" id="status">В заказе</span>
+		<span class="status" id="status">{{ productItem.status }}</span>
 	</div>
 
 	<div class="order-price">
 		<label for="price">Цена:</label>
-		<span class="price" id="price">2048р.</span>
+		<span class="price" id="price">{{ productItem.price * productItem.amount }}p.</span>
 	</div>
 
-	<div class="remove-icon">
+	<div class="remove-icon" (click)="removeItem()">
 		<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M11 15.0823L14.4498 37.1309C14.6021 38.1043 15.4405 38.8218 16.4258 38.8218H31.5747C32.5599 38.8218 33.3983 38.1043 33.5506 37.1309L37.0004 15.0823"

@@ -156,3 +156,24 @@
 	color: var(--main-text);
 	border-color: var(--outline);
 }
+
+@media (max-width: 600px) {
+	.add-order-item-container {
+		font-size: 3em;
+		padding: 15em 0;
+		align-items: flex-start;
+	}
+
+	.close {
+		font-size: 1.5em;
+	}
+
+	.search input {
+		font-size: 1.1em;
+		border-radius: 5px;
+	}
+
+	.product {
+		border-radius: 5px;
+	}
+}

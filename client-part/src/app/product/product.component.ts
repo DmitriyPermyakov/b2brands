@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, Input, ViewChild } from '@angular/core'
 import { Router } from '@angular/router'
+import { IProduct } from '../interfaces/product.interface'
 
 @Component({
 	selector: 'app-product',
@@ -7,7 +8,7 @@ import { Router } from '@angular/router'
 	styleUrls: ['./product.component.css'],
 })
 export class ProductComponent {
-	@Input() public product: any
+	@Input() public product: IProduct
 	@Input() public index: number = 0
 
 	public colorIndex: number = 6

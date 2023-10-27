@@ -159,7 +159,17 @@
 	align-self: flex-end;
 }
 
-.close-form-button {
+.icon {
+	width: 1.5em;
+	height: 1.5em;
+	transform: rotate(45deg);
+
+	position: absolute;
+	top: 4%;
+	right: 7%;
+}
+
+/* .close-form-button {
 	display: inline-block;
 
 	width: 1.5em;
@@ -181,7 +191,7 @@
 
 .close-form-button:hover svg * {
 	stroke: var(--outline);
-}
+} */
 
 .arrow-back-icon {
 	width: 100%;
@@ -261,9 +271,12 @@ button:disabled:hover {
 }
 
 @media (max-width: 600px) {
+	.client-orders {
+		height: 100svh;
+	}
 	.orders {
 		margin: 0;
-		padding: 21em 5em 1em;
+		padding: 21em 5em 30em;
 	}
 
 	.orders-title {
@@ -330,7 +343,14 @@ button:disabled:hover {
 	}
 	.approve-order {
 		font-size: 5em;
-		bottom: 3em;
-		right: 3em;
+		bottom: 2em;
+		right: 25%;
+	}
+
+	.icon {
+		width: 7rem;
+		height: 7rem;
+		top: 1em;
+		right: 1em;
 	}
 }
