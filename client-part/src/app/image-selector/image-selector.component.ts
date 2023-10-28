@@ -57,10 +57,14 @@ export class ImageSelectorComponent implements ControlValueAccessor {
 		if (!this.disabled) this.showImage = true
 	}
 
+	hideImage(): void {
+		this.showImage = false
+	}
+
 	setImage(color: IProductColor): void {
+		this.showImage = false
 		this.markAsTouched()
 		this.value = color
-		this.showImage = false
 		this.onChange(this.value)
 	}
 

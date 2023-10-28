@@ -38,8 +38,9 @@ import { InputWidthDirective } from './directives/input-width/input-width.direct
 import { ColorsListComponent } from './colors-list/colors-list.component'
 import { PrintsListComponent } from './prints-list/prints-list.component'
 import { ImageBlockComponent } from './image-block/image-block.component'
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http'
 import { MobileMenuBtnComponent } from './mobile-menu-btn/mobile-menu-btn.component'
+import { ClickOutsideDirective } from './directives/click-outside.directive'
 
 @NgModule({
 	declarations: [
@@ -72,7 +73,8 @@ import { MobileMenuBtnComponent } from './mobile-menu-btn/mobile-menu-btn.compon
 		ColorsListComponent,
 		PrintsListComponent,
 		ImageBlockComponent,
-  MobileMenuBtnComponent,
+		MobileMenuBtnComponent,
+		ClickOutsideDirective,
 	],
 	imports: [
 		BrowserModule,
