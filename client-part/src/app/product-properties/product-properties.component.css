@@ -12,9 +12,11 @@
 .remove {
 	display: none;
 	grid-column: 3 / 4;
+	width: 1.5em;
+	height: 1.5em;
 	position: absolute;
-	top: -11px;
-	right: -45px;
+	top: -1px;
+	right: -22px;
 }
 
 .empty-property {

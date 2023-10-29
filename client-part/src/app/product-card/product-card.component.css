@@ -40,7 +40,8 @@
 	padding: 3.75em 3em 3.75em 5.5em;
 
 	width: 95%;
-	height: 80vh;
+	height: 100%;
+	min-height: 80vh;
 
 	background-color: var(--card);
 	border-radius: 10px;
@@ -99,6 +100,7 @@ input {
 	display: grid;
 	grid-template-columns: 1fr;
 	grid-template-rows: auto auto;
+	grid-row: 1em;
 
 	align-content: space-around;
 	align-items: center;
@@ -137,6 +139,7 @@ input {
 	grid-row: 2 / 3;
 	display: block;
 	width: 100%;
+	height: 100%;
 }
 
 .images {
@@ -239,13 +242,13 @@ input {
 
 .btn {
 	display: inline;
-	padding: 0.8em 3.5em;
+	padding: 0.8em 3em;
 
-	max-width: 11.25em;
+	width: 11em;
 	max-height: 2.8em;
 
 	font-family: inherit;
-	font-size: 1em;
+	font-size: 0.9em;
 	color: var(--secondary-text);
 
 	background-color: transparent;
@@ -287,8 +290,8 @@ input {
 }
 
 .back {
-	width: 2.19rem;
-	height: 2.19rem;
+	width: 1.5rem;
+	height: 1.5rem;
 	top: 3px;
 }
 

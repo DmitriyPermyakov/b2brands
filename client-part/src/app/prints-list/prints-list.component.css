@@ -44,14 +44,17 @@
 }
 
 .type-of-print.selected:hover {
-	text-shadow: 0px 0px 2px var(--main-text);
+	font-weight: bold;
 }
 
 .remove {
 	display: none;
 	position: absolute;
-	top: -6px;
-	right: -44px;
+
+	width: 1.5em;
+	height: 1.5em;
+	top: 0px;
+	right: -22px;
 }
 
 .type-of-print.selected:hover > .remove {

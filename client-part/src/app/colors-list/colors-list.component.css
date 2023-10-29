@@ -22,6 +22,10 @@
 	cursor: pointer;
 }
 
+.color-btn * {
+	stroke: var(--secondary-text);
+}
+
 .previous-color {
 	grid-column: 1 / 2;
 	grid-row: 1 / 2;
