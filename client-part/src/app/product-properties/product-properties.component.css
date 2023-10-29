@@ -166,4 +166,8 @@ input {
 		top: -2px;
 		right: -47px;
 	}
+
+	.empty-property {
+		font-size: 5em;
+	}
 }

@@ -10,6 +10,7 @@ import { AdminOrdersListComponent } from './admin-orders-list/admin-orders-list.
 import { ListContainerComponent } from './list-container/list-container.component'
 import { EditOrderComponent } from './edit-order/edit-order.component'
 import { authGuard } from './guards/auth.guard'
+import { ProductComponent } from './product/product.component'
 
 const routes: Routes = [
 	{ path: '', component: MainPageComponent },
@@ -24,7 +25,7 @@ const routes: Routes = [
 		children: [
 			{ path: 'active-orders', component: ListContainerComponent },
 			{ path: 'completed-orders', component: ListContainerComponent },
-			{ path: 'products', component: ListContainerComponent },
+			{ path: 'products', component: ProductListComponent },
 		],
 	},
 	{ path: 'admin/orders/:id', component: EditOrderComponent },

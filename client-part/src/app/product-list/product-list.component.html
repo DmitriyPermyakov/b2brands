@@ -1,18 +1,27 @@
-<section class="client-product-list">
-	<div class="product-list" *ngIf="products$ | async">
-		<nav class="product-nav-bar">
-			<button class="arrow-back-icon icon" [routerLink]="['']">
-				<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path
-						d="M20 3L5.2901 18.6293C4.5653 19.3994 4.5653 20.6006 5.2901 21.3707L20 37"
-						stroke="#A2A2A2"
-						stroke-width="3"
-						stroke-linecap="round"
-					/>
-					<path d="M6 20H36" stroke="#A2A2A2" stroke-width="3" stroke-linecap="round" />
-				</svg>
-			</button>
-		</nav>
+<section class="client-product-list" [ngClass]="{ 'auth-desktop': auth.IsAuthenticated && !mobileService.isMobile }">
+	<div
+		class="product-list"
+		*ngIf="products$ | async"
+		[ngClass]="{
+			'auth-desktop': auth.IsAuthenticated && !mobileService.isMobile,
+			'auth-mobile': auth.IsAuthenticated && mobileService.isMobile
+		}"
+	>
+		<ng-container *ngIf="!auth.IsAuthenticated">
+			<nav class="product-nav-bar">
+				<button class="arrow-back-icon icon" [routerLink]="['']">
+					<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path
+							d="M20 3L5.2901 18.6293C4.5653 19.3994 4.5653 20.6006 5.2901 21.3707L20 37"
+							stroke="#A2A2A2"
+							stroke-width="3"
+							stroke-linecap="round"
+						/>
+						<path d="M6 20H36" stroke="#A2A2A2" stroke-width="3" stroke-linecap="round" />
+					</svg>
+				</button>
+			</nav>
+		</ng-container>
 		<p class="product-list-title">Список товаров:</p>
 		<app-product *ngFor="let p of products$ | async; index as i" [product]="p" [index]="i"></app-product>
 		<!-- <div class="loading-icon">

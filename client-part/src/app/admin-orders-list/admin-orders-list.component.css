@@ -118,6 +118,7 @@ button:hover {
 	.order-list-container {
 		padding: 20em 0 0;
 	}
+
 	.order-sort-btn {
 		display: flex;
 		flex-direction: row;
@@ -128,15 +129,16 @@ button:hover {
 		height: 20em;
 		width: 100vw;
 		background-color: var(--background);
-		/* box-shadow: 0 0 20px 1px var(--dark-shadow); */
+		box-shadow: 0 0 20px 1px var(--dark-shadow);
 
 		position: absolute;
 		top: 0;
 		left: 0;
-		z-index: 0;
+		transform-style: preserve-3d;
+		z-index: 1;
 	}
 
-	.order-sort-btn::after {
+	/* .order-sort-btn::after {
 		content: '';
 		box-shadow: 0 0 10px 1px var(--dark-shadow);
 		height: 100%;
@@ -145,7 +147,7 @@ button:hover {
 		left: 0px;
 		top: 0px;
 		z-index: -1;
-	}
+	} */
 
 	.sort-btns {
 		display: flex;
@@ -153,12 +155,13 @@ button:hover {
 
 		width: 90vw;
 		background-color: var(--background);
-		box-shadow: none;
+		box-shadow: 0 0 10px 1px var(--dark-shadow);
 		border-top-left-radius: 0;
 		position: absolute;
 		top: 20em;
 		right: 0;
-		z-index: -2;
+		transform: translateZ(-10px);
+		/* z-index: -2; */
 	}
 
 	button {
@@ -193,6 +196,7 @@ button:hover {
 		position: absolute;
 		right: 0;
 		bottom: 0;
+		z-index: 1;
 	}
 
 	.add-mobile:first-child {

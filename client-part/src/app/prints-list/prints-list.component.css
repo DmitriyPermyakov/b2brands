@@ -168,6 +168,10 @@
 		height: 7rem;
 	}
 
+	.add.icon.showed {
+		margin-top: 2em;
+	}
+
 	.print-select {
 		padding: 0.5em 1em;
 		width: 100%;
@@ -217,6 +221,7 @@
 	}
 
 	.input-container input {
+		margin-top: 1em;
 		margin-bottom: 0.5em;
 		font-size: 5rem;
 		border-radius: 5px;

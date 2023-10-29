@@ -47,7 +47,16 @@
 	z-index: 1;
 }
 
-.arrow-back-icon {
+.client-product-list.auth-desktop {
+	margin-top: 2em;
+}
+
+.product-list.auth-desktop {
+	padding: 0 2em;
+}
+
+.product-list.auth-mobile {
+	padding-top: 0;
 }
 
 @media (max-width: 600px) {

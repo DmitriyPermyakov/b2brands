@@ -14,11 +14,13 @@
 .container::-webkit-scrollbar-corner {
 	display: none;
 }
+
 .container {
 	display: block;
 	height: 90%;
 	overflow: scroll;
 }
+
 .titles {
 	display: grid;
 	grid-template-columns: 1fr 3fr 2fr 2fr 2fr 6fr 2fr 1fr;
@@ -31,6 +33,10 @@
 
 .contacts {
 	grid-column: 2 / 3;
+}
+
+.active-orders-label {
+	margin: 0 2em;
 }
 
 .date-of-creation {

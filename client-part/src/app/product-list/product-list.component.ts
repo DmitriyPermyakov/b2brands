@@ -4,6 +4,8 @@ import { Store, select } from '@ngrx/store'
 import { Observable, Subscription } from 'rxjs'
 import { productSelector } from '../store/products/products.selector'
 import { gettingProductAction } from '../store/products/products.action'
+import { AuthService } from '../services/auth.service'
+import { IsMobileService } from '../services/is-mobile.service'
 
 @Component({
 	selector: 'app-product-list',
@@ -13,7 +15,7 @@ import { gettingProductAction } from '../store/products/products.action'
 export class ProductListComponent implements OnInit {
 	products$: Observable<ReadonlyArray<IProduct>>
 
-	constructor(private store: Store) {
+	constructor(private store: Store, public auth: AuthService, public mobileService: IsMobileService) {
 		this.store.dispatch(gettingProductAction())
 	}
 
