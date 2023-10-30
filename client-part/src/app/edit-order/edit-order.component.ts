@@ -2,9 +2,10 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core'
 import { ClientOrder } from '../interfaces/clientOrder.interface'
 import { IProduct } from '../interfaces/product.interface'
 import { OrderItem } from '../interfaces/orderItem.interface'
-import { FormArray, FormBuilder, FormControl, FormGroup, isFormArray } from '@angular/forms'
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators, isFormArray } from '@angular/forms'
 import { Subscription } from 'rxjs'
 import { IsMobileService } from '../services/is-mobile.service'
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
 	selector: 'app-edit-order',
@@ -29,12 +30,20 @@ export class EditOrderComponent implements OnInit {
 	constructor(
 		private fb: FormBuilder,
 		private changeDetectorRef: ChangeDetectorRef,
-		private mobileService: IsMobileService
+		private mobileService: IsMobileService,
+		private activatedRoute: ActivatedRoute
 	) {
 		this.isMobile = this.mobileService.isMobile
 	}
 
 	ngOnInit(): void {
+		let id = this.activatedRoute.snapshot.paramMap.get('id')
+		if (id === 'create') {
+			this.createEmptyForm()
+			this.setSubscriptions()
+			this.editable = false
+			return
+		}
 		this.order = JSON.parse(localStorage.getItem('client-order')) as ClientOrder
 		this.initForm()
 	}
@@ -85,6 +94,19 @@ export class EditOrderComponent implements OnInit {
 		console.log(this.form.getRawValue())
 	}
 
+	private createEmptyForm(): void {
+		this.form = this.fb.group({
+			phone: [{ value: '', disabled: false }, Validators.required],
+			name: [{ value: '', disabled: false }],
+			email: [{ value: '', disabled: false }],
+			dateOfCreation: [{ value: new Date(), disabled: false }],
+			dateOfCompletion: [{ value: new Date(), disabled: false }],
+			status: [{ value: '', disabled: false }],
+			comment: [{ value: '', disabled: false }],
+			orderItems: this.fb.array([]),
+		})
+	}
+
 	private initForm(): void {
 		this.form = this.fb.group({
 			phone: [{ value: this.order.contacts.phone, disabled: true }],
@@ -98,7 +120,10 @@ export class EditOrderComponent implements OnInit {
 		})
 
 		this.loadOrderItems(this.order.orderItems, this.form)
+		this.setSubscriptions()
+	}
 
+	private setSubscriptions(): void {
 		this.formArrayChangeSubscription = this.form.controls['orderItems'].valueChanges.subscribe(() => {
 			this.changeDetectorRef.detectChanges()
 

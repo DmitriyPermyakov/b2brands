@@ -20,9 +20,7 @@ export class ImageBlockComponent implements AfterViewInit {
 	public inputDisabled: boolean = true
 
 	constructor(private uploadImageService: UploadImageService, public authService: AuthService) {}
-	ngAfterViewInit(): void {
-		console.log('Product color', this.productColor)
-	}
+	ngAfterViewInit(): void {}
 	public chooseImage(input) {
 		input.click()
 	}

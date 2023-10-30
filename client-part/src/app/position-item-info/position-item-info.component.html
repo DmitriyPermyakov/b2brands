@@ -46,13 +46,52 @@
 			<option value="Завершен">Завершен</option>
 		</select>
 	</div>
-	<textarea class="item-comment" autocomplete="off" [ngClass]="{ outlined: editable }" formControlName="comment">
-	</textarea>
-	<div class="resizable-part" [ngClass]="{ edit: editable }">
-		<div class="quantity-price">
+	<ng-container *ngIf="isMobile">
+		<div class="quantity-price-mobile">
 			<app-quantity class="quantity" [postfix]="'шт.'" formControlName="amount"></app-quantity>
 			<p class="total-price">{{ price }}р.</p>
 		</div>
+	</ng-container>
+	<ng-container *ngIf="isMobile">
+		<div class="edit-icon" #editBtn (click)="edit()" [ngClass]="{ hidden: editable, showed: !editable }">
+			<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path
+					d="M36.8624 10.8241L30.1687 6.78452C29.6958 6.49915 29.0812 6.65114 28.7958 7.12399L14.1704 31.3585C14.056 31.5479 14.0078 31.77 14.0332 31.9898L14.7661 38.3408C14.8412 38.9912 15.5106 39.3953 16.1211 39.1586L22.0818 36.8471C22.2881 36.7671 22.4621 36.621 22.5764 36.4315L37.2018 12.197C37.4872 11.7241 37.3352 11.1095 36.8624 10.8241Z"
+					stroke="#A2A2A2"
+					stroke-width="2"
+				/>
+				<circle cx="16.6057" cy="36.8243" r="2.45455" transform="rotate(31.1108 16.6057 36.8243)" fill="#A2A2A2" />
+			</svg>
+		</div>
+		<div
+			class="remove-icon"
+			#removeBtn
+			[ngClass]="{ showed: editable, hidden: !editable }"
+			(click)="removePosition(index)"
+		>
+			<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path
+					d="M11 15.0823L14.4498 37.1309C14.6021 38.1043 15.4405 38.8218 16.4258 38.8218H31.5747C32.5599 38.8218 33.3983 38.1043 33.5506 37.1309L37.0004 15.0823"
+					stroke="#A2A2A2"
+					stroke-width="2"
+					stroke-linecap="round"
+				/>
+				<path d="M14.7148 10.4998H33.2866" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
+				<path d="M20.6895 15.6069L20.6895 31.514" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
+				<path d="M27.3105 15.6069L27.3105 31.514" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
+				<path d="M20.2861 8.17834H27.7148" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
+			</svg>
+		</div>
+	</ng-container>
+	<textarea class="item-comment" autocomplete="off" [ngClass]="{ outlined: editable }" formControlName="comment">
+	</textarea>
+	<div class="resizable-part" [ngClass]="{ edit: editable }">
+		<ng-container *ngIf="!isMobile">
+			<div class="quantity-price">
+				<app-quantity class="quantity" [postfix]="'шт.'" formControlName="amount"></app-quantity>
+				<p class="total-price">{{ price }}р.</p>
+			</div>
+		</ng-container>
 		<ng-container *ngIf="!isMobile">
 			<div class="edit-icon" #editBtn (click)="edit()" [ngClass]="{ hidden: editable, showed: !editable }">
 				<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -89,12 +128,10 @@
 					<path d="M20.2861 8.17834H27.7148" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
 				</svg>
 			</div>
-			<div class="save-cancel-btns">
-				<button class="save-btn" [disabled]="!editable" type="submit" (click)="onSubmit(item.value)">
-					Сохранить
-				</button>
-				<button class="cancel-btn" [disabled]="!editable" (click)="cancel()">Отмена</button>
-			</div>
 		</ng-container>
+		<div class="save-cancel-btns">
+			<button class="save-btn" [disabled]="!editable" type="submit" (click)="onSubmit(item.value)">Сохранить</button>
+			<button class="cancel-btn" [disabled]="!editable" (click)="cancel()">Отмена</button>
+		</div>
 	</div>
 </form>

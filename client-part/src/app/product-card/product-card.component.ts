@@ -49,6 +49,7 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 	public productColor!: IProductColor
 
 	public prints!: string[]
+	public link: string
 
 	private _selectedPrint: string
 	private activeMobilePanel: HTMLElement
@@ -76,9 +77,10 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 	ngOnInit(): void {
 		this.initProductCardForm()
 		// let id = this.activatedRoute.snapshot.paramMap.get('id')
+		this.link = this.authService.IsAuthenticated ? '/admin/products' : '/products'
 		let id = this.activatedRoute.snapshot.params['id']
 
-		if (id === 'new') {
+		if (id === 'create') {
 			this.isAdding = true
 			this.isEdit = true
 			this.enableFormControls()
@@ -99,18 +101,13 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 		this.checkAmoutOfOrderItems()
 	}
 
-	ngAfterContentInit(): void {
-		// this.printCount = this.product.print.length
-		console.log('product color control length ', this.productColorsControl.value.length)
-	}
+	ngAfterContentInit(): void {}
 
 	ngAfterViewInit() {
 		if (this.isMobile) {
 			this.activeMobileButton = this.descriptionBtn.nativeElement
 			this.activeMobilePanel = this.descriptionPanel.nativeElement
 		}
-
-		console.log('print ref', this.printsRef)
 	}
 
 	ngOnDestroy(): void {
@@ -226,7 +223,6 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 	private checkLocalStorageOnCurrentProduct() {
 		if (this.product === null) {
 			this.product = JSON.parse(localStorage.getItem('currentProduct'))
-			console.log('product from local storage', this.product)
 		} else {
 			localStorage.setItem('currentProduct', JSON.stringify(this.product))
 		}

@@ -28,7 +28,7 @@ export class PositionItemInfoComponent implements OnInit, OnChanges {
 	@Output() onRemoveItem: EventEmitter<number> = new EventEmitter()
 
 	public product: IProduct
-	public editable: boolean = false
+	public editable: boolean = true
 	public isMobile: boolean = false
 	public initialForm: FormGroup
 	public price: number
@@ -53,6 +53,7 @@ export class PositionItemInfoComponent implements OnInit, OnChanges {
 	ngOnChanges(changes: SimpleChanges): void {
 		if (this.item) {
 			if (this.isMobile && changes['enableControls'].currentValue) {
+				console.log('current value', changes)
 				this.edit()
 			} else if (this.isMobile && !changes['enableControls'].currentValue) {
 				if (this.initialForm) {

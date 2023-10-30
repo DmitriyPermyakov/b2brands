@@ -140,7 +140,7 @@ export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	private emitSelectedColor(attribute: string): void {
 		let selectedColor = this.colorsControl.value.find((el: IProductColor) => el.value === attribute)
-		console.log('emitSelectedColor', selectedColor)
+
 		if (selectedColor === undefined) {
 			let emptyProduct: IProductColor = {
 				id: '',

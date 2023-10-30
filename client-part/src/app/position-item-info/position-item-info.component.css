@@ -96,6 +96,8 @@
 .item-status {
 	grid-column: 2 / 3;
 	grid-row: 4 / 5;
+
+	width: 100%;
 }
 
 .item-comment {
@@ -314,19 +316,21 @@ textarea::-webkit-scrollbar {
 	.item {
 		display: grid;
 		grid-template-columns: 30% 70%;
-		grid-template-rows: 1fr auto auto;
-		margin: 0 1em;
+		grid-template-rows: 1fr auto auto auto;
+		margin: 0.5em 1em;
 		padding: 1.8em 0;
 
 		position: relative;
 	}
 
 	.item.edit {
+		padding: 1.8em 0;
 		row-gap: 1em;
 	}
 
 	.item::after {
 		width: 20em;
+		height: 2px;
 		transform: unset;
 	}
 
@@ -348,34 +352,73 @@ textarea::-webkit-scrollbar {
 
 		grid-template-columns: auto 1fr;
 		column-gap: 0.2em;
-
 		align-items: baseline;
+
+		font-size: 0.9em;
+	}
+
+	.item-info input {
+		width: 99%;
 	}
 
 	.item-info select {
-		max-width: 67%;
+		width: 99%;
+
 		text-overflow: ellipsis;
 	}
 
 	.resizable-part {
-		grid-row: 2 / 3;
-		grid-column: 2 / 3;
+		grid-row: 4 / 5;
+		grid-column: 1 / span 2;
 
+		display: none;
+		grid-template-columns: 1fr;
+		grid-template-rows: 100% auto;
+
+		width: 100%;
+	}
+
+	.resizable-part.edit {
+		display: grid;
+		grid-template-rows: 0% auto;
+	}
+
+	.save-cancel-btns {
+		grid-row: 2 / 3;
+		grid-column: 1 / 2;
+
+		display: grid;
 		grid-template-columns: 1fr 1fr;
 		grid-template-rows: 1fr;
-		font-size: 0.2em;
+		margin: 1em 1em;
+	}
+
+	.save-cancel-btns button {
+		width: 7em;
 	}
 
 	.quantity-price {
+		display: none;
+	}
+
+	.quantity-price-mobile {
+		grid-row: 2 / 3;
+		grid-column: 2 / 3;
+
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 1fr;
 		align-items: center;
 		justify-items: start;
+		font-size: 0.2em;
 	}
-	.quantity-price .total-price {
+
+	.quantity-price-mobile .total-price {
 		grid-column: 1 / 2;
 		grid-row: 1 / 2;
 	}
 
-	.quantity-price .quantity {
+	.quantity-price-mobile .quantity {
 		grid-column: 2 / 3;
 		grid-row: 1 / 2;
 	}
@@ -388,7 +431,7 @@ textarea::-webkit-scrollbar {
 		padding: 0.4em;
 
 		width: 100%;
-		height: 100%;
+		height: auto;
 		min-height: 4em;
 
 		border: 1px solid var(--secondary-text);
@@ -406,9 +449,17 @@ textarea::-webkit-scrollbar {
 	.item-name {
 		grid-column: 1 / span 2;
 		font-size: 1.2em;
+		width: 85%;
 	}
 
 	label {
 		font-size: 0.7em;
+	}
+
+	.edit-icon,
+	.remove-icon {
+		position: absolute;
+		top: 20px;
+		right: -5px;
 	}
 }
