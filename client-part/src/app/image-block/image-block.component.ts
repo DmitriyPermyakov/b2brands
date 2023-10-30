@@ -21,7 +21,7 @@ export class ImageBlockComponent implements AfterViewInit {
 
 	constructor(private uploadImageService: UploadImageService, public authService: AuthService) {}
 	ngAfterViewInit(): void {
-		console.log('productColor', this.productColor)
+		console.log('Product color', this.productColor)
 	}
 	public chooseImage(input) {
 		input.click()
@@ -41,7 +41,6 @@ export class ImageBlockComponent implements AfterViewInit {
 	}
 
 	public uploadImage(files, name) {
-		console.log('input changes')
 		this.uploading = true
 		this.uploadImageService
 			.uploadImage(files, name)

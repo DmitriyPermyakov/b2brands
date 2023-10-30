@@ -3,7 +3,7 @@ import { Observable, Subject, fromEvent, map, throttleTime } from 'rxjs'
 
 export class Scroller {
 	public scroll$: Observable<any>
-	public selectedItemChanged: Subject<void> = new Subject()
+	public selectedItemChanged: Subject<string> = new Subject()
 
 	private set ParentElement(element: ElementRef) {
 		if (element) this._parentElement = element
@@ -30,7 +30,11 @@ export class Scroller {
 	}
 
 	public get Selected() {
-		return this._selected
+		return this._classIndexMap.get(ClassesEnum.selected)
+	}
+
+	public get SelectedElementAttribute(): string {
+		return this.getElement(this._classIndexMap.get(ClassesEnum.selected)).getAttribute('data-value')
 	}
 
 	private set ScrollingClass(value: string) {
@@ -73,6 +77,7 @@ export class Scroller {
 		this.CountOfElements = countOfElements
 		this.setClassesDictionary()
 		this.setClasses()
+		this.selectedItemChanged.next(this.SelectedElementAttribute)
 	}
 
 	//#region setting classes
@@ -83,27 +88,27 @@ export class Scroller {
 				break
 			case 1:
 				this.getElement(0).classList.add(ClassesEnum.selected)
-				this.selectedItemChanged.next()
+				this.selectedItemChanged.next(this.SelectedElementAttribute)
 				break
 			case 2:
 				this.setClassedForTwoElements()
-				this.selectedItemChanged.next()
+				this.selectedItemChanged.next(this.SelectedElementAttribute)
 				break
 			case 3:
 				this.setClassesForThreeElements()
-				this.selectedItemChanged.next()
+				this.selectedItemChanged.next(this.SelectedElementAttribute)
 				break
 			case 4:
 				this.setClassesForFourElements()
-				this.selectedItemChanged.next()
+				this.selectedItemChanged.next(this.SelectedElementAttribute)
 				break
 			case 5:
 				this.setClassesForFiveElements()
-				this.selectedItemChanged.next()
+				this.selectedItemChanged.next(this.SelectedElementAttribute)
 				break
 			default:
 				this.setClassesForMoreThanFiveElements()
-				this.selectedItemChanged.next()
+				this.selectedItemChanged.next(this.SelectedElementAttribute)
 				break
 		}
 	}
@@ -141,12 +146,12 @@ export class Scroller {
 		if (this._countOfElements < 2) return 0
 		if (event.deltaY < 0) {
 			this.onScrollUp()
-			return this._selected
+			return this._classIndexMap.get(ClassesEnum.selected)
 		}
 
 		if (event.deltaY > 0) {
 			this.onScrollDown()
-			return this._selected
+			return this._classIndexMap.get(ClassesEnum.selected)
 		}
 
 		return -1
@@ -154,16 +159,16 @@ export class Scroller {
 
 	public onScrollUp() {
 		if (this._countOfElements < 2) return
-		this._selected--
-		if (this._selected < 0) this._selected = this._countOfElements - 1
+
 		this.moveClassesUp()
+		this.selectedItemChanged.next(this.SelectedElementAttribute)
 	}
 
 	public onScrollDown() {
 		if (this._countOfElements < 2) return
-		this._selected++
-		if (this._selected > this._countOfElements - 1) this._selected = 0
+
 		this.moveClassesDown()
+		this.selectedItemChanged.next(this.SelectedElementAttribute)
 	}
 
 	public addItem(countOfElements: number) {
@@ -174,7 +179,7 @@ export class Scroller {
 			case 1:
 				this.getElement(0).classList.add(ClassesEnum.selected)
 				this.updateClassesDictionary()
-				this._selected = this._classIndexMap.get('selected')
+				this.selectedItemChanged.next(this.SelectedElementAttribute)
 				break
 			case 2:
 				this.placeElement(ClassesEnum.firstPrev, ClassesEnum.selected)
@@ -262,14 +267,14 @@ export class Scroller {
 	}
 
 	public scrollToAdded() {
-		let i = this._classIndexMap.get('selected')
+		let i = this._classIndexMap.get(ClassesEnum.selected)
 		let interval = setInterval(() => {
 			this.onScrollDown()
 			i++
 			if (i > this._countOfElements - 1) i = 0
 			if (this.getElement(i).getAttribute('data-value') === this._addedElementValueAttribut) {
 				clearInterval(interval)
-				this.selectedItemChanged.next()
+				this.selectedItemChanged.next(this.SelectedElementAttribute)
 				return
 			}
 		}, 100)
@@ -286,13 +291,10 @@ export class Scroller {
 		let oldItemIndex = this._classIndexMap.get(oldElemClassName)
 		//если элемент является первым в списке, то новый элемент, который должен быть добавлен перед ним, просто добавляется в конец
 		if (oldItemIndex !== 0) {
-			console.log('old item index !== 0')
 			let element = this.getElement(oldItemIndex)
 			this._parentElement.nativeElement.insertBefore(this.getElement(this._countOfElements - 1), element)
 		}
 		this.updateClassesDictionary()
-
-		this._selected = this._classIndexMap.get('selected')
 	}
 
 	public updateClassesDictionary() {

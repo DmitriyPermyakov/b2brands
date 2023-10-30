@@ -133,7 +133,6 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 			comment:
 				'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero itaque, ullam tenetur consequatur perspiciatis reiciendis in officia maiores? Adipisci facilis animi architecto voluptatum sapiente, dicta molestias delectus possimus nulla voluptas!',
 		}
-		console.log('order', orderItem)
 
 		this.store.dispatch(addOrderItemAction({ orderItem }))
 		this.checkAmoutOfOrderItems()
@@ -144,6 +143,7 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 		// 	this.productColor = this.productColorsControl.value[value] as IProductColor
 		// 	console.log('product color', this.productColor)
 		// }, 0)
+
 		this.productColor = event
 	}
 
