@@ -13,6 +13,11 @@
 	position: relative;
 }
 
+.remove {
+	width: 1.4rem;
+	height: 1.4rem;
+}
+
 .image-container > .remove {
 	display: none;
 	position: absolute;
@@ -67,6 +72,11 @@
 	align-items: center;
 	justify-content: center;
 	border: 1px solid var(--secondary-text);
+	width: 9.375rem;
+	height: 9.375rem;
+	border-radius: 0.4rem;
+	box-shadow: 0 0 15px 1px var(--dark-shadow);
+	position: relative;
 }
 
 .add-image-icon:hover {
@@ -79,11 +89,10 @@
 	margin-bottom: 1rem;
 }
 
-.add-image-icon {
-	width: 9.375rem;
-	height: 9.375rem;
-	border-radius: 0.4rem;
-	box-shadow: 0 0 15px 1px var(--dark-shadow);
+.icon-label {
+	position: absolute;
+	bottom: 0.8em;
+	left: 1em;
 }
 
 .add {
