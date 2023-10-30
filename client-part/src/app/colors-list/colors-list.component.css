@@ -75,12 +75,12 @@
 .remove {
 	display: none;
 }
-.color.selected:hover > .remove {
+.color.selected.clicked > .remove {
 	display: inline;
 	position: absolute;
-	/* top: 0;
-	left: 0; */
-	transform: translate3d(2.5rem, 0, 6rem);
+	width: 1.5rem;
+	height: 1.5rem;
+	transform: translate3d(2.5rem, 0.3rem, 6rem);
 }
 
 .color.first {
@@ -216,11 +216,11 @@
 		transform: scale(1.3);
 	}
 
-	.color.selected:hover:has(.remove) {
+	.color.selected.clicked {
 		margin-right: 12em;
 	}
 
-	.color.selected:hover > .remove {
+	.color.selected.clicked > .remove {
 		width: 6rem;
 		height: 6rem;
 		transform: translate3d(10rem, 1rem, 6rem);

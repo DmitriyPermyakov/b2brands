@@ -533,6 +533,7 @@ input {
 	.edit {
 		width: 10rem;
 		height: 10rem;
+		position: static;
 	}
 
 	.back {

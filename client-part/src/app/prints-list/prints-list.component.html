@@ -3,7 +3,7 @@
 		<p class="print-title">Виды нанесения:</p>
 		<ng-container *ngIf="printsControl.value !== ''">
 			<div class="prints" #prints>
-				<p class="type-of-print" *ngFor="let p of printsControl.value; index as i">
+				<p class="type-of-print" *ngFor="let p of printsControl.value; index as i" appClickTimer="type-of-print">
 					{{ p }}
 					<ng-container *ngIf="editable">
 						<button class="button icon remove" (click)="removeValue(i)">
@@ -55,7 +55,7 @@
 	<div class="prints-editable">
 		<div class="prints-container" #prints>
 			<div class="prints-mobile" *ngFor="let p of printsControl.value; index as i">
-				<p class="print-item">
+				<p class="print-item" appClickTimer="print-item">
 					{{ p
 					}}<button class="button icon remove" (click)="removeValue(i)">
 						<svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">

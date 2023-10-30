@@ -53,7 +53,7 @@
 	right: -25px;
 }
 
-.type-of-print.selected:hover > .remove {
+.type-of-print.selected.clicked > .remove {
 	display: block;
 }
 
@@ -210,7 +210,7 @@
 		right: 14px;
 	}
 
-	.print-item:hover > .remove {
+	.print-item.clicked > .remove {
 		display: block;
 	}
 

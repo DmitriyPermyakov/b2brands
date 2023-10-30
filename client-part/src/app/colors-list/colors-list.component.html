@@ -12,6 +12,7 @@
 				*ngFor="let c of colorsControl.value; index as i"
 				(click)="selectColor($event, i)"
 				[ngStyle]="{ 'background-color': c.value }"
+				appClickTimer="color"
 			>
 				<ng-container *ngIf="editable">
 					<button class="button icon remove">

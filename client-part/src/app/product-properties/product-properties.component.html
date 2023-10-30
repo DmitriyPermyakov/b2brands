@@ -1,5 +1,10 @@
 <ng-container *ngIf="props.value !== ''">
-	<div class="property" [ngClass]="{ edit: editable }" *ngFor="let p of props.value; index as i">
+	<div
+		class="property"
+		[ngClass]="{ edit: editable }"
+		*ngFor="let p of props.value; index as i"
+		appClickTimer="property"
+	>
 		<p class="prop-name">{{ p.name }}</p>
 		<span class="dots"
 			>...........................................................................................................</span

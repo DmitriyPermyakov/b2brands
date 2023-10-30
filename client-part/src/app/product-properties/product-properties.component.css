@@ -27,7 +27,7 @@
 	color: var(--primary-text);
 }
 
-.property:hover > .remove {
+.property.clicked > .remove {
 	display: inline;
 }
 
@@ -132,7 +132,7 @@ input {
 		font-size: 5em;
 		transition: 0.2s;
 	}
-	.property.edit:hover {
+	.property.edit.clicked {
 		width: 80%;
 		/* margin: 1em 0; */
 	}
