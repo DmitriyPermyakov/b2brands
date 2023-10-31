@@ -18,7 +18,7 @@ const routes: Routes = [
 	{ path: 'products/:id', component: ProductCardComponent },
 	{ path: 'orders', component: CustomerOrdersComponent },
 	{ path: 'login', component: LoginFormComponent },
-	{ path: 'profile', component: ProfileComponent },
+	{ path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
 	{
 		path: 'admin',
 		component: AdminOrdersListComponent,
@@ -27,8 +27,9 @@ const routes: Routes = [
 			{ path: 'completed-orders', component: ListContainerComponent },
 			{ path: 'products', component: ProductListComponent },
 		],
+		canActivate: [authGuard],
 	},
-	{ path: 'admin/orders/:id', component: EditOrderComponent },
+	{ path: 'admin/orders/:id', component: EditOrderComponent, canActivate: [authGuard] },
 ]
 
 @NgModule({

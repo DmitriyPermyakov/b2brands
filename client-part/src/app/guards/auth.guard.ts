@@ -7,16 +7,17 @@ export const authGuard: CanActivateFn = (route, state) => {
 	const router = inject(Router)
 	if (auth.IsAuthenticated) return true
 	else {
-		if (auth.isRefreshTokenValid) {
-			auth.refreshToken().subscribe(() => {
-				if (auth.IsAuthenticated) router.navigate(['/products'])
-				return true
-			})
-		} else {
-			router.navigate(['/'])
-			auth.logout()
-			return false
-		}
+		router.navigate(['/'])
+		// if (auth.isRefreshTokenValid) {
+		// 	auth.refreshToken().subscribe(() => {
+		// 		if (auth.IsAuthenticated) router.navigate(['/admin/active-orders'])
+		// 		return true
+		// 	})
+		// } else {
+		// 	router.navigate(['/'])
+		// 	auth.logout()
+		// 	return false
+		// }
 	}
 	return false
 }
