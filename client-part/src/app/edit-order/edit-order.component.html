@@ -23,7 +23,7 @@
 		<p class="amount">Количество:</p>
 		<p class="total-amount">Сумма:</p>
 	</div>
-	<form class="form" [formGroup]="form" (ngSubmit)="onSubmit(form)">
+	<form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
 		<div class="general-info" [ngClass]="{ edit: editable }">
 			<ng-container *ngIf="isMobile">
 				<div class="edit-icon icon" #editBtn (click)="edit()" [ngClass]="{ hidden: editable, showed: !editable }">
@@ -59,9 +59,27 @@
 			</ng-container>
 			<p class="number">1</p>
 			<div class="contacts">
-				<input class="phone" [ngClass]="{ outlined: editable }" type="tel" formControlName="phone" />
-				<input class="name" type="text" [ngClass]="{ outlined: editable }" formControlName="name" />
-				<input class="email" type="email" [ngClass]="{ outlined: editable }" formControlName="email" />
+				<input
+					class="phone"
+					[ngClass]="{ outlined: editable }"
+					placeholder="телефон"
+					type="tel"
+					formControlName="phone"
+				/>
+				<input
+					class="name"
+					type="text"
+					[ngClass]="{ outlined: editable }"
+					placeholder="имя"
+					formControlName="name"
+				/>
+				<input
+					class="email"
+					type="email"
+					[ngClass]="{ outlined: editable }"
+					placeholder="email"
+					formControlName="email"
+				/>
 			</div>
 			<div class="dates">
 				<input
@@ -86,7 +104,13 @@
 				<option value="Отправлен заказчику">Отправлен заказчику</option>
 				<option value="Завершен">Завершен</option>
 			</select>
-			<textarea class="comment" autocomplete="off" [ngClass]="{ outlined: editable }" formControlName="comment">
+			<textarea
+				class="comment"
+				autocomplete="off"
+				[ngClass]="{ outlined: editable }"
+				placeholder="Комментарий к заказу"
+				formControlName="comment"
+			>
 Сделать как можно быстрее, т.к. заказ попал на праздничние дни. </textarea
 			>
 			<div class="resizable-part" [ngClass]="{ edit: editable }">
@@ -155,8 +179,8 @@
 					[item]="item"
 					[index]="i"
 					[itemLength]="orderItems.controls.length"
-					[enableControls]="editable"
 					(onRemoveItem)="removeItem($event)"
+					(onSubmitItem)="onSubmit()"
 				></app-position-item-info>
 				<button class="add-item-btn icon" *ngIf="editable" (click)="showProductModal()">
 					<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">

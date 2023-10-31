@@ -1,8 +1,8 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core'
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core'
 import { ClientOrder } from '../interfaces/clientOrder.interface'
 import { IProduct } from '../interfaces/product.interface'
 import { OrderItem } from '../interfaces/orderItem.interface'
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators, isFormArray } from '@angular/forms'
+import { FormArray, FormBuilder, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms'
 import { Subscription } from 'rxjs'
 import { IsMobileService } from '../services/is-mobile.service'
 import { ActivatedRoute } from '@angular/router'
@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router'
 	templateUrl: './edit-order.component.html',
 	styleUrls: ['./edit-order.component.css'],
 })
-export class EditOrderComponent implements OnInit {
+export class EditOrderComponent implements OnInit, OnDestroy {
 	public isSelectProductVisible: boolean = false
 	public editable: boolean = false
 	public order: ClientOrder
@@ -25,31 +25,40 @@ export class EditOrderComponent implements OnInit {
 		return this.form.controls['orderItems'] as FormArray
 	}
 
-	private formArrayChangeSubscription: Subscription
+	private createMode: boolean = false
+
+	private formArrayChangeSub: Subscription
 
 	constructor(
 		private fb: FormBuilder,
 		private changeDetectorRef: ChangeDetectorRef,
 		private mobileService: IsMobileService,
-		private activatedRoute: ActivatedRoute
+		private activatedRoute: ActivatedRoute,
+		private nnfb: NonNullableFormBuilder
 	) {
 		this.isMobile = this.mobileService.isMobile
 	}
 
 	ngOnInit(): void {
-		let id = this.activatedRoute.snapshot.paramMap.get('id')
-		if (id === 'create') {
+		this.activatedRoute.snapshot.paramMap.get('id') === 'create'
+			? (this.createMode = true)
+			: (this.createMode = false)
+		if (this.createMode) {
 			this.createEmptyForm()
-			this.setSubscriptions()
-			this.editable = false
+			this.enableFormsControls()
 			return
 		}
 		this.order = JSON.parse(localStorage.getItem('client-order')) as ClientOrder
 		this.initForm()
+		this.disableFormControls()
 	}
+
+	ngOnDestroy(): void {
+		if (this.formArrayChangeSub) this.formArrayChangeSub.unsubscribe()
+	}
+
 	edit(): void {
-		this.editable = true
-		this.enableForm()
+		this.enableFormsControls()
 	}
 
 	showProductModal(): void {
@@ -61,7 +70,7 @@ export class EditOrderComponent implements OnInit {
 
 	addItem(p: IProduct): void {
 		this.isSelectProductVisible = false
-		let orderItem: FormGroup = this.fb.group({
+		let orderItem: FormGroup = this.nnfb.group({
 			id: '234234',
 			name: [{ value: p.name, disabled: true }],
 			vendor: [{ value: p.code, disabled: true }],
@@ -85,30 +94,42 @@ export class EditOrderComponent implements OnInit {
 	}
 
 	cancel(): void {
-		this.editable = false
-		this.disableForm()
+		if (this.createMode) {
+			this.form.reset()
+			this.orderItems.clear()
+		} else {
+			this.form.reset()
+		}
+
+		this.disableFormControls()
 	}
 
-	onSubmit(form): void {
+	onSubmit(): void {
+		this.disableFormControls()
 		// #TODO: в позиции нужно вычислять стоимость
 		console.log(this.form.getRawValue())
+
+		if (this.createMode) console.log('create')
+		else console.log('patch')
 	}
 
 	private createEmptyForm(): void {
 		this.form = this.fb.group({
-			phone: [{ value: '', disabled: false }, Validators.required],
-			name: [{ value: '', disabled: false }],
-			email: [{ value: '', disabled: false }],
-			dateOfCreation: [{ value: new Date(), disabled: false }],
-			dateOfCompletion: [{ value: new Date(), disabled: false }],
-			status: [{ value: '', disabled: false }],
-			comment: [{ value: '', disabled: false }],
+			phone: [{ value: '' }],
+			name: [{ value: '' }],
+			email: [{ value: '' }],
+			dateOfCreation: [{ value: this.getDate(new Date()) }],
+			dateOfCompletion: [{ value: this.getDate(new Date()) }],
+			status: [{ value: '' }],
+			comment: [{ value: '' }],
 			orderItems: this.fb.array([]),
 		})
+
+		this.setSubscriptions()
 	}
 
 	private initForm(): void {
-		this.form = this.fb.group({
+		this.form = this.nnfb.group({
 			phone: [{ value: this.order.contacts.phone, disabled: true }],
 			name: [{ value: this.order.contacts.name, disabled: true }],
 			email: [{ value: this.order.contacts.email, disabled: true }],
@@ -118,13 +139,12 @@ export class EditOrderComponent implements OnInit {
 			comment: [{ value: this.order.comment, disabled: true }],
 			orderItems: this.fb.array([]),
 		})
-
 		this.loadOrderItems(this.order.orderItems, this.form)
 		this.setSubscriptions()
 	}
 
 	private setSubscriptions(): void {
-		this.formArrayChangeSubscription = this.form.controls['orderItems'].valueChanges.subscribe(() => {
+		this.formArrayChangeSub = this.form.controls['orderItems'].valueChanges.subscribe(() => {
 			this.changeDetectorRef.detectChanges()
 
 			this.count = this.orderItems.controls.reduce((acc, controls) => {
@@ -140,7 +160,7 @@ export class EditOrderComponent implements OnInit {
 	private loadOrderItems(items: OrderItem[], form: FormGroup) {
 		items.forEach((i) =>
 			(form.get('orderItems') as FormArray).push(
-				this.fb.group({
+				this.nnfb.group({
 					id: i.id,
 					color: i.color,
 					name: i.name,
@@ -155,15 +175,6 @@ export class EditOrderComponent implements OnInit {
 		)
 	}
 
-	private enableForm(): void {
-		Object.keys(this.form.controls).forEach((c) => {
-			if (!isFormArray(this.form.get(c))) this.form.get(c).enable()
-		})
-	}
-	private disableForm(): void {
-		Object.keys(this.form.controls).forEach((c) => this.form.get(c).disable())
-	}
-
 	private getDate(inputDate: Date): string {
 		let date = new Date(inputDate)
 		let dateString = date.getUTCFullYear() + '-' + this.fixMonthFormat(date.getMonth() + 1) + '-' + date.getUTCDate()
@@ -173,5 +184,19 @@ export class EditOrderComponent implements OnInit {
 	private fixMonthFormat(month: number): string {
 		if (month < 10) return '0' + month
 		return month.toString()
+	}
+
+	private enableFormsControls() {
+		Object.keys(this.form.controls).forEach((c) => {
+			if (c !== 'orderItems') this.form.controls[c].enable()
+		})
+		this.editable = true
+	}
+
+	private disableFormControls() {
+		Object.keys(this.form.controls).forEach((c) => {
+			if (c !== 'orderItems') this.form.controls[c].disable()
+		})
+		this.editable = false
 	}
 }

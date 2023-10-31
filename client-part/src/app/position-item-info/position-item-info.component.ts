@@ -1,14 +1,4 @@
-import {
-	ChangeDetectorRef,
-	Component,
-	EventEmitter,
-	Input,
-	OnChanges,
-	OnInit,
-	Output,
-	SimpleChanges,
-} from '@angular/core'
-import { FormControl, FormGroup } from '@angular/forms'
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
 
 import { IProduct } from '../interfaces/product.interface'
 import { ProductsService } from '../services/products.service'
@@ -20,55 +10,44 @@ import { IsMobileService } from '../services/is-mobile.service'
 	templateUrl: './position-item-info.component.html',
 	styleUrls: ['./position-item-info.component.css'],
 })
-export class PositionItemInfoComponent implements OnInit, OnChanges {
+export class PositionItemInfoComponent implements OnInit, OnDestroy {
 	@Input() item
-	@Input() enableControls: boolean
 	@Input() itemLength: number
 	@Input() index: number
 	@Output() onRemoveItem: EventEmitter<number> = new EventEmitter()
+	@Output() onSubmitItem: EventEmitter<void> = new EventEmitter()
 
 	public product: IProduct
-	public editable: boolean = true
+	public editable: boolean = false
 	public isMobile: boolean = false
-	public initialForm: FormGroup
 	public price: number
 	private amountChangeSubscription: Subscription
+	private productServiceSub: Subscription
 
-	constructor(
-		private mobileService: IsMobileService,
-		private productsService: ProductsService,
-		private changeDetectorRef: ChangeDetectorRef
-	) {
+	constructor(private mobileService: IsMobileService, private productsService: ProductsService) {
 		this.isMobile = this.mobileService.isMobile
 	}
 	ngOnInit(): void {
-		this.disableFormControls()
-		this.initialForm = this.initResetForm(this.item)
 		this.price = this.item.controls['amount'].value * this.item.controls['price'].value
-		this.item.controls['amount'].valueChanges.subscribe(() => {
+		this.amountChangeSubscription = this.item.controls['amount'].valueChanges.subscribe(() => {
 			this.price = this.item.controls['amount'].value * this.item.controls['price'].value
 		})
+
+		this.disableFormControls()
 	}
 
-	ngOnChanges(changes: SimpleChanges): void {
-		if (this.item) {
-			if (this.isMobile && changes['enableControls'].currentValue) {
-				console.log('current value', changes)
-				this.edit()
-			} else if (this.isMobile && !changes['enableControls'].currentValue) {
-				if (this.initialForm) {
-					this.cancel()
-				}
-			}
-		}
+	ngOnDestroy(): void {
+		if (this.amountChangeSubscription) this.amountChangeSubscription.unsubscribe()
+		if (this.productServiceSub) this.productServiceSub.unsubscribe()
 	}
 
-	onSubmit(value) {
+	onSubmit() {
+		this.onSubmitItem.emit()
 		this.disableFormControls()
 	}
 
 	edit(): void {
-		this.productsService.getByVendor(this.item.get('vendor').value).subscribe((p) => {
+		this.productServiceSub = this.productsService.getByVendor(this.item.get('vendor').value).subscribe((p) => {
 			this.product = p
 			this.enableFormsControls()
 		})
@@ -83,44 +62,21 @@ export class PositionItemInfoComponent implements OnInit, OnChanges {
 	}
 
 	cancel(): void {
-		this.resetForm()
+		this.item.reset()
 		this.disableFormControls()
 	}
 
 	removePosition(id: number) {
 		this.onRemoveItem.emit(id)
-		this.disableFormControls()
-	}
-
-	private initResetForm(data: FormGroup): FormGroup {
-		const form = new FormGroup({
-			id: new FormControl(),
-			color: new FormControl(),
-			name: new FormControl(),
-			vendor: new FormControl(),
-			print: new FormControl(),
-			status: new FormControl(),
-			comment: new FormControl(),
-			amount: new FormControl(),
-			price: new FormControl(),
-		})
-
-		Object.keys(data.controls).forEach((c) => form.controls[c].setValue(data.controls[c].value))
-
-		return form
-	}
-
-	private resetForm() {
-		Object.keys(this.item.controls).forEach((c) => this.item.controls[c].setValue(this.initialForm.controls[c].value))
 	}
 
 	private enableFormsControls() {
+		Object.keys(this.item.controls).forEach((c) => this.item.controls[c].enable())
 		this.editable = true
-		Object.keys(this.item.controls).forEach((c) => this.item.get(c).enable())
 	}
 
 	private disableFormControls() {
 		this.editable = false
-		Object.keys(this.item.controls).forEach((c) => this.item.get(c).disable())
+		Object.keys(this.item.controls).forEach((c) => this.item.controls[c].disable())
 	}
 }
