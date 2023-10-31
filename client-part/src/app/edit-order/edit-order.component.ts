@@ -115,13 +115,13 @@ export class EditOrderComponent implements OnInit, OnDestroy {
 
 	private createEmptyForm(): void {
 		this.form = this.fb.group({
-			phone: [{ value: '' }],
-			name: [{ value: '' }],
-			email: [{ value: '' }],
-			dateOfCreation: [{ value: this.getDate(new Date()) }],
-			dateOfCompletion: [{ value: this.getDate(new Date()) }],
-			status: [{ value: '' }],
-			comment: [{ value: '' }],
+			phone: [{ value: '', disabled: false }],
+			name: [{ value: '', disabled: false }],
+			email: [{ value: '', disabled: false }],
+			dateOfCreation: [{ value: this.getDate(new Date()), disabled: false }],
+			dateOfCompletion: [{ value: this.getDate(new Date()), disabled: false }],
+			status: [{ value: '', disabled: false }],
+			comment: [{ value: '', disabled: false }],
 			orderItems: this.fb.array([]),
 		})
 
