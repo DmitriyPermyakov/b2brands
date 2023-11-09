@@ -3,7 +3,6 @@ import { OrderItem } from '../interfaces/orderItem.interface'
 
 import { Store, select } from '@ngrx/store'
 import { Observable, map, switchMap } from 'rxjs'
-import { orderItemSelector } from '../store/orders/order-item.selector'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { PhoneValidator } from '../validators/phoneValidator'
 import { ClientOrder } from '../interfaces/clientOrder.interface'
@@ -21,8 +20,8 @@ export class CustomerOrdersComponent implements OnInit {
 
 	constructor(private store: Store) {}
 	ngOnInit(): void {
-		this.orderItems$ = this.store.pipe(select(orderItemSelector))
-		this.isOrderNotEmpty$ = this.store.pipe(select(orderItemSelector)).pipe(map((order) => order.length > 0))
+		// this.orderItems$ = this.store.pipe(select(orderItemSelector))
+		// this.isOrderNotEmpty$ = this.store.pipe(select(orderItemSelector)).pipe(map((order) => order.length > 0))
 		this.form = new FormGroup({
 			name: new FormControl('', Validators.required),
 			phone: new FormControl('', [Validators.required, PhoneValidator.phoneValidator]),

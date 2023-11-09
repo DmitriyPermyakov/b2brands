@@ -17,12 +17,6 @@ import { ProductListComponent } from './product-list/product-list.component'
 import { ProductComponent } from './product/product.component'
 import { MainPageComponent } from './landing/main-page/main-page.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { StoreModule } from '@ngrx/store'
-import { StoreDevtoolsModule } from '@ngrx/store-devtools'
-import { EffectsModule } from '@ngrx/effects'
-import { gettingProductReducer } from './store/products/products.reducer'
-import { GettingProductEffect } from './store/products/products.effect'
-import { orderItemReducer } from './store/orders/order-item.reducer'
 import { LoginFormComponent } from './login-form/login-form.component'
 import { ProfileComponent } from './profile/profile.component'
 import { AdminOrdersListComponent } from './admin-orders-list/admin-orders-list.component'
@@ -40,8 +34,15 @@ import { PrintsListComponent } from './prints-list/prints-list.component'
 import { ImageBlockComponent } from './image-block/image-block.component'
 import { HttpClientModule } from '@angular/common/http'
 import { MobileMenuBtnComponent } from './mobile-menu-btn/mobile-menu-btn.component'
-import { ClickOutsideDirective } from './directives/click-outside.directive';
+import { ClickOutsideDirective } from './directives/click-outside.directive'
 import { ClickTimerDirective } from './directives/click-timer.directive'
+import { StoreModule } from '@ngrx/store'
+import { reducers, metaReducers } from './store'
+import { StoreDevtoolsModule } from '@ngrx/store-devtools'
+import { environment } from 'src/environments/environment.development'
+import { EffectsModule } from '@ngrx/effects'
+import { ProductsEffects } from './store/effects/products.effects'
+import * as fromProducts from './store/reducers/products.reducer'
 
 @NgModule({
 	declarations: [
@@ -76,17 +77,19 @@ import { ClickTimerDirective } from './directives/click-timer.directive'
 		ImageBlockComponent,
 		MobileMenuBtnComponent,
 		ClickOutsideDirective,
-  ClickTimerDirective,
+		ClickTimerDirective,
 	],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
 		FormsModule,
-		StoreModule.forRoot({ products: gettingProductReducer, orderItems: orderItemReducer }),
-		StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-		EffectsModule.forRoot([GettingProductEffect]),
 		ReactiveFormsModule,
 		HttpClientModule,
+		StoreModule.forRoot(reducers, { metaReducers }),
+		StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !environment.production }),
+		environment.production ? StoreDevtoolsModule.instrument() : [],
+		EffectsModule.forRoot([ProductsEffects]),
+		// StoreModule.forFeature(fromProducts.productsFeatureKey, fromProducts.reducer),
 	],
 	providers: [],
 	bootstrap: [AppComponent],

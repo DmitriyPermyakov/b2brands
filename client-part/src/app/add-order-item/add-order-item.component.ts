@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { Store, select } from '@ngrx/store'
 import { IProduct } from '../interfaces/product.interface'
-import { productSelector } from '../store/products/products.selector'
 import { Observable } from 'rxjs'
 import { ProductsService } from '../services/products.service'
 

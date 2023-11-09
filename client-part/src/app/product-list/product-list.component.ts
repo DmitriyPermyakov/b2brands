@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core'
 import { IProduct } from '../interfaces/product.interface'
 import { Store, select } from '@ngrx/store'
 import { Observable, Subscription } from 'rxjs'
-import { productSelector } from '../store/products/products.selector'
-import { gettingProductAction } from '../store/products/products.action'
 import { AuthService } from '../services/auth.service'
 import { IsMobileService } from '../services/is-mobile.service'
+import * as ProductActions from '../store/actions/products.actions'
+import * as ProductSelectors from '../store/selectors/products.selectors'
+import { AppState } from '../store'
 
 @Component({
 	selector: 'app-product-list',
@@ -13,13 +14,12 @@ import { IsMobileService } from '../services/is-mobile.service'
 	styleUrls: ['./product-list.component.css'],
 })
 export class ProductListComponent implements OnInit {
-	products$: Observable<ReadonlyArray<IProduct>>
+	products$: Observable<IProduct[]>
 
-	constructor(private store: Store, public auth: AuthService, public mobileService: IsMobileService) {
-		this.store.dispatch(gettingProductAction())
-	}
+	constructor(private store: Store<AppState>, public auth: AuthService, public mobileService: IsMobileService) {}
 
 	ngOnInit(): void {
-		this.products$ = this.store.pipe(select(productSelector))
+		this.store.dispatch(ProductActions.loadProductsAction())
+		this.products$ = this.store.pipe(select(ProductSelectors.selectAllProducts))
 	}
 }

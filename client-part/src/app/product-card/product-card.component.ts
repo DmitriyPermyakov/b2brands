@@ -5,9 +5,6 @@ import { Subscription, Observable, every } from 'rxjs'
 
 import { IProduct } from '../interfaces/product.interface'
 import { IProductColor } from '../interfaces/productColor.interface'
-import { productSelector } from '../store/products/products.selector'
-import { addOrderItemAction } from '../store/orders/order-item.action'
-import { orderItemSelector } from '../store/orders/order-item.selector'
 import { OrderItem } from '../interfaces/orderItem.interface'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { AuthService } from '../services/auth.service'
@@ -87,17 +84,17 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 			return
 		}
 
-		this.store.pipe(select(productSelector)).subscribe((p) => {
-			let product = p.find((el) => el.id == id)
+		// this.store.pipe(select(productSelector)).subscribe((p) => {
+		// 	let product = p.find((el) => el.id == id)
 
-			if (product !== undefined) this.product = product
-			else this.product = null
-		})
+		// 	if (product !== undefined) this.product = product
+		// 	else this.product = null
+		// })
 
 		// this.checkLocalStorageOnCurrentProduct()
 
 		this.setProductCardFormValues()
-		this.ordersItem$ = this.store.pipe(select(orderItemSelector))
+		// this.ordersItem$ = this.store.pipe(select(orderItemSelector))
 		this.checkAmoutOfOrderItems()
 	}
 
@@ -131,7 +128,7 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 				'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero itaque, ullam tenetur consequatur perspiciatis reiciendis in officia maiores? Adipisci facilis animi architecto voluptatum sapiente, dicta molestias delectus possimus nulla voluptas!',
 		}
 
-		this.store.dispatch(addOrderItemAction({ orderItem }))
+		// this.store.dispatch(addOrderItemAction({ orderItem }))
 		this.checkAmoutOfOrderItems()
 	}
 
