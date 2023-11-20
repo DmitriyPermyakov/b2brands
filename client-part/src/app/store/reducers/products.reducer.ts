@@ -5,19 +5,18 @@ import { IProduct } from 'src/app/interfaces/product.interface'
 
 export const productsFeatureKey = 'products'
 
-export interface State extends EntityState<IProduct> {
-	products: IProduct[] | null
-}
+export interface State extends EntityState<IProduct> {}
 export const adapter: EntityAdapter<IProduct> = createEntityAdapter<IProduct>()
 
-export const initialState: State = adapter.getInitialState({
-	products: [],
-})
+export const initialState: State = adapter.getInitialState({})
 
 export const { selectIds, selectEntities, selectAll, selectTotal } = adapter.getSelectors()
+
 export const reducer = createReducer(
 	initialState,
-	on(productActions.loadProductsSuccessAction, (state, action) => {
-		return adapter.setAll(action.products, state)
-	})
+	on(productActions.loadProductsSuccessAction, (state, action) => adapter.setAll(action.products, state)),
+	on(productActions.loadProductByIdSuccess, (state, action) => adapter.addOne(action.product, state)),
+	on(productActions.upsertProductSuccess, (state, action) => adapter.upsertOne(action.product, state)),
+	on(productActions.createProductSuccess, (state, action) => adapter.addOne(action.product, state)),
+	on(productActions.deleteProduct, (state, action) => adapter.removeOne(action.id, state))
 )

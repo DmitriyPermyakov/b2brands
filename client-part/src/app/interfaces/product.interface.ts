@@ -12,3 +12,10 @@ export interface IProduct {
 	newPrice: number
 	oldPrice: number
 }
+
+export interface UpdateProduct<IProduct> {
+	id: string
+	changes: Partial<IProduct>
+}
+
+type Update<IProduct> = UpdateProduct<IProduct>

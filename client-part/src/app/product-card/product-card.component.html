@@ -1,7 +1,7 @@
 <ng-container *ngIf="!isMobile">
 	<section class="products desktop">
 		<div class="container">
-			<button class="arrow-back-icon icon" [routerLink]="link">
+			<button class="arrow-back-icon icon" type="button" [routerLink]="link">
 				<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path
 						d="M20 3L5.2901 18.6293C4.5653 19.3994 4.5653 20.6006 5.2901 21.3707L20 37"
@@ -103,21 +103,22 @@
 					></app-prints-list>
 				</div>
 				<div class="to-cart-wrapper">
-					<button class="btn to-cart" *ngIf="!authService.IsAuthenticated" (click)="addToCart()">
+					<button class="btn to-cart" type="submit" *ngIf="!authService.IsAuthenticated" (click)="addToCart()">
 						В&nbsp;корзину
 					</button>
 					<ng-container *ngIf="authService.IsAuthenticated && isAdding">
-						<button class="btn">Добавить</button>
-						<button class="btn">Отмена</button>
+						<button class="btn" type="submit" (click)="addProduct()">Добавить</button>
+						<button class="btn" type="reset">Отмена</button>
 					</ng-container>
 					<ng-container *ngIf="isEdit && !isAdding">
-						<button class="btn">Сохранить</button>
-						<button class="btn">Отмена</button>
+						<button class="btn" type="submit" (click)="updateProduct()">Сохранить</button>
+						<button class="btn" type="reset" (click)="cancelEdit()">Отмена</button>
 					</ng-container>
 				</div>
 				<div class="card-buttons">
 					<button
 						class="button icon"
+						type="button"
 						[routerLink]="['/orders']"
 						[ngClass]="{ hidden: authService.IsAuthenticated }"
 					>
@@ -153,6 +154,7 @@
 					<ng-container *ngIf="authService.IsAuthenticated && !isAdding">
 						<button
 							class="button edit icon"
+							type="button"
 							(click)="edit()"
 							[ngClass]="{
 								showed: !isEdit,
@@ -176,7 +178,8 @@
 						</button>
 						<button
 							class="button back icon"
-							(click)="cancelEdit()"
+							type="submit"
+							(click)="removeProduct()"
 							[ngClass]="{
 								showed: isEdit,
 								hidden: !isEdit

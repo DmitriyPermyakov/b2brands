@@ -19,7 +19,11 @@ export class ProductListComponent implements OnInit {
 	constructor(private store: Store<AppState>, public auth: AuthService, public mobileService: IsMobileService) {}
 
 	ngOnInit(): void {
-		this.store.dispatch(ProductActions.loadProductsAction())
+		this.store.pipe(select(ProductSelectors.productCount)).subscribe((n) => {
+			if (n < 2) {
+				this.store.dispatch(ProductActions.loadProductsAction())
+			}
+		})
 		this.products$ = this.store.pipe(select(ProductSelectors.selectAllProducts))
 	}
 }

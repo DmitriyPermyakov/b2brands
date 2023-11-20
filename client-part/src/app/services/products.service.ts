@@ -217,4 +217,18 @@ export class ProductsService {
 	getByVendor(vendor: string): Observable<IProduct> {
 		return new Observable((s) => s.next(this.product.find((p) => p.code === vendor)))
 	}
+
+	create(product: IProduct): Observable<IProduct> {
+		return new Observable((s) => {
+			s.next(product)
+		})
+	}
+
+	update(product: IProduct): Observable<IProduct> {
+		return new Observable((s) => s.next(product))
+	}
+
+	remove(id: string) {
+		return new Observable((s) => s.next())
+	}
 }

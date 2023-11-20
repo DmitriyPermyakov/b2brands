@@ -88,7 +88,7 @@ export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	public colorPickerChangedValue(event) {
 		let color: IProductColor = {
-			id: 'new' + this.scroller.SelectedElementAttribute,
+			id: 'new',
 			value: event.target.value,
 			frontSmallUrl: '',
 			bottomSmallUrl: '',
@@ -105,6 +105,7 @@ export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 		)
 		if (!this.isMobile) {
 			//если добавлен первый элемент, то инициализируется скроллер, а в скроллере
+
 			if (this.colorsControl.value.length < 2) this.setScroller()
 			else {
 				this.scroller.addItem(this.colorsControl.value.length)
@@ -114,6 +115,11 @@ export class ColorsListComponent implements OnInit, AfterViewInit, OnDestroy {
 			this.setSelected(this.colorsControl.value.length - 1)
 			this.emitSelectedColor(this.getSelectedElement().getAttribute('data-value'))
 		}
+	}
+
+	public removeColor(id: string) {
+		// #TODO: проверить количество элементов в colorsControl и, если элементов 0, то удалить подписки на скролл
+		// #TODO: эмитить событие удаления, чтобы удалить изображения с сервера
 	}
 
 	ngOnDestroy(): void {

@@ -1,7 +1,7 @@
 import { AfterContentInit, AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Store, select } from '@ngrx/store'
-import { Subscription, Observable, every } from 'rxjs'
+import { Subscription, Observable, every, mergeMap } from 'rxjs'
 
 import { IProduct } from '../interfaces/product.interface'
 import { IProductColor } from '../interfaces/productColor.interface'
@@ -9,6 +9,9 @@ import { OrderItem } from '../interfaces/orderItem.interface'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { AuthService } from '../services/auth.service'
 import { IsMobileService } from '../services/is-mobile.service'
+import { productExists, selectProductById } from '../store/selectors/products.selectors'
+import { ProductsService } from '../services/products.service'
+import * as ProductActions from '../store/actions/products.actions'
 
 @Component({
 	selector: 'app-product-card',
@@ -48,6 +51,7 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 	public prints!: string[]
 	public link: string
 
+	private id: string
 	private _selectedPrint: string
 	private activeMobilePanel: HTMLElement
 	private activeMobileButton: HTMLElement
@@ -56,46 +60,56 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 	private productAmount: number = 1
 
 	private ordersItem$: Observable<ReadonlyArray<OrderItem>>
+	private isProductInStore$: Observable<boolean>
+	private product$: Observable<IProduct>
 
+	private productSub: Subscription
 	private changeImageOnScrollSub!: Subscription
 	private changeImageOnClickSub!: Subscription
 	private amountOfOrdersSub: Subscription
 
 	constructor(
+		public authService: AuthService,
 		private activatedRoute: ActivatedRoute,
+		private router: Router,
 		private store: Store,
 		private fb: FormBuilder,
-		private mobileService: IsMobileService,
-		public authService: AuthService
+		private mobileService: IsMobileService
 	) {
 		this.isMobile = this.mobileService.isMobile
 	}
 
 	ngOnInit(): void {
 		this.initProductCardForm()
-		// let id = this.activatedRoute.snapshot.paramMap.get('id')
 		this.link = this.authService.IsAuthenticated ? '/admin/products' : '/products'
-		let id = this.activatedRoute.snapshot.params['id']
+		this.id = this.activatedRoute.snapshot.params['id']
 
-		if (id === 'create') {
+		if (this.id === 'create') {
 			this.isAdding = true
 			this.isEdit = true
 			this.enableFormControls()
 			return
 		}
 
-		// this.store.pipe(select(productSelector)).subscribe((p) => {
-		// 	let product = p.find((el) => el.id == id)
+		this.isProductInStore$ = this.store.pipe(select(productExists(this.id)))
+		console.log('call ngOnInit')
+		this.product$ = this.isProductInStore$.pipe(
+			mergeMap((isProductInStore) => {
+				if (!isProductInStore) {
+					this.store.dispatch(ProductActions.loadProductById({ id: this.id }))
+				}
 
-		// 	if (product !== undefined) this.product = product
-		// 	else this.product = null
-		// })
+				return this.store.pipe(select(selectProductById(this.id)))
+			})
+		)
 
-		// this.checkLocalStorageOnCurrentProduct()
+		this.productSub = this.product$.subscribe((p) => {
+			this.product = p
+		})
 
 		this.setProductCardFormValues()
 		// this.ordersItem$ = this.store.pipe(select(orderItemSelector))
-		this.checkAmoutOfOrderItems()
+		// this.checkAmoutOfOrderItems()
 	}
 
 	ngAfterContentInit(): void {}
@@ -112,6 +126,7 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 
 		if (this.changeImageOnClickSub) this.changeImageOnClickSub.unsubscribe()
 		if (this.amountOfOrdersSub) this.amountOfOrdersSub.unsubscribe()
+		if (this.productSub) this.productSub.unsubscribe()
 	}
 
 	public addToCart() {
@@ -148,6 +163,23 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 	public edit() {
 		this.isEdit = true
 		this.enableFormControls()
+	}
+
+	public addProduct() {
+		let product: IProduct = this.setProductFromCard()
+		this.store.dispatch(ProductActions.createProduct({ product: product }))
+		this.router.navigate(['/admin/products'])
+	}
+
+	public updateProduct() {
+		let product: IProduct = this.setProductFromCard()
+
+		this.store.dispatch(ProductActions.upsertProduct({ product: product }))
+	}
+
+	public removeProduct() {
+		this.store.dispatch(ProductActions.deleteProduct({ id: this.id }))
+		this.router.navigate(['/admin/products'])
 	}
 
 	public cancelEdit() {
@@ -217,11 +249,18 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 		})
 	}
 
-	private checkLocalStorageOnCurrentProduct() {
-		if (this.product === null) {
-			this.product = JSON.parse(localStorage.getItem('currentProduct'))
-		} else {
-			localStorage.setItem('currentProduct', JSON.stringify(this.product))
+	private setProductFromCard(): IProduct {
+		return {
+			// id: this.productCardForm.get('id').value,
+			id: Math.random().toString(),
+			name: this.productCardForm.get('name').value,
+			code: this.productCardForm.get('code').value,
+			description: this.productCardForm.get('description').value,
+			newPrice: this.productCardForm.get('newPrice').value,
+			oldPrice: this.productCardForm.get('oldPrice').value,
+			print: this.productCardForm.get('prints').value,
+			productColors: this.productCardForm.get('colors').value,
+			productProps: this.productCardForm.get('properties').value,
 		}
 	}
 
