@@ -1,5 +1,11 @@
 <div class="quantity" [ngClass]="{ edit: !IsDisabled }">
-	<button class="minus icon" (click)="decrease()" [disabled]="IsDisabled" [ngClass]="{ showed: !IsDisabled }">
+	<button
+		class="minus icon"
+		type="button"
+		(click)="decrease()"
+		[disabled]="IsDisabled"
+		[ngClass]="{ showed: !IsDisabled }"
+	>
 		<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path d="M1 13H25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
 		</svg>
@@ -15,7 +21,13 @@
 		(blur)="onBlur($event)"
 		[value]="quantityString"
 	/>
-	<button class="plus icon" (click)="increase()" [disabled]="IsDisabled" [ngClass]="{ showed: !IsDisabled }">
+	<button
+		class="plus icon"
+		type="button"
+		(click)="increase()"
+		[disabled]="IsDisabled"
+		[ngClass]="{ showed: !IsDisabled }"
+	>
 		<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path d="M1 13H25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
 			<path d="M13 1L13 25" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />

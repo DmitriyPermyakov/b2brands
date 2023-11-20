@@ -103,16 +103,16 @@
 					></app-prints-list>
 				</div>
 				<div class="to-cart-wrapper">
-					<button class="btn to-cart" type="submit" *ngIf="!authService.IsAuthenticated" (click)="addToCart()">
+					<button class="btn to-cart" type="button" *ngIf="!authService.IsAuthenticated" (click)="addToCart()">
 						В&nbsp;корзину
 					</button>
 					<ng-container *ngIf="authService.IsAuthenticated && isAdding">
-						<button class="btn" type="submit" (click)="addProduct()">Добавить</button>
-						<button class="btn" type="reset">Отмена</button>
+						<button class="btn" type="button" (click)="addProduct()">Добавить</button>
+						<button class="btn" type="button">Отмена</button>
 					</ng-container>
 					<ng-container *ngIf="isEdit && !isAdding">
-						<button class="btn" type="submit" (click)="updateProduct()">Сохранить</button>
-						<button class="btn" type="reset" (click)="cancelEdit()">Отмена</button>
+						<button class="btn" type="button" (click)="updateProduct()">Сохранить</button>
+						<button class="btn" type="button" (click)="cancelEdit()">Отмена</button>
 					</ng-container>
 				</div>
 				<div class="card-buttons">
@@ -178,7 +178,7 @@
 						</button>
 						<button
 							class="button back icon"
-							type="submit"
+							type="button"
 							(click)="removeProduct()"
 							[ngClass]="{
 								showed: isEdit,

@@ -96,6 +96,7 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 		this.product$ = this.isProductInStore$.pipe(
 			mergeMap((isProductInStore) => {
 				if (!isProductInStore) {
+					console.log('call isProductInStore')
 					this.store.dispatch(ProductActions.loadProductById({ id: this.id }))
 				}
 
@@ -106,6 +107,8 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 		this.productSub = this.product$.subscribe((p) => {
 			this.product = p
 		})
+
+		this.productSub.unsubscribe()
 
 		this.setProductCardFormValues()
 		// this.ordersItem$ = this.store.pipe(select(orderItemSelector))
@@ -127,6 +130,7 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 		if (this.changeImageOnClickSub) this.changeImageOnClickSub.unsubscribe()
 		if (this.amountOfOrdersSub) this.amountOfOrdersSub.unsubscribe()
 		if (this.productSub) this.productSub.unsubscribe()
+		console.log('on destroy')
 	}
 
 	public addToCart() {
@@ -172,9 +176,12 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 	}
 
 	public updateProduct() {
+		//какого хуя?
 		let product: IProduct = this.setProductFromCard()
+		product.id = this.id
 
 		this.store.dispatch(ProductActions.upsertProduct({ product: product }))
+		this.router.navigate(['/admin/products'])
 	}
 
 	public removeProduct() {
@@ -252,7 +259,7 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 	private setProductFromCard(): IProduct {
 		return {
 			// id: this.productCardForm.get('id').value,
-			id: Math.random().toString(),
+			id: '0',
 			name: this.productCardForm.get('name').value,
 			code: this.productCardForm.get('code').value,
 			description: this.productCardForm.get('description').value,
