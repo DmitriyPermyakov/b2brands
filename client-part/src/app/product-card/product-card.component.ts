@@ -1,7 +1,7 @@
 import { AfterContentInit, AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Store, select } from '@ngrx/store'
-import { Subscription, Observable, every, mergeMap } from 'rxjs'
+import { Subscription, Observable, every, mergeMap, tap, map } from 'rxjs'
 
 import { IProduct } from '../interfaces/product.interface'
 import { IProductColor } from '../interfaces/productColor.interface'
@@ -12,6 +12,8 @@ import { IsMobileService } from '../services/is-mobile.service'
 import { productExists, selectProductById } from '../store/selectors/products.selectors'
 import { ProductsService } from '../services/products.service'
 import * as ProductActions from '../store/actions/products.actions'
+import * as OrderItemActions from '../store/actions/order-items.actions'
+import * as OrderItemsSelectors from '../store/selectors/order-items.selectors'
 
 @Component({
 	selector: 'app-product-card',
@@ -43,7 +45,7 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 	public isAdding: boolean = false
 	public isMobile: boolean = false
 
-	public cartIconDotActive: boolean = false
+	public cartIconDotActive$: Observable<boolean>
 
 	public product!: IProduct
 	public productColor!: IProductColor
@@ -59,7 +61,6 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 	private printCount: number = 0
 	private productAmount: number = 1
 
-	private ordersItem$: Observable<ReadonlyArray<OrderItem>>
 	private isProductInStore$: Observable<boolean>
 	private product$: Observable<IProduct>
 
@@ -112,6 +113,10 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 
 		this.setProductCardFormValues()
 		// this.ordersItem$ = this.store.pipe(select(orderItemSelector))
+		this.cartIconDotActive$ = this.store.pipe(
+			select(OrderItemsSelectors.orderItemsCount),
+			map((c) => c > 0)
+		)
 		// this.checkAmoutOfOrderItems()
 	}
 
@@ -147,8 +152,7 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 				'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero itaque, ullam tenetur consequatur perspiciatis reiciendis in officia maiores? Adipisci facilis animi architecto voluptatum sapiente, dicta molestias delectus possimus nulla voluptas!',
 		}
 
-		// this.store.dispatch(addOrderItemAction({ orderItem }))
-		this.checkAmoutOfOrderItems()
+		this.store.dispatch(OrderItemActions.createOrderItem({ orderItem: orderItem }))
 	}
 
 	public onColorChanged(event: IProductColor) {
@@ -176,7 +180,6 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 	}
 
 	public updateProduct() {
-		//какого хуя?
 		let product: IProduct = this.setProductFromCard()
 		product.id = this.id
 
@@ -269,9 +272,5 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 			productColors: this.productCardForm.get('colors').value,
 			productProps: this.productCardForm.get('properties').value,
 		}
-	}
-
-	private checkAmoutOfOrderItems() {
-		this.amountOfOrdersSub = this.ordersItem$.subscribe((o) => (this.cartIconDotActive = o.length > 0))
 	}
 }

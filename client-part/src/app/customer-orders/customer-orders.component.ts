@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core'
 import { OrderItem } from '../interfaces/orderItem.interface'
 
 import { Store, select } from '@ngrx/store'
-import { Observable, map, switchMap } from 'rxjs'
+import { Observable, isEmpty, map, switchMap, tap } from 'rxjs'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { PhoneValidator } from '../validators/phoneValidator'
 import { ClientOrder } from '../interfaces/clientOrder.interface'
+import * as OrderItemsSelector from '../store/selectors/order-items.selectors'
+import * as OrderItemsAction from '../store/actions/order-items.actions'
 
 @Component({
 	selector: 'app-customer-orders',
@@ -20,8 +22,17 @@ export class CustomerOrdersComponent implements OnInit {
 
 	constructor(private store: Store) {}
 	ngOnInit(): void {
-		// this.orderItems$ = this.store.pipe(select(orderItemSelector))
-		// this.isOrderNotEmpty$ = this.store.pipe(select(orderItemSelector)).pipe(map((order) => order.length > 0))
+		this.isOrderNotEmpty$ = this.store.pipe(
+			select(OrderItemsSelector.orderItemsCount),
+			map((c) => c > 0),
+			tap((hasItems) => {
+				console.log('has items', hasItems)
+				if (!hasItems) this.store.dispatch(OrderItemsAction.loadOrderItemsFromLocalStorage())
+			})
+		)
+
+		this.orderItems$ = this.store.pipe(select(OrderItemsSelector.selectAllOrderItems))
+
 		this.form = new FormGroup({
 			name: new FormControl('', Validators.required),
 			phone: new FormControl('', [Validators.required, PhoneValidator.phoneValidator]),

@@ -140,7 +140,7 @@
 							/>
 						</svg>
 						<svg
-							*ngIf="cartIconDotActive"
+							*ngIf="cartIconDotActive$ | async"
 							class="dot"
 							width="3"
 							height="3"
@@ -242,7 +242,7 @@
 							/>
 						</svg>
 						<svg
-							*ngIf="cartIconDotActive"
+							*ngIf="cartIconDotActive$ | async"
 							class="dot"
 							width="3"
 							height="3"

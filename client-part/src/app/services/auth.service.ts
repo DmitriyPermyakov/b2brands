@@ -12,7 +12,7 @@ export class AuthService {
 
 	private _isAuthenticated: boolean
 	public get IsAuthenticated(): boolean {
-		return true
+		return false
 	}
 
 	public set IsAuthenticated(value) {}

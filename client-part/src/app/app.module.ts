@@ -42,7 +42,9 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { environment } from 'src/environments/environment.development'
 import { EffectsModule } from '@ngrx/effects'
 import { ProductsEffects } from './store/effects/products.effects'
-import * as fromProducts from './store/reducers/products.reducer'
+import * as fromProducts from './store/reducers/products.reducer';
+import * as fromOrderItems from './store/reducers/order-items.reducer';
+import { OrderItemsEffects } from './store/effects/order-items.effects'
 
 @NgModule({
 	declarations: [
@@ -88,7 +90,8 @@ import * as fromProducts from './store/reducers/products.reducer'
 		StoreModule.forRoot(reducers, { metaReducers }),
 		StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !environment.production }),
 		environment.production ? StoreDevtoolsModule.instrument() : [],
-		EffectsModule.forRoot([ProductsEffects]),
+		EffectsModule.forRoot([ProductsEffects, OrderItemsEffects]),
+		StoreModule.forFeature(fromOrderItems.orderItemsFeatureKey, fromOrderItems.reducer),
 		// StoreModule.forFeature(fromProducts.productsFeatureKey, fromProducts.reducer),
 	],
 	providers: [],
