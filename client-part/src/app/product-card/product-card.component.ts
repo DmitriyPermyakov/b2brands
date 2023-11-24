@@ -1,7 +1,7 @@
 import { AfterContentInit, AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Store, select } from '@ngrx/store'
-import { Subscription, Observable, every, mergeMap, tap, map } from 'rxjs'
+import { Subscription, Observable, every, mergeMap, tap, map, of, switchMap, concatMap, catchError } from 'rxjs'
 
 import { IProduct } from '../interfaces/product.interface'
 import { IProductColor } from '../interfaces/productColor.interface'
@@ -45,6 +45,7 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 	public isAdding: boolean = false
 	public isMobile: boolean = false
 
+	// public cartIconDotActive: boolean
 	public cartIconDotActive$: Observable<boolean>
 
 	public product!: IProduct
@@ -93,11 +94,10 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 		}
 
 		this.isProductInStore$ = this.store.pipe(select(productExists(this.id)))
-		console.log('call ngOnInit')
+
 		this.product$ = this.isProductInStore$.pipe(
 			mergeMap((isProductInStore) => {
 				if (!isProductInStore) {
-					console.log('call isProductInStore')
 					this.store.dispatch(ProductActions.loadProductById({ id: this.id }))
 				}
 
@@ -112,11 +112,16 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 		this.productSub.unsubscribe()
 
 		this.setProductCardFormValues()
-		// this.ordersItem$ = this.store.pipe(select(orderItemSelector))
+
+		this.store.dispatch(OrderItemActions.loadOrderItemsFromLocalStorage())
+
 		this.cartIconDotActive$ = this.store.pipe(
 			select(OrderItemsSelectors.orderItemsCount),
-			map((c) => c > 0)
+			map((count) => count > 0)
 		)
+
+		// this.amountOfOrdersSub = this.cartIconDotActive$.subscribe((hasItems) => (this.cartIconDotActive = hasItems))
+
 		// this.checkAmoutOfOrderItems()
 	}
 
@@ -135,7 +140,6 @@ export class ProductCardComponent implements OnInit, AfterContentInit, AfterView
 		if (this.changeImageOnClickSub) this.changeImageOnClickSub.unsubscribe()
 		if (this.amountOfOrdersSub) this.amountOfOrdersSub.unsubscribe()
 		if (this.productSub) this.productSub.unsubscribe()
-		console.log('on destroy')
 	}
 
 	public addToCart() {

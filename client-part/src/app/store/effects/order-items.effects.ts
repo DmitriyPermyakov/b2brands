@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import * as OrderItemsActions from '../actions/order-items.actions'
 import * as OrderItemsSelectors from '../selectors/order-items.selectors'
-import { exhaustMap, map, merge, mergeMap, of, switchMap, tap } from 'rxjs'
+import { catchError, concatMap, exhaustMap, map, merge, mergeMap, of, switchMap, tap } from 'rxjs'
 import { Store, select } from '@ngrx/store'
 
 @Injectable()
@@ -55,8 +55,12 @@ export class OrderItemsEffects {
 	loadOrderItems$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(OrderItemsActions.loadOrderItemsFromLocalStorage),
-			switchMap(() =>
+			concatMap(() =>
 				of(JSON.parse(localStorage.getItem('orderItems'))).pipe(
+					map((item) => {
+						if (item == null) return []
+						else return item
+					}),
 					map((item) => OrderItemsActions.loadOrderItems({ orderItems: item }))
 				)
 			)

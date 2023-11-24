@@ -15,7 +15,7 @@ import * as OrderItemsAction from '../store/actions/order-items.actions'
 	styleUrls: ['./customer-orders.component.css'],
 })
 export class CustomerOrdersComponent implements OnInit {
-	public orderItems$: Observable<ReadonlyArray<OrderItem>>
+	public orderItems$: Observable<OrderItem[]>
 	public isOrderNotEmpty$: Observable<boolean>
 	public form: FormGroup
 	public isFormVisible: boolean = false
@@ -26,7 +26,6 @@ export class CustomerOrdersComponent implements OnInit {
 			select(OrderItemsSelector.orderItemsCount),
 			map((c) => c > 0),
 			tap((hasItems) => {
-				console.log('has items', hasItems)
 				if (!hasItems) this.store.dispatch(OrderItemsAction.loadOrderItemsFromLocalStorage())
 			})
 		)
@@ -46,7 +45,7 @@ export class CustomerOrdersComponent implements OnInit {
 	submit() {
 		if (this.form.valid) {
 			let orderItems: OrderItem[] = []
-			let orderSub = this.orderItems$.pipe(map((el) => [...el])).subscribe((el) => (orderItems = el))
+			let orderSub = this.orderItems$.subscribe((orders) => (orderItems = orders))
 
 			const clientOrder: ClientOrder = {
 				id: '0000-0000-0000-0000',
