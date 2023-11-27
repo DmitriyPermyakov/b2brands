@@ -22,12 +22,11 @@ export class CustomerOrdersComponent implements OnInit {
 
 	constructor(private store: Store) {}
 	ngOnInit(): void {
+		this.store.dispatch(OrderItemsAction.loadOrderItemsFromLocalStorage())
+
 		this.isOrderNotEmpty$ = this.store.pipe(
 			select(OrderItemsSelector.orderItemsCount),
-			map((c) => c > 0),
-			tap((hasItems) => {
-				if (!hasItems) this.store.dispatch(OrderItemsAction.loadOrderItemsFromLocalStorage())
-			})
+			map((c) => c > 0)
 		)
 
 		this.orderItems$ = this.store.pipe(select(OrderItemsSelector.selectAllOrderItems))

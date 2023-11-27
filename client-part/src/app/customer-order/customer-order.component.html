@@ -1,8 +1,8 @@
-<div class="order desktop">
+<div class="order desktop" [formGroup]="form">
 	<p class="order-number">1/2</p>
 	<img class="order-image" [src]="productItem.color.rightSmallUrl" alt="" />
 	<div class="count-of-items">
-		<app-quantity [value]="productItem.amount" [postfix]="'шт.'"></app-quantity>
+		<app-quantity formControlName="amount" [IsDisabled]="false" [postfix]="'шт.'"></app-quantity>
 	</div>
 	<div class="order-description">
 		<label class="name-label" for="name">Название:</label>

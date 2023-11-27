@@ -1,4 +1,14 @@
-import { AfterContentInit, AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, forwardRef } from '@angular/core'
+import {
+	AfterContentInit,
+	AfterViewInit,
+	ChangeDetectorRef,
+	Component,
+	EventEmitter,
+	Input,
+	OnInit,
+	Output,
+	forwardRef,
+} from '@angular/core'
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
 
 @Component({
@@ -24,10 +34,10 @@ export class QuantityComponent implements OnInit, ControlValueAccessor, AfterCon
 		if (val < 1) {
 			this._value = 1
 
-			this.onChanged(this._value)
+			this.onChange(this._value)
 		} else {
 			this._value = val
-			this.onChanged(this._value)
+			this.onChange(this._value)
 		}
 	}
 
@@ -44,7 +54,7 @@ export class QuantityComponent implements OnInit, ControlValueAccessor, AfterCon
 
 	public inputLenght: number
 
-	public onChanged = (value: number) => {}
+	public onChange = (value: number) => {}
 	public onTouched = () => {}
 
 	private _disabled: boolean = true
@@ -72,7 +82,7 @@ export class QuantityComponent implements OnInit, ControlValueAccessor, AfterCon
 		this.value = value
 	}
 	registerOnChange(fn: any): void {
-		this.onChanged = fn
+		this.onChange = fn
 	}
 	registerOnTouched(fn: any): void {
 		this.onTouched = fn

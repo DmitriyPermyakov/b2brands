@@ -1,25 +1,38 @@
-import { Component, Input } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 import { OrderItem } from '../interfaces/orderItem.interface'
 import { Store } from '@ngrx/store'
+import * as OrderItemsActions from '../store/actions/order-items.actions'
+import { FormControl, FormGroup } from '@angular/forms'
 
 @Component({
 	selector: 'app-customer-order',
 	templateUrl: './customer-order.component.html',
 	styleUrls: ['./customer-order.component.css'],
 })
-export class CustomerOrderComponent {
+export class CustomerOrderComponent implements OnInit {
 	@Input() public productItem!: OrderItem
+
+	public form: FormGroup
 
 	constructor(private store: Store) {}
 
-	changeAmount(event: number) {
-		let id: string = this.productItem.id
-		let amount: number = event
-		// this.store.dispatch(changeAmountOfOrderItemAction({ id, amount }))
+	ngOnInit(): void {
+		this.form = new FormGroup({
+			amount: new FormControl(this.productItem.amount),
+		})
+
+		this.form.get('amount').valueChanges.subscribe((event) => this.changeAmount(event))
+	}
+
+	changeAmount(amountValue: number) {
+		let orderItem = Object.assign({}, this.productItem)
+		orderItem = { ...orderItem, amount: amountValue }
+		console.log(orderItem)
+		this.store.dispatch(OrderItemsActions.upsetOrderItem({ orderItem: orderItem }))
 	}
 
 	removeItem() {
 		let orderItemId: string = this.productItem.id
-		// this.store.dispatch(removeOrderItemAction({ orderItemId }))
+		this.store.dispatch(OrderItemsActions.removeOrderItem({ id: orderItemId }))
 	}
 }
