@@ -23,7 +23,7 @@
 	</li>
 	<app-mobile-menu-btn (onMenuClick)="toggleVisibility()"></app-mobile-menu-btn>
 	<ul class="nav-bar__items" *ngIf="isNavBarVisible">
-		<li class="nav-bar__items_item" routerLink="/products" routerLinkActive="active">Продукция</li>
+		<li class="nav-bar__items_item" [routerLink]="link" routerLinkActive="active">Продукция</li>
 		<li class="nav-bar__items_item" (click)="toWorkStage()">Этапы работ</li>
 		<li class="nav-bar__items_icon">
 			<svg width="74" height="74" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">

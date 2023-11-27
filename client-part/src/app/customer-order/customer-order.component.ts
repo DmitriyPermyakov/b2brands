@@ -3,6 +3,7 @@ import { OrderItem } from '../interfaces/orderItem.interface'
 import { Store } from '@ngrx/store'
 import * as OrderItemsActions from '../store/actions/order-items.actions'
 import { FormControl, FormGroup } from '@angular/forms'
+import { IsMobileService } from '../services/is-mobile.service'
 
 @Component({
 	selector: 'app-customer-order',
@@ -13,8 +14,11 @@ export class CustomerOrderComponent implements OnInit {
 	@Input() public productItem!: OrderItem
 
 	public form: FormGroup
+	public isMobile: boolean = false
 
-	constructor(private store: Store) {}
+	constructor(private store: Store, private mobileService: IsMobileService) {
+		this.isMobile = this.mobileService.isMobile
+	}
 
 	ngOnInit(): void {
 		this.form = new FormGroup({
