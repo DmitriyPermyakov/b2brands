@@ -14,12 +14,15 @@ export class ListContainerComponent implements OnInit {
 		switch (this.activatedRoute.snapshot.routeConfig.path) {
 			case 'active-orders':
 				this.text = 'active'
+				//dispatch active
 				break
 			case 'completed-orders':
 				this.text = 'completed'
+				//dispatch completed
 				break
 			case 'products':
 				this.text = 'products'
+				//nothing
 				break
 		}
 	}
