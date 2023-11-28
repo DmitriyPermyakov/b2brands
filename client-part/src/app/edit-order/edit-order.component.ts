@@ -132,11 +132,15 @@ export class EditOrderComponent implements OnInit, OnDestroy {
 
 	onSubmit(): void {
 		this.disableFormControls()
-		// #TODO: в позиции нужно вычислять стоимость
-		console.log(this.form.getRawValue())
 
+		let order = this.form.getRawValue()
+		order = { ...order, id: '0' }
 		if (this.createMode) console.log('create')
-		else console.log('patch')
+		else {
+			// console.log(this.form.getRawValue())
+
+			this.store.dispatch(OrderAction.upsertOrder({ order: order }))
+		}
 	}
 
 	private createEmptyForm(): void {

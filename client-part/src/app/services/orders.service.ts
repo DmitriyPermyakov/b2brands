@@ -18,4 +18,8 @@ export class OrdersService {
 		let order = JSON.parse(localStorage.getItem('client-order'))
 		return of(order)
 	}
+
+	updateOrder(order: ClientOrder): Observable<ClientOrder> {
+		return of(order)
+	}
 }
