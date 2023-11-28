@@ -1,14 +1,14 @@
 <div class="order" [routerLink]="['/admin/orders/3']">
-	<p class="number">1</p>
+	<p class="number">{{ number + 1 }}</p>
 	<div class="contacts">
-		<p class="phone">+7 812 345 45 45</p>
-		<p class="name">Смирнова Валентина</p>
+		<p class="phone">{{ order.contacts.phone }}</p>
+		<p class="name">{{ order.contacts.name }}</p>
 	</div>
-	<p class="date-of-creation">23.12.2022</p>
-	<p class="date-of-completion">23.02.2023</p>
-	<p class="status">В производстве</p>
-	<p class="comment">Сделать как можно быстрее, т.к. заказ попал на праздничние дни.</p>
-	<p class="total-amount">50 748p.</p>
+	<p class="date-of-creation">{{ order.dateOfCreation | date : 'd.M.yyyy' }}</p>
+	<p class="date-of-completion">{{ order.dateOfCompletion | date : 'd.M.yyyy' }}</p>
+	<p class="status">{{ order.status }}</p>
+	<p class="comment">{{ order.comment }}</p>
+	<p class="total-amount">{{ totalPrice + 'р.' }}</p>
 	<div class="edit-icon icon">
 		<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path

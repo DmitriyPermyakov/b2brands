@@ -1,0 +1,16 @@
+import { Injectable } from '@angular/core'
+import { Observable, of } from 'rxjs'
+import { ClientOrder } from '../interfaces/clientOrder.interface'
+
+@Injectable({
+	providedIn: 'root',
+})
+export class OrdersService {
+	constructor() {}
+
+	getActiveOrders(): Observable<ClientOrder[]> {
+		let activeOrders: Array<ClientOrder> = []
+		activeOrders.push(JSON.parse(localStorage.getItem('client-order')))
+		return of(Array.from(activeOrders))
+	}
+}

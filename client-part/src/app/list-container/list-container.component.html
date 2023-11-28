@@ -8,15 +8,5 @@
 </div>
 <div class="container">
 	<p class="active-orders-label">Активные заказы:</p>
-	<app-admin-order></app-admin-order>
-	<app-admin-order></app-admin-order>
-	<app-admin-order></app-admin-order>
-	<app-admin-order></app-admin-order>
-	<app-admin-order></app-admin-order>
-	<app-admin-order></app-admin-order>
-	<app-admin-order></app-admin-order>
-	<app-admin-order></app-admin-order>
-	<app-admin-order></app-admin-order>
-	<app-admin-order></app-admin-order>
-	<app-admin-order></app-admin-order>
+	<app-admin-order *ngFor="let order of orders$ | async; index as i" [order]="order" [number]="i"></app-admin-order>
 </div>

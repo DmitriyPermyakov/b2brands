@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
+import { Store, select } from '@ngrx/store'
+import * as OrdersActions from '../store/actions/orders.actions'
+import * as OrdersSelectors from '../store/selectors/orders.selectors'
+import { ClientOrder } from '../interfaces/clientOrder.interface'
+import { Observable } from 'rxjs'
 
 @Component({
 	selector: 'app-list-container',
@@ -8,13 +13,15 @@ import { ActivatedRoute } from '@angular/router'
 })
 export class ListContainerComponent implements OnInit {
 	public text: string = ''
-	constructor(private activatedRoute: ActivatedRoute) {}
+	public orders$: Observable<ClientOrder[]>
+	constructor(private activatedRoute: ActivatedRoute, private store: Store) {}
 
 	ngOnInit(): void {
 		switch (this.activatedRoute.snapshot.routeConfig.path) {
 			case 'active-orders':
 				this.text = 'active'
-				//dispatch active
+				this.store.dispatch(OrdersActions.loadActiveOrders())
+				this.orders$ = this.store.pipe(select(OrdersSelectors.selectAllOrders))
 				break
 			case 'completed-orders':
 				this.text = 'completed'
