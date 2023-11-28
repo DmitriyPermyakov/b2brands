@@ -66,6 +66,9 @@ export class ProductPropertiesComponent implements OnInit {
 	}
 
 	removeValue(index: number): void {
-		this.props.value.splice(index, 1)
+		let arr = Array.from(this.props.value)
+		arr.splice(index, 1)
+		this.props.patchValue(arr)
+		// console.log(Array.from(this.props.value).splice(index, 1))
 	}
 }
