@@ -3,9 +3,12 @@ import { ClientOrder } from '../interfaces/clientOrder.interface'
 import { IProduct } from '../interfaces/product.interface'
 import { OrderItem } from '../interfaces/orderItem.interface'
 import { FormArray, FormBuilder, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms'
-import { Subscription } from 'rxjs'
+import { Observable, Subscription, mergeMap } from 'rxjs'
 import { IsMobileService } from '../services/is-mobile.service'
 import { ActivatedRoute } from '@angular/router'
+import { Store, select } from '@ngrx/store'
+import * as OrderAction from '../store/actions/orders.actions'
+import * as OrdersSelectors from '../store/selectors/orders.selectors'
 
 @Component({
 	selector: 'app-edit-order',
@@ -26,35 +29,58 @@ export class EditOrderComponent implements OnInit, OnDestroy {
 	}
 
 	private createMode: boolean = false
+	private id: string
+
+	private orderExistsInStore$: Observable<boolean>
+	private order$: Observable<ClientOrder>
 
 	private formArrayChangeSub: Subscription
+	private orderSub: Subscription
 
 	constructor(
 		private fb: FormBuilder,
 		private changeDetectorRef: ChangeDetectorRef,
 		private mobileService: IsMobileService,
 		private activatedRoute: ActivatedRoute,
-		private nnfb: NonNullableFormBuilder
+		private nnfb: NonNullableFormBuilder,
+		private store: Store
 	) {
 		this.isMobile = this.mobileService.isMobile
 	}
 
 	ngOnInit(): void {
-		this.activatedRoute.snapshot.paramMap.get('id') === 'create'
-			? (this.createMode = true)
-			: (this.createMode = false)
+		this.id = this.activatedRoute.snapshot.paramMap.get('id')
+
+		this.createMode = this.id === 'create' ? (this.createMode = true) : (this.createMode = false)
+
 		if (this.createMode) {
 			this.createEmptyForm()
 			this.enableFormsControls()
 			return
 		}
-		this.order = JSON.parse(localStorage.getItem('client-order')) as ClientOrder
+		// this.order = JSON.parse(localStorage.getItem('client-order')) as ClientOrder
+
+		this.orderExistsInStore$ = this.store.pipe(select(OrdersSelectors.orderExists(this.id)))
+
+		this.order$ = this.orderExistsInStore$.pipe(
+			mergeMap((isOrderInStore) => {
+				if (!isOrderInStore) {
+					this.store.dispatch(OrderAction.loadOrderById({ id: this.id }))
+				}
+
+				return this.store.pipe(select(OrdersSelectors.selectOrderById(this.id)))
+			})
+		)
+
+		this.orderSub = this.order$.subscribe((o) => (this.order = o))
+
 		this.initForm()
 		this.disableFormControls()
 	}
 
 	ngOnDestroy(): void {
 		if (this.formArrayChangeSub) this.formArrayChangeSub.unsubscribe()
+		if (this.orderSub) this.orderSub.unsubscribe()
 	}
 
 	edit(): void {

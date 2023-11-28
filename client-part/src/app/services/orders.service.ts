@@ -13,4 +13,9 @@ export class OrdersService {
 		activeOrders.push(JSON.parse(localStorage.getItem('client-order')))
 		return of(Array.from(activeOrders))
 	}
+
+	getOrderById(id: string): Observable<ClientOrder> {
+		let order = JSON.parse(localStorage.getItem('client-order'))
+		return of(order)
+	}
 }

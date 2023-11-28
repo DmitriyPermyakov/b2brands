@@ -19,5 +19,17 @@ export class OrdersEffects {
 		)
 	})
 
+	loadOrderById$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(OrderActions.loadOrderById),
+			mergeMap((action) =>
+				this.orderService.getOrderById(action.id).pipe(
+					map((order) => OrderActions.loadOrderByIdSuccess({ order: order })),
+					catchError((error) => of(OrderActions.loadOrderByIdFailure({ error: error })))
+				)
+			)
+		)
+	})
+
 	constructor(private actions$: Actions, private orderService: OrdersService) {}
 }
