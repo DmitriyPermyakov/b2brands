@@ -7,6 +7,8 @@
 	<p class="total-amount">Итоговая сумма:</p>
 </div>
 <div class="container">
-	<p class="active-orders-label">Активные заказы:</p>
+	<ng-container *ngIf="isMobile">
+		<p class="active-orders-label">{{ label }}</p>
+	</ng-container>
 	<app-admin-order *ngFor="let order of orders$ | async; index as i" [order]="order" [number]="i"></app-admin-order>
 </div>

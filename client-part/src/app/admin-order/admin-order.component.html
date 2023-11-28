@@ -1,4 +1,4 @@
-<div class="order" [routerLink]="['/admin/orders/3']">
+<div class="order" [routerLink]="['/admin/orders/', order.id]">
 	<p class="number">{{ number + 1 }}</p>
 	<div class="contacts">
 		<p class="phone">{{ order.contacts.phone }}</p>
