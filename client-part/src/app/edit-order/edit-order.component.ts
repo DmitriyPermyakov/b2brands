@@ -54,6 +54,8 @@ export class EditOrderComponent implements OnInit, OnDestroy {
 
 		this.createMode = this.id === 'create' ? (this.createMode = true) : (this.createMode = false)
 
+		console.log('is create mode ', this.createMode)
+
 		if (this.createMode) {
 			this.createEmptyForm()
 			this.enableFormsControls()
@@ -139,9 +141,11 @@ export class EditOrderComponent implements OnInit, OnDestroy {
 		this.disableFormControls()
 
 		let order = this.form.getRawValue()
-		order = { ...order, id: this.order.id }
-		if (this.createMode) console.log('create')
-		else {
+		if (this.createMode) {
+			order = { ...order, id: '0' }
+			this.store.dispatch(OrderAction.createOrder({ order: order }))
+		} else {
+			order = { ...order, id: this.order.id }
 			this.store.dispatch(OrderAction.upsertOrder({ order: order }))
 		}
 	}

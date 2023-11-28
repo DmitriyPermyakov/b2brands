@@ -18,6 +18,7 @@ export const reducer = createReducer(
 	on(OrdersAction.loadActiveOrdersSuccess, (state, action) => adapter.setAll(action.activeOrders, state)),
 	on(OrdersAction.loadCompletedOrdersSuccess, (state, action) => adapter.setAll(action.completedOrders, state)),
 	on(OrdersAction.loadOrderByIdSuccess, (state, action) => adapter.addOne(action.order, state)),
+	on(OrdersAction.createOrderSuccess, (state, action) => adapter.addOne(action.order, state)),
 	on(OrdersAction.upsertOrder, (state, action) => adapter.upsertOne(action.order, state)),
 	on(OrdersAction.deleteOrder, (state, action) => adapter.removeOne(action.id, state))
 )
