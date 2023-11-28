@@ -134,7 +134,7 @@ export class EditOrderComponent implements OnInit, OnDestroy {
 		this.disableFormControls()
 
 		let order = this.form.getRawValue()
-		order = { ...order, id: '0' }
+		order = { ...order, id: this.order.id }
 		if (this.createMode) console.log('create')
 		else {
 			// console.log(this.form.getRawValue())

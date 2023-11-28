@@ -167,7 +167,7 @@
 				</ng-container>
 				<div class="save-cancel-btns">
 					<button class="save-btn" [disabled]="!editable" type="submit">Сохранить</button>
-					<button class="cancel-btn" [disabled]="!editable" (click)="cancel()">Отмена</button>
+					<button class="cancel-btn" [disabled]="!editable" type="button" (click)="cancel()">Отмена</button>
 				</div>
 			</div>
 		</div>
@@ -182,7 +182,7 @@
 					(onRemoveItem)="removeItem($event)"
 					(onSubmitItem)="onSubmit()"
 				></app-position-item-info>
-				<button class="add-item-btn icon" *ngIf="editable" (click)="showProductModal()">
+				<button class="add-item-btn icon" *ngIf="editable" type="button" (click)="showProductModal()">
 					<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<rect x="0.5" y="0.5" width="47" height="47" rx="4.5" stroke-width="3" stroke="#A2A2A2" />
 						<path d="M12 24H36" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" />
