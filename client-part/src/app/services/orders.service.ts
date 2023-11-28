@@ -19,7 +19,15 @@ export class OrdersService {
 		return of(order)
 	}
 
+	createOrder(order: ClientOrder): Observable<ClientOrder> {
+		return of(order)
+	}
+
 	updateOrder(order: ClientOrder): Observable<ClientOrder> {
 		return of(order)
+	}
+
+	removeOrder(id: string) {
+		return new Observable((s) => s.next())
 	}
 }

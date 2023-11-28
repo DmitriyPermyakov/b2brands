@@ -5,7 +5,7 @@ import { OrderItem } from '../interfaces/orderItem.interface'
 import { FormArray, FormBuilder, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms'
 import { Observable, Subscription, mergeMap } from 'rxjs'
 import { IsMobileService } from '../services/is-mobile.service'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { Store, select } from '@ngrx/store'
 import * as OrderAction from '../store/actions/orders.actions'
 import * as OrdersSelectors from '../store/selectors/orders.selectors'
@@ -43,7 +43,8 @@ export class EditOrderComponent implements OnInit, OnDestroy {
 		private mobileService: IsMobileService,
 		private activatedRoute: ActivatedRoute,
 		private nnfb: NonNullableFormBuilder,
-		private store: Store
+		private store: Store,
+		private router: Router
 	) {
 		this.isMobile = this.mobileService.isMobile
 	}
@@ -117,6 +118,10 @@ export class EditOrderComponent implements OnInit, OnDestroy {
 
 	removeItem(index: number): void {
 		this.orderItems.removeAt(index)
+
+		let order = this.form.getRawValue()
+		order = { ...order, id: this.order.id }
+		// this.store.dispatch(OrderAction.upsertOrder({ order: order }))
 	}
 
 	cancel(): void {
@@ -137,10 +142,14 @@ export class EditOrderComponent implements OnInit, OnDestroy {
 		order = { ...order, id: this.order.id }
 		if (this.createMode) console.log('create')
 		else {
-			// console.log(this.form.getRawValue())
-
 			this.store.dispatch(OrderAction.upsertOrder({ order: order }))
 		}
+	}
+
+	public removeOrder() {
+		console.log('remove order')
+		this.store.dispatch(OrderAction.deleteOrder({ id: this.id }))
+		this.router.navigate(['/admin/active-orders/'])
 	}
 
 	private createEmptyForm(): void {

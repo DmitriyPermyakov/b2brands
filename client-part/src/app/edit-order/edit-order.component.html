@@ -42,7 +42,12 @@
 						/>
 					</svg>
 				</div>
-				<div class="remove-icon icon" #removeBtn [ngClass]="{ showed: editable, hidden: !editable }">
+				<div
+					class="remove-icon icon"
+					(click)="removeOrder()"
+					#removeBtn
+					[ngClass]="{ showed: editable, hidden: !editable }"
+				>
 					<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path
 							d="M11 15.0823L14.4498 37.1309C14.6021 38.1043 15.4405 38.8218 16.4258 38.8218H31.5747C32.5599 38.8218 33.3983 38.1043 33.5506 37.1309L37.0004 15.0823"
@@ -140,7 +145,12 @@
 							/>
 						</svg>
 					</div>
-					<div class="remove-icon icon" #removeBtn [ngClass]="{ showed: editable, hidden: !editable }">
+					<div
+						class="remove-icon icon"
+						#removeBtn
+						(click)="removeOrder()"
+						[ngClass]="{ showed: editable, hidden: !editable }"
+					>
 						<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path
 								d="M11 15.0823L14.4498 37.1309C14.6021 38.1043 15.4405 38.8218 16.4258 38.8218H31.5747C32.5599 38.8218 33.3983 38.1043 33.5506 37.1309L37.0004 15.0823"

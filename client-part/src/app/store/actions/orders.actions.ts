@@ -40,6 +40,12 @@ export const loadOrderByIdSuccess = createAction(
 
 export const loadOrderByIdFailure = createAction('[Order effect] Load order by id failure', props<{ error: any }>())
 
+//********* Create order ***************//
+
+export const createOrder = createAction('[Edit order component] Create order', props<{ order: ClientOrder }>())
+export const createOrderSuccess = createAction('[Order effect] Create order success', props<{ order: ClientOrder }>())
+export const createOrderFailure = createAction('[Order effect] Create order failure', props<{ error: any }>())
+
 //********* Upsert orders ***************//
 
 export const upsertOrder = createAction('[Edit order component] Upsert order', props<{ order: ClientOrder }>())
